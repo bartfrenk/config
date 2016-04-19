@@ -1,0 +1,20 @@
+set ruler
+set number
+set laststatus=2
+set backspace=indent,eol,start
+set mousehide
+set mouse=a
+set timeoutlen=500
+set history=256
+set nocompatible
+set nocp
+set incsearch
+set novisualbell
+set noerrorbells
+set nobackup
+set nowb
+set noswapfile
+set showcmd
+" move up the directory hierarchy to search for tabs
+set tags=tags;/
+set clipboard=unnamed

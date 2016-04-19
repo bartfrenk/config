@@ -1,0 +1,2 @@
+setlocal omnifunc=pythoncomplete#Complete
+let python_no_builtin_highlight=1
