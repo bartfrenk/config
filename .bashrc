@@ -4,8 +4,7 @@
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
-      *) return;;
-esac
+      *) return;; esac
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -82,6 +81,7 @@ alias xcb='xclip -selection clipboard'
 alias acryan='telnet -l root acryan'
 # use readline for sqlite3 client
 alias sqlite3='rlwrap sqlite3'
+alias youtube-dl-mp3='youtube-dl -x --audio-format mp3 --prefer-ffmpeg'
 export PATH=/opt/gradle-2.9/bin:/home/bart/lib/android-sdk-linux/platform-tools:$PATH
 export ANDROID_HOME=/home/bart/lib/android-sdk-linux
 export JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-amd64/
