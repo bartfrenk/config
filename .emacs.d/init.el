@@ -1,7 +1,6 @@
 (menu-bar-mode -1)
 (require 'settings-globals "/home/bart/.emacs.d/config/settings-globals.el")
 
-
 (setq-default custom-file (expand-file-name "settings-custom.el" config-dir))
 (load custom-file 'noerror)
 (package-initialize)

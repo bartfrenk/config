@@ -19,8 +19,7 @@
 .CodeMirror span.cm-em { font-style: italic; }
 .CodeMirror span.cm-error { color: #f00; }
 .CodeMirror span.cm-hr { color: #999; }
-.CodeMirror span.cm-invalidchar { color: #f00; }
-.CodeMirror span.cm-keyword { font-weight:bold; }
+.CodeMirror span.cm-invalidchar { color: #f00; } .CodeMirror span.cm-keyword { font-weight:bold; }
 .CodeMirror span.cm-link { color: #00c; text-decoration: underline; }
 .CodeMirror span.cm-meta { color: #555; }
 .CodeMirror span.cm-negative { color: #d44; }
@@ -66,34 +65,32 @@
 .CodeMirror span.cm-visibilityModifiers { font-weight:bold; }
 
 div.code_cell {
-  margin: 1em 0;
+    margin: 1em 0;
 }
 
 div.text_cell {
-  margin: 1em 0;
+    margin: 1em 0;
 }
 
 div.input {
-  padding: 1em;
+    padding: 1em;
 }
 
 div.input_area .CodeMirror {
-  line-height: 1.8em;
-  padding: 0.5em;
-  font-size: 10pt;
+    line-height: 1.8em;
+    padding: 0.5em;
+    font-size: 10pt;
 }
 
-@import url('https://fonts.googleapis.com/css?family=Sorts+Mill+Goudy:400');
-
 #notebook_name {
-  font-family: Garamond, Palatino, serif;
-  font-variant: small-caps;
-  letter-spacing: 0.15em;
+    font-family: Garamond, Palatino, serif;
+    font-variant: small-caps;
+    letter-spacing: 0.15em;
 }
 
 div.text_cell.rendered {
-  font-family: Garamond, Palatino, serif;
-  font-size: 14pt;
-  line-height: 150%;
+    font-family: Garamond, Palatino, serif;
+    font-size: 14pt;
+    line-height: 150%;
 }
 
