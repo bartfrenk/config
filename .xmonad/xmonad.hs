@@ -89,7 +89,7 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
         enableTouchPad = let cmd = "xinput --set-prop \"AlpsPS/2 ALPS DualPoint TouchPad\" \"Device Enabled\" 1"
                          in spawnAndNotify cmd "touchpad enabled"
         menuArgs s = ["-fn", "Inconsolata-11", "-p", s, "-l", "6"]
-        dmenu = "/usr/local/bin/dmenu_run"
+        dmenu = "/usr/bin/dmenu_run"
         isChromium = className =? "chromium-browser"
         isEmacs = resource =? "emacs24" <||> resource =? "emacs"
         isThunar = resource =? "thunar"
