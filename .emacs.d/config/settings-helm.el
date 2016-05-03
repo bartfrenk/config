@@ -2,11 +2,10 @@
 
 (use-package helm
 
-
   :init
+  (use-package helm-mode)
   (use-package helm-config)
   (use-package helm-misc)
-  (use-package helm-mode)
   (use-package helm-buffers)
   (use-package helm-files)
   (use-package helm-locate)
@@ -15,8 +14,7 @@
   (use-package helm-flycheck)
   (use-package helm-projectile)
 
-  (setq helm-quick-update t
-        helm-split-window-in-side-p t
+  (setq helm-split-window-in-side-p t
         helm-bookmark-show-location t
         helm-buffers-fuzzy-matching t
         helm-input-idle-delay 0.01)
@@ -45,6 +43,7 @@
 
 (use-package helm-ring
   :bind (("M-y" . helm-show-kill-ring)))
+
 
 (use-package helm-ag
   :bind (("C-c a" . helm-ag)))

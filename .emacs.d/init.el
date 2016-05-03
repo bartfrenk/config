@@ -1,3 +1,4 @@
+
 (menu-bar-mode -1)
 (require 'settings-globals "/home/bart/.emacs.d/config/settings-globals.el")
 
@@ -13,10 +14,16 @@
 (let ((modules '(packages misc helm projectile
                           company flycheck cvs
                           lisp c++ java scala clojure
-                          python haskell lua ess
+                          python haskell lua
                           octave latex org)))
   (dolist (elt modules)
     (let ((name (symbol-name elt))
           (prefix "settings-"))
       (message (symbol-name elt))
       (require (intern (concat prefix name))))))
+
+; GNU TLS gives a fatal error when connecting to marmalade
+; Only an issue when compiled with GNU TLS support
+(defun gnutls-available-p ()
+  "Function redefined in order not to use built-in GnuTLS support"
+  nil)
