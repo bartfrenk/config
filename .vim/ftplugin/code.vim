@@ -1,22 +1,20 @@
-setlocal tabstop=4  " number of spaces to use for a tab
-setlocal shiftwidth=4   " number of spaces to use for autoindent
+setlocal tabstop=4
+setlocal shiftwidth=4
 setlocal smarttab
 setlocal expandtab
 setlocal autoindent
-set nowrap
-
+setlocal nowrap
+	
 setlocal list
-setlocal cf " enable error files and error jumping.
-setlocal autowrite  " writes on make and shell commands
-setlocal nowrap " line wrapping off
+setlocal cf
+setlocal autowrite
+setlocal nowrap
 setlocal formatoptions=tcqr
-setlocal showmatch  " show matching brackets
-setlocal mat=2  " bracket blinking
-setlocal lcs=tab:\ \ ,trail:~,extends:>,precedes:<  " show trailing space as ~
+setlocal showmatch
+setlocal mat=2
+setlocal lcs=tab:\ \ ,trail:~,extends:>,precedes:<
 
-setlocal foldmethod=indent  " fold based on indent
-setlocal foldnestmax=10 " deepest fold is 10 levels
-setlocal nofoldenable   " don't fold by default
+setlocal foldmethod=indent
+setlocal foldnestmax=10
+setlocal nofoldenable
 setlocal foldlevel=10
-
-set colorcolumn=120
