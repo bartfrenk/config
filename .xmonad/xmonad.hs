@@ -76,7 +76,7 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
              ("M-g", gotoMenuArgs $ menuArgs "Go"),
              ("M-b", bringMenuArgs $ menuArgs "Bring"),
              ("M-S-b", runOrRaise "chromium-browser" isChromium),
-             ("M-S-e", runOrRaise "emacs" isEmacs),
+             ("M-S-e", runOrRaise "/home/bart/local/bin/emacs" isEmacs),
              ("M-S-f", runOrRaise "thunar" isThunar)]
   where setMasterAudio cmd = spawn $ "amixer -D pulse set Master " ++ cmd
         enableSpeaker = let cmd = setSpeaker "analog-output-speaker"
@@ -88,7 +88,7 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
                           in spawnAndNotify cmd "touchpad disabled"
         enableTouchPad = let cmd = "xinput --set-prop \"AlpsPS/2 ALPS DualPoint TouchPad\" \"Device Enabled\" 1"
                          in spawnAndNotify cmd "touchpad enabled"
-        menuArgs s = ["-fn", "Inconsolata-11", "-p", s, "-l", "6"]
+        menuArgs s = ["-fn", "SourceCodePro-9", "-p", s, "-l", "6"]
         dmenu = "/usr/bin/dmenu_run"
         isChromium = className =? "chromium-browser"
         isEmacs = resource =? "emacs24" <||> resource =? "emacs"
