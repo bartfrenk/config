@@ -77,7 +77,8 @@ div.input {
 }
 
 div.input_area .CodeMirror {
-    line-height: 1.8em;
+    font-family: "Source Code Pro", monospace;
+    line-height: 180%;
     padding: 0.5em;
     font-size: 10pt;
 }
@@ -91,6 +92,6 @@ div.input_area .CodeMirror {
 div.text_cell.rendered {
     font-family: Garamond, Palatino, serif;
     font-size: 14pt;
-    line-height: 150%;
+    line-height: 180%;
 }
 
