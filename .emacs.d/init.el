@@ -1,4 +1,3 @@
-
 (menu-bar-mode -1)
 (require 'settings-globals "/home/bart/.emacs.d/config/settings-globals.el")
 
