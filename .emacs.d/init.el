@@ -7,6 +7,7 @@
 (add-to-list 'load-path config-dir)
 (add-to-list 'load-path local-dir)
 (add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
+(scroll-bar-mode -1)
 
 ; silence 'tramp-read-passwd and 'find-tag-noselect redefinition warnings
 (setq ad-redefinition-action 'accept)
