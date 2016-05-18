@@ -76,7 +76,7 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
              ("M-g", gotoMenuArgs $ menuArgs "Go"),
              ("M-b", bringMenuArgs $ menuArgs "Bring"),
              ("M-S-b", runOrRaise "chromium-browser" isChromium),
-             ("M-S-e", runOrRaise "/home/bart/local/bin/emacs" isEmacs),
+             ("M-S-m", runOrRaise "/home/bart/local/bin/emacs" isEmacs),
              ("M-S-f", runOrRaise "thunar" isThunar)]
   where setMasterAudio cmd = spawn $ "amixer -D pulse set Master " ++ cmd
         enableSpeaker = let cmd = setSpeaker "analog-output-speaker"
