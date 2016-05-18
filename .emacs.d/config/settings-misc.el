@@ -38,6 +38,11 @@
 (use-package ace-window
   :bind ("M-a" . ace-window))
 
+(use-package yasnippet
+  :init
+  (yas-global-mode 1)
+  (global-set-key (kbd "C-c y") 'helm-yas-complete))
+
 (when window-system
   (scroll-bar-mode -1))
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -68,8 +73,9 @@
 (column-number-mode t)
 (define-key global-map (kbd "RET") 'newline-and-indent)
 (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode)
-(setq-default backup-directory-alist '(("." . "~/.emacs.d/backups")))
-(setq-default tab-width 4 indent-tabs-mode nil)
+(setq-default backup-directory-alist '(("." . "~/.emacs.d/backups"))
+              tab-width 4 indent-tabs-mode nil
+              fill-column 100)
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
 (global-set-key (kbd "C-c d") 'insert-current-date)
