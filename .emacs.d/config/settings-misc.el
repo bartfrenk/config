@@ -43,31 +43,43 @@
   (yas-global-mode 1)
   (global-set-key (kbd "C-c y") 'helm-yas-complete))
 
+(use-package linum
+  :init
+  ;; Ensure that there is sufficient space for line numbers.
+  (global-linum-mode)
+  (defvar linum-format-fmt "Cached line number format string.")
+  (add-hook 'linum-before-numbering-hook
+            (lambda ()
+              (setq-local linum-format-fmt
+                          (let
+                              ((w (length (number-to-string
+                                           (count-lines (point-min) (point-max))))))
+                            (concat "%" (number-to-string (+ w 1)) "d")))))
+  (defun linum-format-func (line)
+    (concat
+     (propertize (format linum-format-fmt line) 'face 'linum)
+     (propertize " " 'face 'linum)))
+  :config
+  (setq linum-format 'linum-format-func))
+
 (when window-system
   (scroll-bar-mode -1))
 (fset 'yes-or-no-p 'y-or-n-p)
-(global-linum-mode)
 
 (when (display-graphic-p)
   (global-hl-line-mode 1))
 
-;; TODO set options depending on whether client opened in text terminal or in X
-(defadvice make-frame-command (after set-hl-line-mode last activate)
-  "Sets hl-line-mode if the frame is graphical."
-  (if (display-graphic-p)
-      (progn
-        (message (symbol-name window-system))
-        (global-hl-line-mode 1))
-    (message (symbol-name window-system))
-    (global-hl-line-mode 1)))
+;; This avoids having multiple themes loaded at the same time,
+;; which is the default behavious of 'load-theme'.
+(defun switch-theme (theme)
+  (interactive
+   (list
+    (intern (completing-read "Load custom theme: "
+                             (mapcar 'symbol-name
+                                     (custom-available-themes))))))
+  (mapc #'disable-theme custom-enabled-themes)
+  (load-theme theme t))
 
-;(add-hook 'after-make-frame-functions
-;          (lambda (frame)
-;            (if window-system
-;                (progn
-;                  (message (symbol-name window-system))
-;                  (global-hl-line-mode))
-;              (message (symbol-name window-system)))))
 
 (show-paren-mode)
 (column-number-mode t)
@@ -76,6 +88,7 @@
 (setq-default backup-directory-alist '(("." . "~/.emacs.d/backups"))
               tab-width 4 indent-tabs-mode nil
               fill-column 100)
+
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
 (global-set-key (kbd "C-c d") 'insert-current-date)

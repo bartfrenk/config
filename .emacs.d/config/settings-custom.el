@@ -7,16 +7,18 @@
    [default bold shadow italic underline bold bold-italic bold])
  '(ansi-color-names-vector
    ["#839496" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#002b36"])
- '(custom-enabled-themes (quote (sanityinc-solarized-dark)))
+ '(custom-enabled-themes (quote (adwaita)))
  '(custom-safe-themes
    (quote
-    ("e56ee322c8907feab796a1fb808ceadaab5caba5494a50ee83a13091d5b1a10c" "bcc6775934c9adf5f3bd1f428326ce0dcd34d743a92df48c128e6438b815b44f" "790e74b900c074ac8f64fa0b610ad05bcfece9be44e8f5340d2d94c1e47538de" "b0ab5c9172ea02fba36b974bbd93bc26e9d26f379c9a29b84903c666a5fde837" "0022e0b80aaf697a4dc41322d5270aff5c4dae342c09a559abb91fd2bc64e755" "70b9c3d480948a3d007978b29e31d6ab9d7e259105d558c41f8b9532c13219aa" "b7b2cd8c45e18e28a14145573e84320795f5385895132a646ff779a141bbda7e" "18aa799ae149ceed4e337310319ad612b4f2526f058f8fd8ee00b8d8d79ed678" "9e1e2e7590c2f443c09a3f6240a05ada53f06566a6873c37eeae10d13dc372c9" "47ac4658d9e085ace37e7d967ea1c7d5f3dfeb2f720e5dec420034118ba84e17" "f979e71b37e53197803f8ac8417ea98fa3b104f38da5dea2992b520871a58b35" default)))
+    ("8abee8a14e028101f90a2d314f1b03bed1cde7fd3f1eb945ada6ffc15b1d7d65" "05411251e1232959144334e4359f8af0931c6c1a2f3a109d0d9e6753b6dfecfe" "e56ee322c8907feab796a1fb808ceadaab5caba5494a50ee83a13091d5b1a10c" "bcc6775934c9adf5f3bd1f428326ce0dcd34d743a92df48c128e6438b815b44f" "790e74b900c074ac8f64fa0b610ad05bcfece9be44e8f5340d2d94c1e47538de" "b0ab5c9172ea02fba36b974bbd93bc26e9d26f379c9a29b84903c666a5fde837" "0022e0b80aaf697a4dc41322d5270aff5c4dae342c09a559abb91fd2bc64e755" "70b9c3d480948a3d007978b29e31d6ab9d7e259105d558c41f8b9532c13219aa" "b7b2cd8c45e18e28a14145573e84320795f5385895132a646ff779a141bbda7e" "18aa799ae149ceed4e337310319ad612b4f2526f058f8fd8ee00b8d8d79ed678" "9e1e2e7590c2f443c09a3f6240a05ada53f06566a6873c37eeae10d13dc372c9" "47ac4658d9e085ace37e7d967ea1c7d5f3dfeb2f720e5dec420034118ba84e17" "f979e71b37e53197803f8ac8417ea98fa3b104f38da5dea2992b520871a58b35" default)))
+ '(fci-rule-color "#232A2F")
  '(flycheck-display-errors-function (function flycheck-pos-tip-error-messages))
  '(font-latex-fontify-sectioning 1.0)
  '(haskell-process-auto-import-loaded-modules t)
  '(haskell-process-log t)
  '(haskell-process-suggest-remove-import-lines t)
  '(haskell-process-type (quote ghci))
+ '(hl-sexp-background-color "#efebe9")
  '(inhibit-startup-screen t)
  '(initial-scratch-message nil)
  '(org-agenda-files
