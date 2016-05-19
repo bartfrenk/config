@@ -17,6 +17,8 @@
 
 (use-package org
   :ensure t
+  :bind
+  (("C-c h" . ob-ipython-inspect))
   :init
   (define-key global-map "\C-cl" 'org-store-link)
   (define-key global-map "\C-ca" 'org-agenda)
@@ -24,7 +26,8 @@
   (setq org-log-done t
         org-src-fontify-natively t
         org-confirm-babel-evaluate nil
-        org-startup-with-inline-images t)
+        org-startup-with-inline-images t
+        org-edit-src-content-indentation 0)
   (add-hook 'org-babel-after-execute-hook
             'org-display-inline-images 'append)
   (add-hook 'org-src-mode-hook
