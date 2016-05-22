@@ -1,6 +1,5 @@
 module RecentCommands (recentCommands) where
 
-
 import Text.XML.HaXml.Types
 import Text.XML.HaXml.Posn (Posn)
 import Text.XML.HaXml (xmlParse)
@@ -34,10 +33,10 @@ recentCommands' bookmark = do
 
 -- | Represents a single execution of a command on a specified file.
 data RecentCommand = RecentCommand {
-  rcName :: String,
+  _rcName :: String,
   rcExec :: String,
   rcUri :: URI,
-  rcModified :: LocalTime
+  _rcModified :: LocalTime
 } deriving (Eq, Show)
 
 displayLabel :: RecentCommand -> String
@@ -46,7 +45,7 @@ displayLabel cmd = rcExec cmd ++ " " ++ shortArg
                    in last $ splitPath arg
 
 shellCommand :: RecentCommand -> String
-shellCommand cmd = rcExec cmd ++ " " ++ loc
+shellCommand cmd = rcExec cmd ++ " \"" ++ loc ++ "\""
   where loc = drop 3 . dropWhile (/= ':') $ unEscapeString (show $ rcUri cmd)
 
 -- | Wraps 'xmlParse' in HaXml; parses an XML document without schema.

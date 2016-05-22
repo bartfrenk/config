@@ -14,19 +14,22 @@ import XMonad.Layout.PerWorkspace
 import XMonad.Layout.WindowNavigation
 import XMonad.Layout.NoBorders
 import XMonad.Hooks.SetWMName
-import XMonad.Layout.ComboP ()
 import XMonad.Layout.Combo
 import XMonad.Layout.ZoomRow
 import XMonad.Layout.Fullscreen
 import XMonad.Config.Xfce
 import XMonad.Actions.WindowGo (runOrRaise)
+import XMonad.Util.Dmenu (menuMapArgs)
+
 import Data.Maybe
+import Data.Foldable (forM_)
 import XMonad.Util.WindowProperties ()
 import qualified DBus as D
 import qualified DBus.Client as D
 import qualified Codec.Binary.UTF8.String as UTF8
 import Data.Monoid (Endo)
 import Solarized
+import RecentCommands
 
 tabTheme :: Theme
 tabTheme = def {
@@ -46,7 +49,7 @@ managePlacement = composeAll [title =? "Save As" --> doFloat,
 
 spawnAndNotify cmd message = do
   spawn cmd
-  spawn $ "notify-send -t 1000 " ++ (quote message)
+  spawn $ "notify-send -t 1000 " ++ quote message
   where
     quote str = "\"" ++ str ++ "\""
 
@@ -72,11 +75,12 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
              ("M-S-l", sendMessage $ Move R),
              ("M-S-h", sendMessage $ Move L),
              ("M-S-q", spawn "xfce4-session-logout"),
-             ("M-p", spawn $ dmenu ++ " " ++ (unwords $ menuArgs "Run")),
+             ("M-p", spawn $ dmenuRun ++ " " ++ unwords (menuArgs "Run")),
              ("M-g", gotoMenuArgs $ menuArgs "Go"),
              ("M-b", bringMenuArgs $ menuArgs "Bring"),
              ("M-S-b", runOrRaise "chromium-browser" isChromium),
              ("M-S-m", runOrRaise "/home/bart/local/bin/emacs" isEmacs),
+             ("M-r", recentCommandsMenu dmenu "/home/bart/.local/share/recently-used.xbel"),
              ("M-S-f", runOrRaise "thunar" isThunar)]
   where setMasterAudio cmd = spawn $ "amixer -D pulse set Master " ++ cmd
         enableSpeaker = let cmd = setSpeaker "analog-output-speaker"
@@ -84,18 +88,33 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
         disableSpeaker = let cmd = setSpeaker "analog-output-headphones"
                          in spawnAndNotify cmd "speaker disabled"
         setSpeaker speaker = "pacmd set-sink-port 1 " ++ speaker
-        disableTouchPad = let cmd = "xinput --set-prop \"AlpsPS/2 ALPS DualPoint TouchPad\" \"Device Enabled\" 0"
+        disableTouchPad = let cmd = "xinput --set-prop \"AlpsPS/2 ALPS DualPoint TouchPad\"\
+                                    \\"Device Enabled\" 0"
                           in spawnAndNotify cmd "touchpad disabled"
-        enableTouchPad = let cmd = "xinput --set-prop \"AlpsPS/2 ALPS DualPoint TouchPad\" \"Device Enabled\" 1"
+        enableTouchPad = let cmd = "xinput --set-prop \"AlpsPS/2 ALPS DualPoint TouchPad\"\
+                                   \\"Device Enabled\" 1"
                          in spawnAndNotify cmd "touchpad enabled"
-        menuArgs s = ["-fn", "SourceCodePro-9", "-p", s, "-l", "6"]
-        dmenu = "/usr/bin/dmenu_run"
+        dmenuRun = "/usr/bin/dmenu_run"
+        dmenu = "/usr/bin/dmenu"
         isChromium = className =? "chromium-browser"
         isEmacs = resource =? "emacs24" <||> resource =? "emacs"
         isThunar = resource =? "thunar"
 
+-- | Construct arguments for passing to dmenu.
+menuArgs :: String -> [String]
+menuArgs s = ["-fn", "SourceCodePro-9", "-p", s, "-l", "6"]
+
+-- | Shows dmenu with recently used commands, and runs the selection.
+-- First argument is the location of dmenu, second is the location of
+-- the recently used file (which should be in 'xbel' format).
+recentCommandsMenu :: FilePath -> FilePath -> X ()
+recentCommandsMenu dmenu path = do
+  cmds <- liftIO (recentCommands path)
+  sel <- menuMapArgs dmenu (menuArgs "Open") cmds
+  forM_ sel spawn
+
 defaultPanes :: Tall a
-defaultPanes = (Tall 1 0.03 0.5)
+defaultPanes = Tall 1 0.03 0.5
 
 tabbedWindow = tabbedBottom shrinkText tabTheme
 isTerminal = ClassName "Xfce4-terminal"
@@ -119,7 +138,7 @@ consLayout = windowNavigation $ combineTwoP split left right condition
                    right = tabbedWindow
                    condition = Not isTerminal
 
-defaultLayouts = avoidStruts $ defaultLayoutHook
+defaultLayouts = avoidStruts defaultLayoutHook
     where defaultLayoutHook = noBorders (tabbedBottom shrinkText tabTheme) |||
                               noBorders Full |||
                               devLayout |||
@@ -130,7 +149,7 @@ defaultLayouts = avoidStruts $ defaultLayoutHook
 fullscreenLayouts =
     lessBorders OnlyFloat $ fullscreenFull Full
 
-layoutRingPerWorkspace = onWorkspace "8" fullscreenLayouts $ defaultLayouts
+layoutRingPerWorkspace = onWorkspace "8" fullscreenLayouts defaultLayouts
 
 main :: IO ()
 main = do
