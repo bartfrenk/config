@@ -12,6 +12,7 @@
 
 (use-package ws-butler
   :commands ws-butler-mode
+  :diminish ws-butler-mode
   :init (add-hook 'prog-mode-hook 'ws-butler-mode))
 
 (use-package undo-tree

@@ -18,7 +18,7 @@
 (use-package org
   :ensure t
   :bind
-  (("C-c h" . ob-ipython-inspect))
+  (:map org-mode-map ("C-c h" . ob-ipython-inspect))
   :init
   (define-key global-map "\C-cl" 'org-store-link)
   (define-key global-map "\C-ca" 'org-agenda)
