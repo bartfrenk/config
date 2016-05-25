@@ -23,6 +23,7 @@ import XMonad.Util.Dmenu (menuMapArgs)
 
 import Data.Maybe
 import Data.Foldable (forM_)
+import Data.List (isPrefixOf)
 import XMonad.Util.WindowProperties ()
 import qualified DBus as D
 import qualified DBus.Client as D
@@ -96,7 +97,8 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
                          in spawnAndNotify cmd "touchpad enabled"
         dmenuRun = "/usr/bin/dmenu_run"
         dmenu = "/usr/bin/dmenu"
-        isChromium = className =? "chromium-browser"
+        isChromium = isPrefixOf "chromium-browser" `fmap` resource <&&>
+                     className =? "chromium-browser"
         isEmacs = resource =? "emacs24" <||> resource =? "emacs"
         isThunar = resource =? "thunar"
 
