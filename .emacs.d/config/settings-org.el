@@ -23,11 +23,13 @@
   (define-key global-map "\C-cl" 'org-store-link)
   (define-key global-map "\C-ca" 'org-agenda)
   :config
+  (require 'ob-haskell)
   (setq org-log-done t
         org-src-fontify-natively t
         org-confirm-babel-evaluate nil
         org-startup-with-inline-images t
-        org-edit-src-content-indentation 0)
+        org-edit-src-content-indentation 0
+        org-startup-folded 'content)
   (add-hook 'org-babel-after-execute-hook
             'org-display-inline-images 'append)
   (add-hook 'org-src-mode-hook

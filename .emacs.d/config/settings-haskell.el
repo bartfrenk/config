@@ -18,7 +18,7 @@
   ; Use C-u C-c C-h to display extra info (i.e. pass --info to hoogle)
   ; where C-u stands for activating the prefix command
   (define-key haskell-mode-map (kbd "C-c C-h") 'haskell-hoogle)
-  (setq haskell-process-type 'auto
+  (setq haskell-process-type 'ghci ; use dir-locals for stack projects
         haskell-hoogle-command "hoogle"
         haskell-process-path-ghci "ghci"
         haskell-process-args-ghci '("-i.")
@@ -30,8 +30,8 @@
         ; Quick fix for REPL's failing to obtain directory for non-cabal
         ; projects. Wil be fixed in a later release of haskell-mode. See
         ; issue-784.
-        haskell-interactive-popup-errors nil))
-        haskell-process-load-or-reload-prompt t
+        haskell-interactive-popup-errors nil
+        haskell-process-load-or-reload-prompt t))
 
 (require 'flycheck-haskell)
 (add-hook 'haskell-mode-hook 'flycheck-mode)

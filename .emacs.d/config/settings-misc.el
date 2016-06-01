@@ -67,8 +67,6 @@
   (scroll-bar-mode -1))
 (fset 'yes-or-no-p 'y-or-n-p)
 
-(when (display-graphic-p)
-  (global-hl-line-mode 1))
 
 ;; This avoids having multiple themes loaded at the same time,
 ;; which is the default behavious of 'load-theme'.
@@ -83,6 +81,7 @@
 
 
 (show-paren-mode)
+(global-hl-line-mode 1)
 (column-number-mode t)
 (define-key global-map (kbd "RET") 'newline-and-indent)
 (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode)
