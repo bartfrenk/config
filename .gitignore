@@ -10,6 +10,7 @@
 
 !.xmonad/
 !.xmonad/xmonad.hs
+!.xmonad/.dir-locals.el
 !.xmonad/lib/
 !.xmonad/lib/*.hs
 
@@ -47,4 +48,6 @@
 !.config/xfce4/terminal/
 !.config/xfce4/terminal/terminalrc
 
+!bin/
+!bin/*
 
