@@ -2,7 +2,6 @@
 {-# OPTIONS_GHC -fno-warn-missing-signatures #-}
 
 -- TOOD: define layout for Gimp
-
 import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
@@ -23,6 +22,7 @@ import XMonad.Util.Dmenu (menuMapArgs)
 
 import Data.Maybe
 import Data.Foldable (forM_)
+import Data.List (isPrefixOf)
 import XMonad.Util.WindowProperties ()
 import qualified DBus as D
 import qualified DBus.Client as D
@@ -79,7 +79,7 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
              ("M-g", gotoMenuArgs $ menuArgs "Go"),
              ("M-b", bringMenuArgs $ menuArgs "Bring"),
              ("M-S-b", runOrRaise "chromium-browser" isChromium),
-             ("M-S-m", runOrRaise "/home/bart/local/bin/emacs" isEmacs),
+             ("M-S-m", runOrRaise "/home/bart/bin/emacs" isEmacs),
              ("M-r", recentCommandsMenu dmenu "/home/bart/.local/share/recently-used.xbel"),
              ("M-S-f", runOrRaise "thunar" isThunar)]
   where setMasterAudio cmd = spawn $ "amixer -D pulse set Master " ++ cmd
@@ -96,7 +96,8 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
                          in spawnAndNotify cmd "touchpad enabled"
         dmenuRun = "/usr/bin/dmenu_run"
         dmenu = "/usr/bin/dmenu"
-        isChromium = className =? "chromium-browser"
+        isChromium = isPrefixOf "chromium-browser" `fmap` resource <&&>
+                     className =? "chromium-browser"
         isEmacs = resource =? "emacs24" <||> resource =? "emacs"
         isThunar = resource =? "thunar"
 

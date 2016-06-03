@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: haskell block
+# key: hs
+# --
+#+begin_src haskell :tangle yes
+$0
+#+end_src

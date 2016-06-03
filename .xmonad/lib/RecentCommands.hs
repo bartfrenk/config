@@ -27,7 +27,7 @@ recentCommands' bookmark = do
   modified <- app `attrs` N "modified"
   return $ RecentCommand (toString name) (sanitize exec) (toURI arg) (toLocalTime modified)
   where toLocalTime = parseTimeOrError True defaultTimeLocale "%FT%XZ" . show
-        toURI = fromJust . parseURI . show
+        toURI = fromJust . parseURI . replaceHtmlEntities . show
         toString = replaceHtmlEntities . show
         sanitize = takeWhile (/= ' ') . init . tail . toString
 

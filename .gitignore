@@ -3,11 +3,18 @@
 !.emacs.d/init.el
 !.emacs.d/config/
 !.emacs.d/config/*.el
+.emacs.d/config/settings-custom.el
+!.emacs.d/snippets/
+!.emacs.d/snippets/*/
+!.emacs.d/snippets/*/*
+
 
 !.xmonad/
 !.xmonad/xmonad.hs
+!.xmonad/.dir-locals.el
 !.xmonad/lib/
 !.xmonad/lib/*.hs
+.xmonad/lib/Local.hs
 
 !.vim/
 !.vim/plugin/
@@ -43,4 +50,6 @@
 !.config/xfce4/terminal/
 !.config/xfce4/terminal/terminalrc
 
+!bin/
+!bin/*
 

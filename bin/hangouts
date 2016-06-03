@@ -1,0 +1,5 @@
+#! /bin/bash
+
+chromium-browser --user-data-dir=/home/bart/.config/chromium \
+                 --profile-directory=Default \
+                 --app-id=knipolnnllmklapflnccelgolnpehhpl
