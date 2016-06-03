@@ -16,6 +16,7 @@
   :init (add-hook 'prog-mode-hook 'ws-butler-mode))
 
 (use-package undo-tree
+  :diminish undo-tree-mode
   :init
   (global-undo-tree-mode)
   (setq-default undo-tree-visualizer-timestamps t)
