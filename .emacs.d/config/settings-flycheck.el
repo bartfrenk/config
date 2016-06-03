@@ -3,6 +3,7 @@
 
 (use-package flycheck
   :commands global-flycheck-mode
+  :ensure t
   :init (global-flycheck-mode)
   :config
   (setq-default flycheck-emacs-lisp-load-path 'inherit)
