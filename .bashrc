@@ -22,8 +22,8 @@ if [ -f ~/.bash_aliases ]; then
     source ~/.bash_aliases $use_color
 fi
 
-if [ -f ~/.local/rc/bashrc ]; then
-    source ~/.local/rc/bashrc $use_color
+if [ -f ~/local/rc/bashrc ]; then
+    source ~/local/rc/bashrc $use_color
 fi
 
 # If set, the pattern "**" used in a pathname expansion context will
