@@ -31,6 +31,7 @@
 !.jupyter/custom/custom.js
 
 !.bashrc
+!.bash_aliases
 !.gitignore_global
 !.Xmodmap
 !.ghci
