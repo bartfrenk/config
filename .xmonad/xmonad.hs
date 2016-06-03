@@ -3,7 +3,7 @@
 
 -- TOOD: define layout for Gimp
 
-import XMonad
+import XMonad hiding (local)
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Util.EZConfig (additionalKeysP)
@@ -31,6 +31,7 @@ import qualified Codec.Binary.UTF8.String as UTF8
 import Data.Monoid (Endo)
 import Solarized
 import RecentCommands
+import Local
 
 tabTheme :: Theme
 tabTheme = def {
@@ -80,7 +81,7 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
              ("M-g", gotoMenuArgs $ menuArgs "Go"),
              ("M-b", bringMenuArgs $ menuArgs "Bring"),
              ("M-S-b", runOrRaise "chromium-browser" isChromium),
-             ("M-S-m", runOrRaise "/home/bart/bin/emacs" isEmacs),
+             ("M-S-m", runOrRaise (emacsPath local) isEmacs),
              ("M-r", recentCommandsMenu dmenu "/home/bart/.local/share/recently-used.xbel"),
              ("M-S-f", runOrRaise "thunar" isThunar)]
   where setMasterAudio cmd = spawn $ "amixer -D pulse set Master " ++ cmd

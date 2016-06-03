@@ -13,6 +13,7 @@
 !.xmonad/.dir-locals.el
 !.xmonad/lib/
 !.xmonad/lib/*.hs
+.xmonad/lib/Local.hs
 
 !.vim/
 !.vim/plugin/
