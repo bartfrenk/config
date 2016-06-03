@@ -15,7 +15,6 @@ if [ "$1" == true ]; then
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
-    echo $1
 fi
 
 # use like: sleep 10; alert
