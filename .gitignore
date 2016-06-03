@@ -45,11 +45,6 @@
 !local/bin/
 !local/bin/emacs
 
-!.config/
-!.config/xfce4/
-!.config/xfce4/terminal/
-!.config/xfce4/terminal/terminalrc
-
 !bin/
 !bin/*
 
