@@ -88,11 +88,9 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
         disableSpeaker = let cmd = setSpeaker "analog-output-headphones"
                          in spawnAndNotify cmd "speaker disabled"
         setSpeaker speaker = "pacmd set-sink-port 1 " ++ speaker
-        disableTouchPad = let cmd = "xinput --set-prop \"AlpsPS/2 ALPS DualPoint TouchPad\"\
-                                    \\"Device Enabled\" 0"
+        disableTouchPad = let cmd = "xinput --disable \"AlpsPS/2 ALPS DualPoint TouchPad\""
                           in spawnAndNotify cmd "touchpad disabled"
-        enableTouchPad = let cmd = "xinput --set-prop \"AlpsPS/2 ALPS DualPoint TouchPad\"\
-                                   \\"Device Enabled\" 1"
+        enableTouchPad = let cmd = "xinput --enable \"AlpsPS/2 ALPS DualPoint TouchPad\""
                          in spawnAndNotify cmd "touchpad enabled"
         dmenuRun = "/usr/bin/dmenu_run"
         dmenu = "/usr/bin/dmenu"
