@@ -41,6 +41,7 @@
 !.vimrc
 !.gitignore
 !.pylintrc
+!.profile
 
 !local
 !local/bin/
