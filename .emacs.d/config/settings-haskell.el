@@ -5,6 +5,8 @@
 (require 'company)
 (require 'flycheck)
 
+;; turn off hlint for .lhs files
+
 (use-package haskell-mode
   :init
   (add-hook 'haskell-mode-hook (lambda ()
