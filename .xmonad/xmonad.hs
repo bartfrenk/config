@@ -61,8 +61,6 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
              ("<XF86MonBrightnessDown>", spawn "xbacklight -dec 5"),
              ("C-M-[", disableTouchPad),
              ("C-M-]", enableTouchPad),
-             ("M-s", enableSpeaker),
-             ("M-S-s", disableSpeaker),
              ("C-M-b", sendMessage $ ToggleStrut U),
              ("C-M-=", sendMessage $ Zoom (5/4)),
              ("C-M--", sendMessage $ Zoom (4/5)),
@@ -83,11 +81,6 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
              ("M-r", recentCommandsMenu dmenu "/home/bart/.local/share/recently-used.xbel"),
              ("M-S-f", runOrRaise "thunar" isThunar)]
   where setMasterAudio cmd = spawn $ "amixer -D pulse set Master " ++ cmd
-        enableSpeaker = let cmd = setSpeaker "analog-output-speaker"
-                        in spawnAndNotify cmd "speaker enabled"
-        disableSpeaker = let cmd = setSpeaker "analog-output-headphones"
-                         in spawnAndNotify cmd "speaker disabled"
-        setSpeaker speaker = "pacmd set-sink-port 1 " ++ speaker
         disableTouchPad = let cmd = "xinput --disable \"AlpsPS/2 ALPS DualPoint TouchPad\""
                           in spawnAndNotify cmd "touchpad disabled"
         enableTouchPad = let cmd = "xinput --enable \"AlpsPS/2 ALPS DualPoint TouchPad\""
