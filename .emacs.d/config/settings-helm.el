@@ -17,7 +17,10 @@
   (setq helm-split-window-in-side-p t
         helm-bookmark-show-location t
         helm-buffers-fuzzy-matching t
+        helm-buffer-max-length nil
+        helm-buffer-details-flag t
         helm-input-idle-delay 0.01)
+  (add-to-list 'helm-boring-buffer-regexp-list "*epc con \\d+*")
 
   (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
   (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
@@ -43,7 +46,6 @@
 
 (use-package helm-ring
   :bind (("M-y" . helm-show-kill-ring)))
-
 
 (use-package helm-ag
   :bind (("C-c a" . helm-ag)))
