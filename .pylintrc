@@ -1,7 +1,8 @@
 [TYPECHECK]
 ignored-modules = numpy, tensorflow
 
-# R0903: too few public methods
-# C0111: missing docstring
 [MESSAGES CONTROL]
-disable=R0903,C0111
+disable=missing-docstring, duplicate-code
+
+[SIMILARITIES]
+ignore-imports=yes
