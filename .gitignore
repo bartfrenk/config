@@ -47,6 +47,9 @@
 !local/bin/
 !local/bin/emacs
 
+!.config/
+!.config/pep8
+
 !bin/
 !bin/*
 
