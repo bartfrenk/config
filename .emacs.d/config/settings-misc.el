@@ -1,9 +1,7 @@
 (require 'use-package)
 
 (defun insert-current-date () (interactive)
-  (insert (shell-command-to-string "echo -n $(date +%Y-%m-%d)")))
-
-(use-package evil
+  (insert (shell-command-to-string "echo -n $(date +%Y-%m-%d)"))) (use-package evil
   :config
   (evil-mode t)
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
@@ -80,10 +78,10 @@
   (mapc #'disable-theme custom-enabled-themes)
   (load-theme theme t))
 
-
+(switch-theme 'material)
 (show-paren-mode)
-(global-hl-line-mode 1)
 (column-number-mode t)
+(tool-bar-mode -1)
 (define-key global-map (kbd "RET") 'newline-and-indent)
 (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode)
 (setq-default backup-directory-alist '(("." . "~/.emacs.d/backups"))
