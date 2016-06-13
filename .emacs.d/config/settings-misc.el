@@ -1,7 +1,9 @@
 (require 'use-package)
 
 (defun insert-current-date () (interactive)
-  (insert (shell-command-to-string "echo -n $(date +%Y-%m-%d)"))) (use-package evil
+       (insert (shell-command-to-string "echo -n $(date +%Y-%m-%d)")))
+
+(use-package evil
   :config
   (evil-mode t)
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
@@ -68,7 +70,7 @@
 
 
 ;; This avoids having multiple themes loaded at the same time,
-;; which is the default behavious of 'load-theme'.
+;; which is the default behaviour of 'load-theme'.
 (defun switch-theme (theme)
   (interactive
    (list
