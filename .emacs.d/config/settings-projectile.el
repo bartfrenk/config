@@ -1,12 +1,10 @@
 (require 'use-package)
-(require 'settings-globals)
 
 (use-package projectile
   :init
-  (setq projectile-known-projects-file
-        (expand-file-name "projectile-bookmarks.eld" cache-dir))
+  (use-package settings-globals)
   :config
-  (projectile-global-mode)
+  (projectile-global-mode +1)
   (setq projectile-completion-system 'helm
         projectile-enable-caching t
         projectile-cache-file (expand-file-name  "projectile.cache" cache-dir)
