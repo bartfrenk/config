@@ -80,6 +80,7 @@
 
 (switch-theme 'material)
 (show-paren-mode)
+(global-hl-line-mode)
 (column-number-mode t)
 (tool-bar-mode -1)
 (define-key global-map (kbd "RET") 'newline-and-indent)
