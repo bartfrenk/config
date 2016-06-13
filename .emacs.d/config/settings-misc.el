@@ -33,7 +33,7 @@
 (use-package whitespace
   :init (global-whitespace-mode t)
   :config (setq whitespace-style '(face empty tabs lines-tail trailing)
-                whitespace-line-column 120
+                whitespace-line-column 100
                 ;; avoid highlighting large tables in org-mode
                 whitespace-global-modes '(not latex-mode org-mode)))
 
@@ -94,5 +94,10 @@
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
 (global-set-key (kbd "C-c d") 'insert-current-date)
+;; Change key binding to save all buffers from default to something that interferes less with
+;; regular save key binding.
+(global-set-key (kbd "C-x s") nil)
+(global-set-key (kbd "C-x M-s") 'save-some-buffers)
+
 
 (provide 'settings-misc)
