@@ -3,4 +3,4 @@
 (defvar init-dir (expand-file-name "~/.emacs.d/init/")
   "This folder stores configuration files.")
 
-(provide 'constants)
+(provide 'init-constants)

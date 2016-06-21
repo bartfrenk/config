@@ -46,6 +46,4 @@
   :config
   (setq linum-format 'linum-format-func))
 
-
-
-(provide 'core)
+(provide 'init-core)

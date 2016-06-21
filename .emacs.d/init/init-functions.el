@@ -9,4 +9,4 @@
   (mapc #'disable-theme custom-enabled-themes)
   (load-theme theme t))
 
-(provide 'functions)
+(provide 'init-functions)
