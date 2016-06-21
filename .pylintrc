@@ -1,8 +1,8 @@
 [TYPECHECK]
-ignored-modules = numpy, tensorflow
+ignored-modules=numpy, tensorflow
 
 [MESSAGES CONTROL]
-disable=missing-docstring, duplicate-code
+disable=missing-docstring, duplicate-code,invalid-name,too-few-public-methods
 
 [SIMILARITIES]
 ignore-imports=yes
