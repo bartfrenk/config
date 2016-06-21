@@ -1,29 +1,11 @@
-(menu-bar-mode -1)
-(require 'settings-globals "/home/bart/.emacs.d/config/settings-globals.el")
+(require 'constants (expand-file-name "~/.emacs.d/init/constants.el"))
 
-(setq-default custom-file (expand-file-name "settings-custom.el" config-dir))
-(load custom-file 'noerror)
+(add-to-list 'load-path init-dir)
+
 (package-initialize)
-(add-to-list 'load-path config-dir)
-(add-to-list 'load-path local-dir)
-(add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
-(scroll-bar-mode -1)
 
-; silence 'tramp-read-passwd and 'find-tag-noselect redefinition warnings
-(setq ad-redefinition-action 'accept)
-(let ((modules '(packages misc helm projectile
-                          company flycheck cvs
-                          lisp c++ java scala clojure
-                          python haskell lua
-                          octave latex org)))
-  (dolist (elt modules)
-    (let ((name (symbol-name elt))
-          (prefix "settings-"))
-      (message (symbol-name elt))
-      (require (intern (concat prefix name))))))
-
-; GNU TLS gives a fatal error when connecting to marmalade
-; Only an issue when compiled with GNU TLS support
-(defun gnutls-available-p ()
-  "Function redefined in order not to use built-in GnuTLS support"
-  nil)
+(let ((modules '(packages core functions)))
+  (dolist (module modules)
+    (let ((name (symbol-name module)))
+      (message name)
+      (require (intern name)))))
