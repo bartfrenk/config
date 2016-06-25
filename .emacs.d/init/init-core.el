@@ -1,3 +1,21 @@
+(require 'constants)
+
+(global-hl-line-mode)
+(column-number-mode t)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+
+(setq inhibit-startup-message t
+      backup-directory-alist '(("." . "~/.emacs.d/backup")))
+(setq-default tab-width 4 indent-tabs-mode nil
+              fill-column 100)
+
+(global-set-key (kbd "C-x s") nil)
+(global-set-key (kbd "C-x M-s") 'save-some-buffers)
+(global-set-key (kbd "C-+") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
+(global-set-key (kbd "RET") 'newline-and-indent)
+
 (use-package evil
   :ensure t
   :config
@@ -16,7 +34,7 @@
   :ensure t
   :init (global-whitespace-mode t)
   :config (setq whitespace-style '(face empty tabs lines-tail trailing)
-                whitespace-line-column 100
+                whitespace-line-column fill-column
                 ;; avoid highlighting large tables in org-mode
                 whitespace-global-modes '(not latex-mode org-mode)))
 

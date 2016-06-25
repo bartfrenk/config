@@ -1,5 +1,5 @@
 (require 'use-package)
-(require 'init-constants)
+(require 'constants)
 
 (use-package projectile
   :ensure t

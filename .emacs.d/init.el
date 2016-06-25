@@ -1,13 +1,16 @@
-(require 'init-constants (expand-file-name "~/.emacs.d/init/init-constants.el"))
+(require 'constants (expand-file-name "~/.emacs.d/init/constants.el"))
+(require 'functions (expand-file-name "~/.emacs.d/init/functions.el"))
 
 (add-to-list 'load-path init-dir)
 
 (package-initialize)
 
-(let ((modules '(packages core functions projectile helm)))
+; silence 'tramp-read-passwd and 'find-tag-noselect redefinition warnings
+(setq ad-redefinition-action 'accept)
+(let ((modules '(packages core projectile helm)))
  (dolist (module modules)
    (let ((name (symbol-name module))
-	 (prefix "init-"))
+         (prefix "init-"))
       (message name)
       (require (intern (concat prefix name))))))
 
