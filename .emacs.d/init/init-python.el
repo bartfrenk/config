@@ -3,7 +3,9 @@
 (use-package python
   :init
   (add-hook 'python-mode-hook (lambda ()
-                                (jedi:setup)))
+                                (jedi:setup)
+                                (eldoc-mode 1)
+                                (auto-complete-mode -1)))
   :ensure t)
 
 (use-package jedi

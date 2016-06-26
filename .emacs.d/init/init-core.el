@@ -6,7 +6,10 @@
 
 (setq inhibit-startup-message t
       backup-directory-alist '(("." . "~/.emacs.d/backup"))
-      initial-scratch-message nil)
+      initial-scratch-message nil
+      scroll-preserve-screen-position nil
+      scroll-conservatively 101
+      scroll-margin 20)
 
 (fset 'yes-or-no-p 'y-or-n-p)
 (column-number-mode t)

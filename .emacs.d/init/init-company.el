@@ -13,8 +13,7 @@
   (setq company-tooltip-limit 20
         company-idle-delay .1
         company-echo-delay 0
-        company-begin-commands '(self-insert-command)
-        company-backends (delq 'company-capf company-backends))
+        company-begin-commands '(self-insert-command))
   :ensure t)
 
 (global-company-mode)
