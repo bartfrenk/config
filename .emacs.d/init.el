@@ -4,10 +4,18 @@
 (add-to-list 'load-path init-dir)
 
 (package-initialize)
+;; TODO: move layout from init-core here, to avoid switching layout during initialization.
 
 ; silence 'tramp-read-passwd and 'find-tag-noselect redefinition warnings
 (setq ad-redefinition-action 'accept)
-(let ((modules '(packages core projectile helm)))
+(let ((modules '(packages
+                 core
+                 projectile
+                 helm
+                 flycheck
+                 company
+                 org
+                 python)))
  (dolist (module modules)
    (let ((name (symbol-name module))
          (prefix "init-"))
