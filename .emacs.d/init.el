@@ -16,7 +16,8 @@
                  company
                  elisp
                  org
-                 python)))
+                 python
+                 clojure)))
  (dolist (module modules)
    (let ((name (symbol-name module))
          (prefix "init-"))
