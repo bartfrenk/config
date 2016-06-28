@@ -1,11 +1,9 @@
 *
 !.emacs.d/
 !.emacs.d/init.el
-!.emacs.d/config/
-!.emacs.d/config/*.el
 !.emacs.d/init/
 !.emacs.d/init/*.el
-.emacs.d/config/settings-custom.el
+.emacs.d/init/custom.el
 !.emacs.d/snippets/
 !.emacs.d/snippets/*/
 !.emacs.d/snippets/*/*

@@ -2,6 +2,7 @@
 (require 'constants (expand-file-name "~/.emacs.d/init/constants.el"))
 (require 'functions (expand-file-name "~/.emacs.d/init/functions.el"))
 
+(setq-default custom-file (expand-file-name "custom.el" init-dir))
 (add-to-list 'load-path init-dir)
 
 (package-initialize)
