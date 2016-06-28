@@ -79,7 +79,8 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
              ("M-S-b", runOrRaise "chromium-browser" isChromium),
              ("M-S-m", runOrRaise "/home/bart/bin/emacs" isEmacs),
              ("M-r", recentCommandsMenu dmenu "/home/bart/.local/share/recently-used.xbel"),
-             ("M-S-f", runOrRaise "thunar" isThunar)]
+             ("M-S-f", runOrRaise "thunar" isThunar),
+             ("M-S-s", runOrRaise "slack" isSlack)]
   where setMasterAudio cmd = spawn $ "amixer -D pulse set Master " ++ cmd
         disableTouchPad = let cmd = "xinput --disable \"AlpsPS/2 ALPS DualPoint TouchPad\""
                           in spawnAndNotify cmd "touchpad disabled"
@@ -91,6 +92,7 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
                      className =? "chromium-browser"
         isEmacs = resource =? "emacs24" <||> resource =? "emacs"
         isThunar = resource =? "thunar"
+        isSlack = resource =? "crx_mhojggogmbbnolopodpcklldhkdoofcc"
 
 -- | Construct arguments for passing to dmenu.
 menuArgs :: String -> [String]
