@@ -88,10 +88,6 @@
   :config
   (setq linum-format 'linum-format-func))
 
-;; not too sure about this
-(use-package magit
-  :ensure t)
-
 (use-package fringe-helper
   :ensure t)
 
