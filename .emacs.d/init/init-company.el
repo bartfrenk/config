@@ -14,6 +14,7 @@
         company-idle-delay .1
         company-echo-delay 0
         company-begin-commands '(self-insert-command))
+  :diminish company-mode
   :ensure t)
 
 (global-company-mode)

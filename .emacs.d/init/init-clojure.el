@@ -14,6 +14,7 @@
         cider-use-overlays nil)
   (add-to-list 'evil-emacs-state-modes 'cider-stacktrace-mode)
   (add-to-list 'evil-emacs-state-modes 'cider-test-report-mode)
+  (add-to-list 'evil-emacs-state-modes 'cider-docview-mode)
   (add-to-list 'helm-boring-buffer-regexp-list "*nrepl-server.*")
   (add-to-list 'helm-boring-buffer-regexp-list "*nrepl-messages.*")
 

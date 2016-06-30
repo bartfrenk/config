@@ -1,8 +1,6 @@
 (require 'constants)
 (require 'use-package)
-
-(setq-default tab-width 4 indent-tabs-mode nil
-              fill-column 100)
+(setq-default tab-width 4 indent-tabs-mode nil fill-column 100)
 
 (setq inhibit-startup-message t
       backup-directory-alist '(("." . "~/.emacs.d/backup"))
@@ -19,7 +17,6 @@
 
 (set-frame-font "Source Code Pro 10" nil t)
 (add-to-list 'default-frame-alist '(font . "Source Code Pro 10"))
-
 (global-set-key (kbd "C-x s") nil)
 (global-set-key (kbd "C-x M-s") 'save-some-buffers)
 (global-set-key (kbd "C-x C-o") nil)
@@ -28,6 +25,11 @@
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
 (global-set-key (kbd "RET") 'newline-and-indent)
+(global-set-key (kbd "C-c C--") 'linum-mode)
+
+(use-package eldoc
+  :diminish eldoc-mode
+  :ensure t)
 
 (use-package undo-tree
   :diminish undo-tree-mode
@@ -88,14 +90,24 @@
   :config
   (setq linum-format 'linum-format-func))
 
+(use-package smart-mode-line
+  :ensure t
+  :commands sml/setup)
+
 (use-package fringe-helper
   :ensure t)
 
-(use-package git-gutter-fringe+
-  :commands global-git-gutter+-mode
+(use-package git-gutter-fringe
+  :commands global-git-gutter-mode
+  :diminish git-gutter-mode
   :ensure t)
 
-(global-git-gutter+-mode)
+(setq sml/no-confirm-load-theme t
+      sml/theme 'light)
+(sml/setup)
+
+(require 'git-gutter-fringe) ; to avoid regular git-gutter mode
+(global-git-gutter-mode)
 (global-hl-line-mode)
 
 (provide 'init-core)
