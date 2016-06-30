@@ -88,6 +88,18 @@
   :config
   (setq linum-format 'linum-format-func))
 
+;; not too sure about this
+(use-package magit
+  :ensure t)
+
+(use-package fringe-helper
+  :ensure t)
+
+(use-package git-gutter-fringe+
+  :commands global-git-gutter+-mode
+  :ensure t)
+
+(global-git-gutter+-mode)
 (global-hl-line-mode)
 
 (provide 'init-core)
