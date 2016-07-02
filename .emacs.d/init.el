@@ -3,6 +3,8 @@
 (require 'functions (expand-file-name "~/.emacs.d/init/functions.el"))
 
 (setq-default custom-file (expand-file-name "custom.el" init-dir))
+(load custom-file 'noerror)
+
 (add-to-list 'load-path init-dir)
 
 (package-initialize)
