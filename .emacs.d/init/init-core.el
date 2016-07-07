@@ -1,4 +1,3 @@
-(require 'constants)
 (require 'use-package)
 (setq-default tab-width 4 indent-tabs-mode nil fill-column 100)
 
@@ -6,9 +5,7 @@
       backup-directory-alist '(("." . "~/.emacs.d/backup"))
       initial-scratch-message nil
       scroll-preserve-screen-position nil
-      scroll-conservatively 101
-      scroll-margin 20)
-
+      scroll-conservatively 101 scroll-margin 20)
 (fset 'yes-or-no-p 'y-or-n-p)
 (column-number-mode t)
 (tool-bar-mode -1)
@@ -64,10 +61,10 @@
                 whitespace-global-modes '(not latex-mode org-mode)))
 
 (use-package yasnippet
+  :commands yas-global-mode
   :ensure t
   :diminish yas-minor-mode
   :init
-  (yas-global-mode 1)
   (global-set-key (kbd "C-c y") 'helm-yas-complete))
 
 (use-package linum
@@ -78,8 +75,7 @@
   (defvar linum-format-fmt "%d" "Cached line number format string.")
   (add-hook 'linum-before-numbering-hook
             (lambda ()
-              (setq-local linum-format-fmt
-                          (let
+              (setq-local linum-format-fmt (let
                               ((w (length (number-to-string
                                            (count-lines (point-min) (point-max))))))
                             (concat "%" (number-to-string (+ w 1)) "d")))))
@@ -91,8 +87,12 @@
   (setq linum-format 'linum-format-func))
 
 (use-package smart-mode-line
-  :ensure t
-  :commands sml/setup)
+   :ensure t
+   :commands sml/setup)
+
+(setq sml/no-confirm-load-theme t
+      sml/theme 'light)
+(sml/setup)
 
 (use-package fringe-helper
   :ensure t)
@@ -102,12 +102,18 @@
   :diminish git-gutter-mode
   :ensure t)
 
-(setq sml/no-confirm-load-theme t
-      sml/theme 'light)
-(sml/setup)
+(use-package phabricator
+  :ensure t)
+
+(use-package yaml-mode
+  :ensure t)
+
+(use-package markdown-mode
+  :ensure t)
 
 (require 'git-gutter-fringe) ; to avoid regular git-gutter mode
 (global-git-gutter-mode)
 (global-hl-line-mode)
+(yas-global-mode)
 
 (provide 'init-core)

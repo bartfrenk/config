@@ -2,6 +2,9 @@
 (require 'evil)
 
 (use-package cider
+  :bind (:map clojure-mode-map
+              ("M-]" . cider-find-var)
+              ("M-[" . cider-pop-back))
   :init
   (add-hook 'cider-mode-hook (lambda ()
                                (eldoc-mode 1)))

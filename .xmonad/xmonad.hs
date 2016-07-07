@@ -76,7 +76,7 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
              ("M-p", spawn $ dmenuRun ++ " " ++ unwords (menuArgs "Run")),
              ("M-g", gotoMenuArgs $ menuArgs "Go"),
              ("M-b", bringMenuArgs $ menuArgs "Bring"),
-             ("M-S-b", runOrRaise "chromium-browser" isChromium),
+             ("M-S-b", runOrRaise "firefox" isFirefox),
              ("M-S-m", runOrRaise "/home/bart/bin/emacs" isEmacs),
              ("M-r", recentCommandsMenu dmenu "/home/bart/.local/share/recently-used.xbel"),
              ("M-S-f", runOrRaise "thunar" isThunar),
@@ -88,11 +88,13 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
                          in spawnAndNotify cmd "touchpad enabled"
         dmenuRun = "/usr/bin/dmenu_run"
         dmenu = "/usr/bin/dmenu"
-        isChromium = isPrefixOf "chromium-browser" `fmap` resource <&&>
-                     className =? "chromium-browser"
+        -- isChromium = isPrefixOf "chromium-browser" `fmap` resource <&&>
+        --              className =? "chromium-browser"
         isEmacs = resource =? "emacs24" <||> resource =? "emacs"
         isThunar = resource =? "thunar"
-        isSlack = resource =? "crx_mhojggogmbbnolopodpcklldhkdoofcc"
+        isSlack = className =? "Slack"
+--        isSlack = resource =? "crx_mhojggogmbbnolopodpcklldhkdoofcc"
+        isFirefox = className =? "Firefox"
 
 -- | Construct arguments for passing to dmenu.
 menuArgs :: String -> [String]
