@@ -1,12 +1,10 @@
 (require 'use-package)
-(setq-default tab-width 4 indent-tabs-mode nil fill-column 100)
 
+(setq-default tab-width 4 indent-tabs-mode nil fill-column 100)
 (setq inhibit-startup-message t
       backup-directory-alist '(("." . "~/.emacs.d/backup"))
-      initial-scratch-message nil
-      scroll-preserve-screen-position nil
-      scroll-conservatively 101 scroll-margin 20)
-(fset 'yes-or-no-p 'y-or-n-p)
+      initial-scratch-message nil scroll-preserve-screen-position nil
+      scroll-conservatively 101 scroll-margin 20) (fset 'yes-or-no-p 'y-or-n-p)
 (column-number-mode t)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -39,18 +37,26 @@
 (use-package rainbow-delimiters
   :ensure t
   :init
-  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+  (add-hook 'prog-mode-hook (lambda ()
+                              (rainbow-delimiters-mode)
+                              (rainbow-delimiters-saturate 30)))
   :config
+  (use-package color :ensure t)
 
-  (defface outer-parenthesis-face
-    '((t (:weight bold)))
-    "Font face of outermost parenthesis."
-    :group 'emacs)
+  (defun rainbow-delimiters-saturate (percent)
+    "Saturate rainbow delimiters by specified percentage."
+    (interactive "nPercentage: ")
+    (dolist (index (number-sequence 1 rainbow-delimiters-max-face-count))
+      (let* ((face (intern (format "rainbow-delimiters-depth-%d-face" index)))
+             (old-color (face-foreground face)))
+        (unless (null old-color)
+          (let ((new-color (color-saturate-name old-color percent)))
+            (set-face-foreground face new-color))))))
 
   (setq rainbow-delimiters-outermost-only-face-count 1)
   (set-face-attribute 'rainbow-delimiters-depth-1-face nil
                       :foreground 'unspecified
-                      :inherit 'outer-parenthesis-face))
+                      :weight 'bold))
 
 (use-package whitespace
   :ensure t
