@@ -1,5 +1,5 @@
 {-# OPTIONS_GHC -fno-warn-missing-signatures #-}
-module Solarized where
+module Colors where
 
 base03 = "#002b36"
 base02 = "#073642"
