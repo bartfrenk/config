@@ -22,7 +22,6 @@ import XMonad.Util.Dmenu (menuMapArgs)
 
 import Data.Maybe
 import Data.Foldable (forM_)
-import Data.List (isPrefixOf)
 import XMonad.Util.WindowProperties ()
 import qualified DBus as D
 import qualified DBus.Client as D
@@ -30,6 +29,7 @@ import qualified Codec.Binary.UTF8.String as UTF8
 import Data.Monoid (Endo)
 import Colors
 import RecentCommands
+import qualified Local
 
 tabTheme :: Theme
 tabTheme = def {
@@ -76,7 +76,6 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
              ("M-p", spawn $ dmenuRun ++ " " ++ unwords (menuArgs "Run")),
              ("M-g", gotoMenuArgs $ menuArgs "Go"),
              ("M-b", bringMenuArgs $ menuArgs "Bring"),
-             ("M-S-b", runOrRaise "chromium-browser" isChromium),
              ("M-S-m", runOrRaise "/home/bart/bin/emacs" isEmacs),
              ("M-r", recentCommandsMenu dmenu "/home/bart/.local/share/recently-used.xbel"),
              ("M-S-f", runOrRaise "thunar" isThunar),
@@ -88,8 +87,6 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
                          in spawnAndNotify cmd "touchpad enabled"
         dmenuRun = "/usr/bin/dmenu_run"
         dmenu = "/usr/bin/dmenu"
-        isChromium = isPrefixOf "chromium-browser" `fmap` resource <&&>
-                     className =? "chromium-browser"
         isEmacs = resource =? "emacs24" <||> resource =? "emacs"
         isThunar = resource =? "thunar"
         isSlack = className =? "Slack"
@@ -165,7 +162,7 @@ main = do
         layoutHook = layoutRingPerWorkspace,
         startupHook = setWMName "LG3D",
         logHook = dynamicLogWithPP (prettyPrinter dbus)
-    } `additionalKeysP` extraKeys
+    } `additionalKeysP` (extraKeys ++ Local.extraKeys)
 
 prettyPrinter :: D.Client -> PP
 prettyPrinter dbus = def {
