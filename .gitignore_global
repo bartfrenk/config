@@ -1,6 +1,11 @@
-# ignore binaries
+# binaries
 *.pyc
 *.o
 *.class
 *.jar
+
+# stack
 .stack-work/
+
+# emacs
+\#*#
