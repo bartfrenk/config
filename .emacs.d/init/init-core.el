@@ -24,18 +24,9 @@
 (global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "C-c C--") 'linum-mode)
 
-(use-package eldoc
-  :diminish eldoc-mode
-  :ensure t)
-
-(use-package undo-tree
-  :diminish undo-tree-mode
-  :ensure t)
-
 (use-package hl-line
   :commands global-hl-line-mode
-  :init
-  (setq global-hl-line-sticky-flag nil))
+  :init (setq global-hl-line-sticky-flag nil))
 
 (use-package evil
   :ensure t
@@ -45,11 +36,21 @@
   (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
   (setq-default evil-move-cursor-back nil))
 
-(use-package smooth-scrolling :ensure t)
-
 (use-package rainbow-delimiters
   :ensure t
-  :init (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+  :init
+  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+  :config
+
+  (defface outer-parenthesis-face
+    '((t (:weight bold)))
+    "Font face of outermost parenthesis."
+    :group 'emacs)
+
+  (setq rainbow-delimiters-outermost-only-face-count 1)
+  (set-face-attribute 'rainbow-delimiters-depth-1-face nil
+                      :foreground 'unspecified
+                      :inherit 'outer-parenthesis-face))
 
 (use-package whitespace
   :ensure t
@@ -65,6 +66,7 @@
   :ensure t
   :diminish yas-minor-mode
   :init
+  (use-package helm-c-yasnippet :ensure t)
   (global-set-key (kbd "C-c y") 'helm-yas-complete))
 
 (use-package linum
@@ -88,28 +90,27 @@
 
 (use-package smart-mode-line
    :ensure t
+   :functions (sml/faces-from-theme
+               sml/theme-p)
+   :init
+   (setq sml/no-confirm-load-theme t
+         sml/theme 'light)
    :commands sml/setup)
 
-(setq sml/no-confirm-load-theme t
-      sml/theme 'light)
 (sml/setup)
-
-(use-package fringe-helper
-  :ensure t)
 
 (use-package git-gutter-fringe
   :commands global-git-gutter-mode
   :diminish git-gutter-mode
   :ensure t)
 
-(use-package phabricator
-  :ensure t)
-
-(use-package yaml-mode
-  :ensure t)
-
-(use-package markdown-mode
-  :ensure t)
+(use-package smooth-scrolling :ensure t)
+(use-package fringe-helper :ensure t)
+(use-package phabricator :ensure t)
+(use-package yaml-mode :ensure t)
+(use-package markdown-mode :ensure t)
+(use-package eldoc :diminish eldoc-mode :ensure t)
+(use-package undo-tree :diminish undo-tree-mode :ensure t)
 
 (require 'git-gutter-fringe) ; to avoid regular git-gutter mode
 (global-git-gutter-mode)
