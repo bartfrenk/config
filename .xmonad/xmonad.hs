@@ -90,7 +90,6 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
         isEmacs = resource =? "emacs24" <||> resource =? "emacs"
         isThunar = resource =? "thunar"
         isSlack = className =? "Slack"
---        isSlack = resource =? "crx_mhojggogmbbnolopodpcklldhkdoofcc"
         isFirefox = className =? "Firefox"
 
 -- | Construct arguments for passing to dmenu.
