@@ -48,9 +48,9 @@
 ;;  :ensure t)
 
 ;; TODO: does not work too well yet
-;; (use-package flycheck-clojure
-;;   :commands flycheck-clojure-setup
-;;   :ensure t)
+(use-package flycheck-clojure
+  :commands flycheck-clojure-setup
+  :ensure t)
 
 ;; (eval-after-load 'flycheck '(flycheck-clojure-setup))
 (provide 'init-clojure)
