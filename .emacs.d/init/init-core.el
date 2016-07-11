@@ -9,6 +9,7 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
+(show-paren-mode 1)
 
 (set-frame-font "Source Code Pro 10" nil t)
 (add-to-list 'default-frame-alist '(font . "Source Code Pro 10"))
