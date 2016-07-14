@@ -7,7 +7,8 @@
   (add-hook 'clojure-mode-hook (lambda ()
                                  (paredit-mode 1)
                                  (clj-refactor-mode 1)
-                                 (yas-minor-mode 1)))
+                                 (yas-minor-mode 1)
+                                 (flycheck-clojure-setup)))
   :functions put-clojure-indent
   :config
   (setq clojure-indent-style :always-align)
@@ -51,6 +52,7 @@
 (use-package flycheck-clojure
   :commands flycheck-clojure-setup
   :ensure t)
+
 
 ;; (eval-after-load 'flycheck '(flycheck-clojure-setup))
 (provide 'init-clojure)
