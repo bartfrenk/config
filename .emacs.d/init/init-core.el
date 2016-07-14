@@ -39,8 +39,7 @@
   :ensure t
   :init
   (add-hook 'prog-mode-hook (lambda ()
-                              (rainbow-delimiters-mode)
-                              (rainbow-delimiters-saturate 30)))
+                              (rainbow-delimiters-mode)))
   :config
   (use-package color :ensure t)
 
