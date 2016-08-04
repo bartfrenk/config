@@ -123,4 +123,6 @@
 (global-hl-line-mode)
 (yas-global-mode)
 
+(add-to-list 'auto-mode-alist '("\\.raml\\'" . yaml-mode))
+
 (provide 'init-core)

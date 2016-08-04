@@ -24,7 +24,7 @@
         haskell-process-suggest-remove-import-lines t
         haskell-process-auto-import-loaded-modules t
         haskell-process-suggest-hoogle-imports t
-        haskell-process-log nil
+        haskell-process-log t
         ; Quick fix for REPL's failing to obtain directory for non-cabal
         ; projects. Wil be fixed in a later release of haskell-mode. See
         ; issue-784.
