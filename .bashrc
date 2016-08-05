@@ -53,3 +53,6 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+# tab completion for stack
+eval "$(stack --bash-completion-script stack)"
