@@ -1,6 +1,6 @@
 (require 'use-package)
 
-(setq-default tab-width 4 indent-tabs-mode nil fill-column 100)
+(setq-default tab-width 4 indent-tabs-mode nil fill-column 80)
 (setq inhibit-startup-message t
       backup-directory-alist '(("." . "~/.emacs.d/backup"))
       initial-scratch-message nil scroll-preserve-screen-position nil
@@ -63,7 +63,7 @@
   :diminish global-whitespace-mode
   :init (global-whitespace-mode t)
   :config (setq whitespace-style '(face empty tabs lines-tail trailing)
-                whitespace-line-column fill-column
+                whitespace-line-column 100
                 ;; avoid highlighting large tables in org-mode
                 whitespace-global-modes '(not latex-mode org-mode)))
 
