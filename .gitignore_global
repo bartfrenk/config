@@ -3,6 +3,7 @@
 *.o
 *.class
 *.jar
+*.hi
 
 # stack
 .stack-work/
