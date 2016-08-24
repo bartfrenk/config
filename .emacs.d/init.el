@@ -18,6 +18,7 @@
                  flycheck
                  company
                  elisp
+                 javascript
                  org
                  python
                  clojure
