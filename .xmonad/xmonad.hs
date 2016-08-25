@@ -43,9 +43,15 @@ tabTheme = def {
     inactiveBorderColor = base02
 }
 
+-- Global since required for doFloat and runOrRaise
+isAuthy = title =? "Authy"
+
 managePlacement :: Query (Endo WindowSet)
 managePlacement = composeAll [title =? "Save As" --> doFloat,
-                              title =? "Whisker Menu" --> doFloat]
+                              title =? "Whisker Menu" --> doFloat,
+                              isAuthy --> doFloat]
+
+
 
 spawnAndNotify cmd message = do
   spawn cmd
@@ -79,7 +85,8 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
              ("M-S-m", runOrRaise "/home/bart/bin/emacs" isEmacs),
              ("M-r", recentCommandsMenu dmenu "/home/bart/.local/share/recently-used.xbel"),
              ("M-S-f", runOrRaise "thunar" isThunar),
-             ("M-S-s", runOrRaise "slack" isSlack)]
+             ("M-S-s", runOrRaise "slack" isSlack),
+             ("M-S-a", runOrRaise "authy" isAuthy)]
   where setMasterAudio cmd = spawn $ "amixer -D pulse set Master " ++ cmd
         disableTouchPad = let cmd = "xinput --disable \"AlpsPS/2 ALPS DualPoint TouchPad\""
                           in spawnAndNotify cmd "touchpad disabled"
@@ -166,8 +173,8 @@ prettyPrinter :: D.Client -> PP
 prettyPrinter dbus = def {
     ppOutput = dbusOutput dbus,
     ppTitle = pangoSanitize,
-    ppCurrent = pangoColor "green" . wrap "[" "]" . pangoSanitize,
-    ppVisible = pangoColor "yellow" . wrap "(" ")" . pangoSanitize,
+    ppCurrent = pangoColor "red" . wrap "**" "**" . pangoSanitize,
+    ppVisible = pangoColor "blue" . wrap "(" ")". pangoSanitize,
     ppHidden = pangoColor "gray",
     ppUrgent = pangoColor "red",
     ppLayout = const "",
