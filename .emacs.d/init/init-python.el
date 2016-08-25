@@ -4,7 +4,7 @@
   :init
   (add-hook 'python-mode-hook (lambda ()
                                 (jedi:setup)
-                                (eldoc-mode 1)
+                                (eldoc-mode nil)
                                 (auto-complete-mode -1)))
   :ensure t)
 
