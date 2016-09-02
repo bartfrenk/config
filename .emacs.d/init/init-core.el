@@ -62,7 +62,7 @@
   :ensure t
   :diminish global-whitespace-mode
   :init (global-whitespace-mode t)
-  :config (setq whitespace-style '(face empty tabs lines-tail trailing)
+  :config (setq whitespace-style '(face tab-mark lines-tail trailing)
                 whitespace-line-column 100
                 ;; avoid highlighting large tables in org-mode
                 whitespace-global-modes '(not latex-mode org-mode)))
@@ -118,11 +118,13 @@
 (use-package eldoc :diminish eldoc-mode :ensure t)
 (use-package undo-tree :diminish undo-tree-mode :ensure t)
 (use-package dockerfile-mode :ensure t)
+(use-package magit :ensure t)
 
 (require 'git-gutter-fringe) ; to avoid regular git-gutter mode
 (global-git-gutter-mode)
 (global-hl-line-mode)
 (yas-global-mode)
+(switch-theme 'sanityinc-solarized-dark)
 
 (add-to-list 'auto-mode-alist '("\\.raml\\'" . yaml-mode))
 
