@@ -173,7 +173,7 @@ prettyPrinter :: D.Client -> PP
 prettyPrinter dbus = def {
     ppOutput = dbusOutput dbus,
     ppTitle = pangoSanitize,
-    ppCurrent = pangoColor "red" . wrap "**" "**" . pangoSanitize,
+    ppCurrent = pangoColor "red" . wrap "[" "]" . pangoSanitize,
     ppVisible = pangoColor "blue" . wrap "(" ")". pangoSanitize,
     ppHidden = pangoColor "gray",
     ppUrgent = pangoColor "red",
