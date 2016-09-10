@@ -29,6 +29,10 @@
       (message name)
       (require (intern (concat prefix name))))))
 
+(message "local")
+;; do not fail if 'init-local is not provided
+(require 'init-local nil :no-error)
+
 ; GNU TLS gives a fatal error when connecting to marmalade
 ; Only an issue when compiled with GNU TLS support
 (defun gnutls-available-p ()
