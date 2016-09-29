@@ -14,7 +14,8 @@
         ("C-`" . haskell-interactive-bring)
         ("C-c c" . haskell-process-cabal)
         ("C-c h" . helm-hoogle)
-        ("C-c C-d" . hoogle-info))
+        ("C-c C-d" . hoogle-info)
+        ("M-]" . haskell-mode-jump-to-def-or-tag))
   :config
   (use-package haskell-doc)
   (setq haskell-process-type 'ghci ; use dir-locals for stack projects
