@@ -25,7 +25,13 @@
 (global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "C-c C--") 'linum-mode)
 
+(use-package ace-window
+  :ensure t
+  :config
+  (global-set-key (kbd "M-m") 'ace-window))
+
 (use-package hl-line
+  :ensure t
   :commands global-hl-line-mode
   :init (setq global-hl-line-sticky-flag nil))
 
