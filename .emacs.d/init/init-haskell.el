@@ -7,6 +7,11 @@
   (setq current-prefix-arg t)
   (call-interactively 'haskell-hoogle))
 
+(defun haskell-reformat ()
+  (interactive)
+  (haskell-sort-imports)
+  (hindent-reformat-buffer))
+
 (use-package haskell-mode
   :bind
   (:map haskell-mode-map
@@ -15,6 +20,7 @@
         ("C-c c" . haskell-process-cabal)
         ("C-c h" . helm-hoogle)
         ("C-c C-d" . hoogle-info)
+        ("C-c C-a" . haskell-reformat)
         ("M-]" . haskell-mode-jump-to-def-or-tag))
   :config
   (use-package haskell-doc)
@@ -49,6 +55,9 @@
 (use-package company-ghci
   :config
   (add-to-list 'company-backends 'company-ghci)
+  :ensure t)
+
+(use-package hindent
   :ensure t)
 
 (provide 'init-haskell)
