@@ -12,6 +12,9 @@
   (haskell-sort-imports)
   (hindent-reformat-buffer))
 
+(use-package haskell-snippets
+  :ensure t)
+
 (use-package haskell-mode
   :bind
   (:map haskell-mode-map
