@@ -1,8 +1,14 @@
 [TYPECHECK]
 ignored-modules=numpy, tensorflow
+ignored-classes=scoped_session
 
 [MESSAGES CONTROL]
-disable=missing-docstring, duplicate-code,invalid-name,too-few-public-methods
+disable=missing-docstring,
+        duplicate-code,
+        invalid-name,
+        too-few-public-methods,
+        redefined-builtin,
+        invalid-name
 
 [SIMILARITIES]
 ignore-imports=yes

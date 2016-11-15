@@ -12,9 +12,7 @@
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
 (show-paren-mode 1)
-
-(set-frame-font "Source Code Pro 10" nil t)
-(add-to-list 'default-frame-alist '(font . "Source Code Pro 10"))
+(set-frame-font "Source Code Pro 10" nil t) (add-to-list 'default-frame-alist '(font . "Source Code Pro 10"))
 (global-set-key (kbd "C-x s") nil)
 (global-set-key (kbd "C-x M-s") 'save-some-buffers)
 (global-set-key (kbd "C-x C-o") nil)
@@ -118,6 +116,16 @@
   :diminish git-gutter-mode
   :ensure t)
 
+(use-package which-function-mode
+  :commands which-function-mode
+  :diminish which-function-mode
+  :config
+  (which-function-mode)
+  (setq-default header-line-format
+                '((which-func-mode (""which-func-format " "))))
+  (setq mode-line-misc-info
+        (assq-delete-all 'which-func-mode mode-line-misc-info)))
+
 (use-package smooth-scrolling :ensure t)
 (use-package fringe-helper :ensure t)
 (use-package phabricator :ensure t)
@@ -132,6 +140,7 @@
 (global-git-gutter-mode)
 (global-hl-line-mode)
 (yas-global-mode)
+(switch-theme 'sanityinc-solarized-dark)
 
 (add-to-list 'auto-mode-alist '("\\.raml\\'" . yaml-mode))
 

@@ -7,6 +7,7 @@
   (setq-default flycheck-emacs-lisp-load-path 'inherit
                 flycheck-check-syntax-automatically '(save mode-enabled)
                 flycheck-standard-error-navigation nil
+                flycheck-checker-error-threshold nil ;; no limit to errors
                 flycheck-disabled-checkers '(emacs-lisp-checkdoc
                                              python-flake8)))
 
