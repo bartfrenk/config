@@ -21,7 +21,8 @@
 (use-package cider
   :bind (:map clojure-mode-map
               ("M-]" . cider-find-var)
-              ("M-[" . cider-pop-back))
+              ("M-[" . cider-pop-back)
+              ("C-c C-a" . cider-format-buffer))
   :init
   (add-hook 'cider-mode-hook (lambda ()
                                (eldoc-mode 1)))
