@@ -106,7 +106,7 @@
                sml/theme-p)
    :init
    (setq sml/no-confirm-load-theme t
-         sml/theme 'light)
+         sml/theme 'dark)
    :commands sml/setup)
 
 (sml/setup)
