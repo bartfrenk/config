@@ -37,7 +37,7 @@
         org-edit-src-content-indentation 0
         org-startup-folded 'content
         org-todo-keywords '((sequence
-                             "TODO(t)" "WAIT(w)"
+                             "TODO(t)" "WAIT(w)" "IN-PROGRESS(p)"
                              "|" "DONE(d)" "CANCELED(c)")))
   (add-hook 'org-babel-after-execute-hook
             'org-display-inline-images 'append)

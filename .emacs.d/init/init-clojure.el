@@ -21,7 +21,8 @@
 (use-package cider
   :bind (:map clojure-mode-map
               ("M-]" . cider-find-var)
-              ("M-[" . cider-pop-back))
+              ("M-[" . cider-pop-back)
+              ("C-c C-a" . cider-format-buffer))
   :init
   (add-hook 'cider-mode-hook (lambda ()
                                (eldoc-mode 1)))
@@ -29,7 +30,7 @@
   (use-package helm-buffers)
   (setq cider-prompt-for-symbol nil
         nrepl-hide-special-buffers t
-        cider-use-overlays nil)
+        cider-use-overlays t)
   (add-to-list 'evil-emacs-state-modes 'cider-stacktrace-mode)
   (add-to-list 'evil-emacs-state-modes 'cider-test-report-mode)
   (add-to-list 'evil-emacs-state-modes 'cider-docview-mode)
