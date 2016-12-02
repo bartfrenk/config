@@ -31,6 +31,9 @@
 !.jupyter/custom/custom.css
 !.jupyter/custom/custom.js
 
+!.tmuxinator/
+!.tmuxinator/*
+
 !.bashrc
 !.bash_aliases
 !.gitignore_global
