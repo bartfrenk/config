@@ -27,7 +27,8 @@ root: ~/dev/lemonpi
 # Runs after everything. Use it to attach to tmux with custom options etc.
 # post: tmux -CC attach -t lemonpi-products
 
-attach: false
+pre: xtitle "lemonpi-products"
+attach: true
 windows:
   - eventstore: >-
       docker start -a eventstore

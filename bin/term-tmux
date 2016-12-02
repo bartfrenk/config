@@ -1,0 +1,9 @@
+#! /bin/bash
+
+sessions=$(tmux list-session)
+
+if [ "$sessions" ]; then
+        xfce4-terminal -e 'tmux a'
+else
+        xfce4-terminal -e 'tmux new -s init'
+fi
