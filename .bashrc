@@ -4,14 +4,13 @@ case $- in
     *) return;;
 esac
 
-
-
 HISTCONTROL=ignoreboth
 HISTSIZE=10000
 HISTFILESIZE=20000
 shopt -s histappend
 # append to history after each command
 export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+EDITOR=vim
 
 PS0='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '
 shopt -s checkwinsize
