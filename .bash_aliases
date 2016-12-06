@@ -8,6 +8,7 @@ alias xcb='xclip -selection clipboard'
 alias sqlite3='rlwrap sqlite3'
 alias youtube-dl-mp3='youtube-dl -x --audio-format mp3 --prefer-ffmpeg'
 alias boot-new="boot -d seancorfield/boot-new new"
+alias takeover="tmux detach -a"
 
 if [ "$1" == true ]; then
     alias ls='ls --color=auto --group-directories-first --classify'
