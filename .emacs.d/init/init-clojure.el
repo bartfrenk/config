@@ -13,10 +13,9 @@
   :config
   (setq clojure-indent-style :always-align)
   (define-clojure-indent
-    (send-off 1) (cli 1) (go-loop 1) (fdef 1)
+    (send-off 1) (cli 1) (go-loop 1) (fdef 1) (context 1) (expect-call 1)
     (ANY 2) (GET 2) (POST 2) (PUT 2) (PATCH 2) (DELETE 2)
-    (OPTIONS 2)
-    (expect-call 1)))
+    (OPTIONS 2)))
 
 (use-package cider
   :bind (:map clojure-mode-map

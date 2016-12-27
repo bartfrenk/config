@@ -54,6 +54,9 @@
 !.config/
 !.config/pep8
 
+!.ssh/
+!.ssh/config
+
 !bin/
 !bin/*
 
