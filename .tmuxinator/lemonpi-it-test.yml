@@ -1,6 +1,6 @@
-# ~/.tmuxinator/lemonpi-products.yml
+# ~/.tmuxinator/lemonpi-it-test.yml
 
-name: lemonpi-products
+name: lemonpi-it-test
 root: ~/dev/lemonpi
 
 # Optional tmux socket
@@ -27,16 +27,10 @@ root: ~/dev/lemonpi
 # Runs after everything. Use it to attach to tmux with custom options etc.
 # post: tmux -CC attach -t lemonpi-products
 
-pre: xtitle "lemonpi-products"
-attach: true
+attach: false
 windows:
-  - eventstore: >-
-      docker start -a eventstore
-  - interaction-tracker-db: >-
-      docker start -a interaction-tracker-db-dev
-  - product-repository: |
-      cd $HOME/dev/lemonpi/product-repository
-      make run-debug
-  - event-publisher: |
-      cd $HOME/dev/lemonpi/event-publisher
-      ./build.boot
+  - eventstore-test-tunnel: >-
+      ssh -L 2113:eventstore.service.local:2113 bastion-test -N
+  - it-api-tunnel: >-
+      ssh -L 5000:10.20.100.187:5000 bastion-test -N
+startup_window: eventstore-test-tunnel
