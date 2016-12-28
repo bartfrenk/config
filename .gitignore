@@ -60,3 +60,7 @@
 !bin/
 !bin/*
 
+!.boot/
+!.boot/boot.properties
+!.boot/profile.boot
+

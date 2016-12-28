@@ -51,7 +51,7 @@
 
 (use-package flycheck-haskell
   :config
-  (setq flycheck-ghc-search-path '("/home/bart/.cabal/lib/x86_64-linux-ghc-7.10.3"))
+  (setq flycheck-ghc-search-path '("/home/bart/.cabal/lib/x86_64-linux-ghc-8.0.1.20161213"))
   :ensure t)
 (add-hook 'flycheck-mode-hook 'flycheck-haskell-configure)
 
