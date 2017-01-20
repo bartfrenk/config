@@ -140,7 +140,6 @@
 (global-git-gutter-mode)
 (global-hl-line-mode)
 (yas-global-mode)
-(switch-theme 'sanityinc-solarized-dark)
 
 (add-to-list 'auto-mode-alist '("\\.raml\\'" . yaml-mode))
 
