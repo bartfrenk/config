@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+if [ -f .boot-jvm-options ]; then
+  OPTS=`cat .boot-jvm-options`
+  echo "Running boot with $OPTS"
+fi
+
+BOOT_JVM_OPTIONS="$OPTS" /opt/bin/boot "$@"
