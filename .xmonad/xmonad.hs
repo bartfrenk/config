@@ -86,6 +86,7 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
              ("M-r", recentCommandsMenu dmenu "/home/bart/.local/share/recently-used.xbel"),
              ("M-S-f", runOrRaise "thunar" isThunar),
              ("M-S-s", runOrRaise "slack" isSlack),
+             ("M-S-t", spawn "~/bin/term-tmux"),
              ("M-S-a", runOrRaise "authy" isAuthy)]
   where setMasterAudio cmd = spawn $ "amixer -D pulse set Master " ++ cmd
         disableTouchPad = let cmd = "xinput --disable \"AlpsPS/2 ALPS DualPoint TouchPad\""
@@ -157,7 +158,7 @@ main = do
         borderWidth = 3,
         normalBorderColor = base02,
         focusedBorderColor = red,
-        terminal = "~/bin/term-tmux",
+        terminal = "/usr/bin/xfce4-terminal",
         focusFollowsMouse = False,
         workspaces = map show (take 9 [(1 :: Integer)..]),
         modMask = mod4Mask,

@@ -24,7 +24,8 @@
         ("C-c h" . helm-hoogle)
         ("C-c C-d" . hoogle-info)
         ("C-c C-a" . haskell-reformat)
-        ("M-]" . haskell-mode-jump-to-def-or-tag))
+        ("M-]" . haskell-mode-jump-to-def-or-tag)
+        ("M-[" . xref-pop-marker-stack))
   :config
   (use-package haskell-doc)
   (setq haskell-process-type 'ghci ; use dir-locals for stack projects
