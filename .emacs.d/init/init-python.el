@@ -2,6 +2,8 @@
 
 (use-package python
   :init
+  (setq python-shell-interpreter "ipython"
+        python-shell-interpreter-args "--profile=dev --simple-prompt -i")
   (add-hook 'python-mode-hook (lambda ()
                                 (jedi:setup)
                                 (auto-complete-mode -1)))
