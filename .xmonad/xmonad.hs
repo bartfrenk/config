@@ -118,37 +118,19 @@ defaultPanes = Tall 1 0.03 0.5
 tabbedWindow = tabbedBottom shrinkText tabTheme
 isTerminal = ClassName "Xfce4-terminal"
 
-devLayout = windowNavigation $ combineTwoP defaultPanes left right condition
-            where right = tabbedWindow
-                  left = Mirror zoomRow
-                  condition = Not isTerminal
-
 flexLayout = windowNavigation $ combineTwo defaultPanes left right
              where right = tabbedWindow
                    left = tabbedWindow
 
-gridLayout = windowNavigation $ combineTwo defaultPanes left right
-             where right = Mirror zoomRow
-                   left = Mirror zoomRow
-
-consLayout = windowNavigation $ combineTwoP split left right condition
-             where split = Mirror $ Tall 1 0.03 0.8
-                   left = zoomRow
-                   right = tabbedWindow
-                   condition = Not isTerminal
-
 defaultLayouts = avoidStruts defaultLayoutHook
     where defaultLayoutHook = noBorders (tabbedBottom shrinkText tabTheme) |||
                               noBorders Full |||
-                              devLayout |||
-                              flexLayout |||
-                              gridLayout |||
-                              consLayout
+                              flexLayout
 
 fullscreenLayouts =
     lessBorders OnlyFloat $ fullscreenFull Full
 
-layoutRingPerWorkspace = onWorkspace "8" fullscreenLayouts defaultLayouts
+layoutRingPerWorkspace = onWorkspace "9" fullscreenLayouts defaultLayouts
 
 main :: IO ()
 main = do
