@@ -17,6 +17,13 @@
 !.xmonad/lib/*.hs
 .xmonad/lib/Local.hs
 
+!.ipython/
+!.ipython/profile_default/
+!.ipython/profile_dev/
+!.ipython/profile_default/*
+!.ipython/profile_dev/*
+.ipython/*/*.sqlite
+
 !.vim/
 !.vim/plugin/
 !.vim/plugin/*/

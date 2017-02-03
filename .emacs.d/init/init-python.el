@@ -2,6 +2,8 @@
 
 (use-package python
   :init
+  (setq python-shell-interpreter "ipython"
+        python-shell-interpreter-args "--profile=dev --simple-prompt -i")
   (add-hook 'python-mode-hook (lambda ()
                                 (jedi:setup)
                                 (auto-complete-mode -1)))
@@ -27,5 +29,19 @@
   :bind
   (:map python-mode-map
         ("C-c C-a" . py-autopep8-buffer)))
+
+(defvar my-python-shell-dir-setup-code
+  "import os
+home = os.path.expanduser('~')
+while os.path.isfile('__init__.py') and (os.getcwd() != home):
+    os.chdir('..')
+del os")
+
+(defun my-python-shell-dir-setup ()
+  (let ((process (get-buffer-process (current-buffer))))
+    (python-shell-send-string my-python-shell-dir-setup-code process)
+    (message "Setup project path")))
+
+(add-hook 'inferior-python-mode-hook 'my-python-shell-dir-setup)
 
 (provide 'init-python)
