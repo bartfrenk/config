@@ -11,10 +11,20 @@
                                  (flycheck-clojure-setup)))
   :functions put-clojure-indent
   :config
-  (setq clojure-indent-style :always-align)
+  (setq clojure-indent-style :align-arguments)
   (define-clojure-indent
-    (send-off 1) (cli 1) (go-loop 1) (fdef 1) (context 1) (expect-call 1)
-    (ANY 2) (GET 2) (POST 2) (PUT 2) (PATCH 2) (DELETE 2)
+    (send-off 1)
+    (cli 1)
+    (go-loop 1)
+    (fdef 1)
+    (context 2)
+    (expect-call 1)
+    (ANY 2)
+    (GET 2)
+    (POST 2)
+    (PUT 2)
+    (PATCH 2)
+    (DELETE 2)
     (OPTIONS 2)))
 
 (use-package cider
