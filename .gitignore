@@ -54,10 +54,6 @@
 !.pylintrc
 !.profile
 
-!local
-!local/bin/
-!local/bin/emacs
-
 !.config/
 !.config/pep8
 
