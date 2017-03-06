@@ -7,7 +7,7 @@
       initial-scratch-message nil scroll-preserve-screen-position nil
       scroll-conservatively 101 scroll-margin 20) (fset 'yes-or-no-p 'y-or-n-p)
 (column-number-mode t)
-(blink-cursor-mode)
+(blink-cursor-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
