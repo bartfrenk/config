@@ -2,17 +2,18 @@
 
 (setq-default tab-width 4 indent-tabs-mode nil fill-column 80)
 (setq inhibit-startup-message t
-      blink-cursor-interval 0.8
+      ;blink-cursor-interval 0.8
       backup-directory-alist '(("." . "~/.emacs.d/backup"))
       initial-scratch-message nil scroll-preserve-screen-position nil
       scroll-conservatively 101 scroll-margin 20) (fset 'yes-or-no-p 'y-or-n-p)
 (column-number-mode t)
-(blink-cursor-mode -1)
+(blink-cursor-mode 0)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
 (show-paren-mode 1)
-(set-frame-font "Source Code Pro 10" nil t) (add-to-list 'default-frame-alist '(font . "Source Code Pro 10"))
+(set-frame-font "Source Code Pro 10" nil t) (add-to-list 'default-frame-alist
+                                                         '(font . "Source Code Pro 10"))
 (global-set-key (kbd "C-x s") nil)
 (global-set-key (kbd "C-x M-s") 'save-some-buffers)
 (global-set-key (kbd "C-x C-o") nil)
