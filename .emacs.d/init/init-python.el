@@ -6,7 +6,9 @@
         python-shell-interpreter-args "--profile=dev --simple-prompt -i")
   (add-hook 'python-mode-hook (lambda ()
                                 (jedi:setup)
-                                (auto-complete-mode -1)))
+                                (auto-complete-mode -1)
+                                (python-docstring-mode)
+                                (sphinx-doc-mode)))
   :ensure t)
 
 (use-package jedi
@@ -29,6 +31,15 @@
   :bind
   (:map python-mode-map
         ("C-c C-a" . py-autopep8-buffer)))
+
+(use-package sphinx-doc
+  :ensure t)
+
+(use-package python-docstringkkkj
+  :ensure t)
+
+(use-package helm-pydoc
+  :ensure t)
 
 (defvar my-python-shell-dir-setup-code
   "import os
