@@ -10,6 +10,7 @@
 (defun haskell-reformat ()
   (interactive)
   (haskell-sort-imports)
+  (haskell-mode-stylish-buffer)
   ;;(hindent-reformat-buffer)
   )
 
