@@ -22,7 +22,8 @@
                  org
                  python
                  clojure
-                 haskell)))
+                 haskell
+                 erlang)))
  (dolist (module modules)
    (let ((name (symbol-name module))
          (prefix "init-"))

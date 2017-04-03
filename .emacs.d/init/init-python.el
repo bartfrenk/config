@@ -35,7 +35,7 @@
 (use-package sphinx-doc
   :ensure t)
 
-(use-package python-docstringkkkj
+(use-package python-docstring
   :ensure t)
 
 (use-package helm-pydoc
