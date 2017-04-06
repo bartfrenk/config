@@ -3,6 +3,7 @@
 
 -- TOOD: define layout for Gimp
 import XMonad
+import XMonad.Actions.GroupNavigation
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Util.EZConfig (additionalKeysP)
@@ -87,6 +88,7 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
              ("M-S-f", runOrRaise "thunar" isThunar),
              ("M-S-s", runOrRaise "slack" isSlack),
              ("M-S-t", spawn "~/bin/term-tmux"),
+             ("M-S-n", nextMatch History isTerminal),
              ("M-S-a", runOrRaise "authy" isAuthy)]
   where setMasterAudio cmd = spawn $ "amixer -D pulse set Master " ++ cmd
         disableTouchPad = let cmd = "xinput --disable \"AlpsPS/2 ALPS DualPoint TouchPad\""
@@ -98,6 +100,7 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
         isEmacs = resource =? "emacs24" <||> resource =? "emacs"
         isThunar = resource =? "thunar"
         isSlack = className =? "Slack"
+        isTerminal = className =? "Xfce4-terminal"
 
 -- | Construct arguments for passing to dmenu.
 menuArgs :: String -> [String]
@@ -116,7 +119,7 @@ defaultPanes :: Tall a
 defaultPanes = Tall 1 0.03 0.5
 
 tabbedWindow = tabbedBottom shrinkText tabTheme
-isTerminal = ClassName "Xfce4-terminal"
+
 
 flexLayout = windowNavigation $ combineTwo defaultPanes left right
              where right = tabbedWindow
@@ -149,7 +152,7 @@ main = do
                      manageHook def,
         layoutHook = layoutRingPerWorkspace,
         startupHook = setWMName "LG3D",
-        logHook = dynamicLogWithPP (prettyPrinter dbus)
+        logHook = dynamicLogWithPP (prettyPrinter dbus) >> historyHook
     } `additionalKeysP` (extraKeys ++ Local.extraKeys)
 
 prettyPrinter :: D.Client -> PP
