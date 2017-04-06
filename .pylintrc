@@ -12,3 +12,6 @@ disable=missing-docstring,
 
 [SIMILARITIES]
 ignore-imports=yes
+
+[MASTER]
+ignore=versions
