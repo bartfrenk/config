@@ -7,6 +7,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Util.EZConfig (additionalKeysP)
 import XMonad.Actions.WindowBringer
+import XMonad.Actions.PhysicalScreens
 import XMonad.Layout.Tabbed
 import XMonad.Layout.ComboP
 import XMonad.Layout.PerWorkspace
@@ -83,7 +84,7 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
              ("M-g", gotoMenuArgs $ menuArgs "Go"),
              ("M-b", bringMenuArgs $ menuArgs "Bring"),
              ("M-S-m", runOrRaise "/home/bart/bin/emacs" isEmacs),
-             ("M-r", recentCommandsMenu dmenu "/home/bart/.local/share/recently-used.xbel"),
+             ("M-S-r", recentCommandsMenu dmenu "/home/bart/.local/share/recently-used.xbel"),
              ("M-S-f", runOrRaise "thunar" isThunar),
              ("M-S-s", runOrRaise "slack" isSlack),
              ("M-S-t", spawn "~/bin/term-tmux"),
