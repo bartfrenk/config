@@ -5,6 +5,8 @@
 (use-package js2-mode
   :bind (:map js2-mode-map
               ("M-]" . js2-jump-to-definition))
+  :config
+  (setq js2-basic-offset 2)
   :ensure t)
 
 (use-package js2-refactor
