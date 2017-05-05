@@ -2,14 +2,26 @@
 
 (use-package python
   :init
-  (setq python-shell-interpreter "ipython"
-        python-shell-interpreter-args "--profile=dev --simple-prompt -i")
   (add-hook 'python-mode-hook (lambda ()
                                 (jedi:setup)
                                 (auto-complete-mode -1)
                                 (python-docstring-mode)
                                 (sphinx-doc-mode)))
+  :config
+  (setq python-shell-interpreter "ipython"
+        python-shell-interpreter-args "--profile=dev --simple-prompt -i")
   :ensure t)
+
+;; work-around for Python interpreter not starting properly, fixed in Emacs 25.2.
+(with-eval-after-load 'python
+  (defun python-shell-completion-native-try ()
+    "Return non-nil if can trigger native completion."
+    (let ((python-shell-completion-native-enable t)
+          (python-shell-completion-native-output-timeout
+           python-shell-completion-native-try-output-timeout))
+      (python-shell-completion-native-get-completions
+       (get-buffer-process (current-buffer))
+       nil "_"))))
 
 (use-package jedi
   :bind
