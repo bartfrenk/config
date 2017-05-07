@@ -5,7 +5,9 @@
       ;blink-cursor-interval 0.8
       backup-directory-alist '(("." . "~/.emacs.d/backup"))
       initial-scratch-message nil scroll-preserve-screen-position nil
-      scroll-conservatively 101 scroll-margin 20) (fset 'yes-or-no-p 'y-or-n-p)
+      scroll-conservatively 101
+      scroll-margin 20)
+(fset 'yes-or-no-p 'y-or-n-p)
 (column-number-mode t)
 (blink-cursor-mode 0)
 (tool-bar-mode -1)
@@ -126,6 +128,7 @@
                 '((which-func-mode (""which-func-format " "))))
   (setq mode-line-misc-info
         (assq-delete-all 'which-func-mode mode-line-misc-info)))
+
 
 (use-package smooth-scrolling :ensure t)
 (use-package fringe-helper :ensure t)
