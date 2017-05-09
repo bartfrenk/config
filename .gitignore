@@ -53,6 +53,7 @@
 !.gitignore
 !.pylintrc
 !.profile
+!.gitconfig
 
 !.config/
 !.config/pep8
