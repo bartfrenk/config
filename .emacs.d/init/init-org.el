@@ -44,6 +44,8 @@
         org-startup-folded 'content
         org-completion-use-ido nil
         org-outline-path-complete-in-steps nil
+        org-default-notes-file "~/documents/org/organizer.org"
+        org-hide-leading-stars t
         org-todo-keywords '((sequence
                              "TODO(t)" "WAIT(w)" "STARTED(s)"
                              "|" "DONE(d)" "CANCELED(c)"))
