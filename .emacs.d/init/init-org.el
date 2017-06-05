@@ -1,13 +1,19 @@
 (require 'use-package)
 
+
 (use-package org
 
   :bind
   (("C-c l" . org-store-link)
-   ("C-c a" . org-agenda))
+   ("C-c a" . org-agenda)
+   ("C-c o" . find-organizer-file))
 
   :config
   (use-package flycheck)
+
+  (defun find-organizer-file ()
+    (interactive)
+    (find-file "~/documents/org/organizer.org"))
 
   (defun org-fill-paragraph--latex-environment (&rest args)
     "Use default fill-paragraph in latex environments."
@@ -36,9 +42,12 @@
         org-startup-with-inline-images t
         org-edit-src-content-indentation 0
         org-startup-folded 'content
+        org-completion-use-ido nil
+        org-outline-path-complete-in-steps nil
         org-todo-keywords '((sequence
                              "TODO(t)" "WAIT(w)" "STARTED(s)"
-                             "|" "DONE(d)" "CANCELED(c)")))
+                             "|" "DONE(d)" "CANCELED(c)"))
+        org-refile-targets '((org-agenda-files . (:maxlevel . 3))))
   (add-hook 'org-babel-after-execute-hook
             'org-display-inline-images 'append)
   (add-hook 'org-src-mode-hook
