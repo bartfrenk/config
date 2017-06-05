@@ -1,7 +1,10 @@
 (require 'use-package)
 
 (use-package helm
+  :diminish helm-mode
   :ensure t
+  :init
+  (helm-mode)
   :config
   (use-package helm-buffers)
   (use-package helm-mode)
@@ -11,6 +14,7 @@
   (use-package helm-files)
   (use-package helm-command)
   (use-package helm-locate)
+  (use-package helm-org)
   (setq helm-split-window-in-side-p t
         helm-bookmark-show-location t
         helm-buffers-fuzzy-matching t
@@ -30,8 +34,7 @@
    ("C-c i" . helm-imenu)
    :map helm-map
    ("<tab>" . helm-execute-persistent-action)
-   ("C-z" . helm-select-action))
-  )
+   ("C-z" . helm-select-action)))
 
 (use-package helm-gtags
   :ensure t)
