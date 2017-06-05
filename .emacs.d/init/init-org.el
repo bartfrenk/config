@@ -7,11 +7,14 @@
   (("C-c l" . org-store-link)
    ("C-c a" . org-agenda)
    ("C-c o" . find-organizer-file)
-   ("C-c t" . find-time-tracking-file))
+   ("C-c t" . find-time-tracking-file)
+   ("C-c c" . org-capture)
+   ("C-c j" . find-journal-file))
 
   :config
   (use-package flycheck)
 
+  ;; TODO: refactor
   (defun find-organizer-file ()
     (interactive)
     (find-file "~/documents/org/organizer.org"))
@@ -19,6 +22,10 @@
   (defun find-time-tracking-file ()
     (interactive)
     (find-file "~/documents/org/time-tracking.org"))
+
+  (defun find-journal-file ()
+    (interactive)
+    (find-file "~/documents/org/journal.org"))
 
   (defun org-fill-paragraph--latex-environment (&rest args)
     "Use default fill-paragraph in latex environments."
@@ -55,9 +62,24 @@
                              "TODO(t)" "WAIT(w)" "STARTED(s)"
                              "|" "DONE(d)" "CANCELED(c)"))
         org-refile-targets '((org-agenda-files . (:maxlevel . 3))))
+
   (add-hook 'org-babel-after-execute-hook
             'org-display-inline-images 'append)
   (add-hook 'org-src-mode-hook
             'disable-checkers-in-org-src-block))
+
+(use-package org-capture
+  :config
+  (setq org-capture-templates
+        '(("t" "Task" entry
+           (file+headline "~/documents/org/organizer.org" "Tasks")
+           "* TODO %^{Task}")
+          ("n" "Quick note" entry
+           (file+headline "~/documents/org/organizer.org" "Notes")
+           "* %^{Note}")
+          ("j" "Journal entry" entry
+           (file+headline "~/documents/org/journal.org" "Entries")
+           "* %^{Title}\nDate: %U\n\n%?"
+           :unnarrowed t))))
 
 (provide 'init-org)
