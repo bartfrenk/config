@@ -6,7 +6,8 @@
   :bind
   (("C-c l" . org-store-link)
    ("C-c a" . org-agenda)
-   ("C-c o" . find-organizer-file))
+   ("C-c o" . find-organizer-file)
+   ("C-c t" . find-time-tracking-file))
 
   :config
   (use-package flycheck)
@@ -14,6 +15,10 @@
   (defun find-organizer-file ()
     (interactive)
     (find-file "~/documents/org/organizer.org"))
+
+  (defun find-time-tracking-file ()
+    (interactive)
+    (find-file "~/documents/org/time-tracking.org"))
 
   (defun org-fill-paragraph--latex-environment (&rest args)
     "Use default fill-paragraph in latex environments."
