@@ -15,3 +15,6 @@ ignore-imports=yes
 
 [MASTER]
 ignore=versions
+
+[MISCELLANEOUS]
+notes=FIXME,XXX
