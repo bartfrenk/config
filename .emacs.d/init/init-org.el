@@ -62,8 +62,7 @@
                              "TODO(t)" "WAIT(w)" "STARTED(s)"
                              "|" "DONE(d)" "CANCELED(c)"))
         org-refile-targets '((org-agenda-files . (:maxlevel . 3))))
-
-  (add-hook 'org-babel-after-execute-hook
+(add-hook 'org-babel-after-execute-hook
             'org-display-inline-images 'append)
   (add-hook 'org-src-mode-hook
             'disable-checkers-in-org-src-block))
@@ -73,7 +72,7 @@
   (setq org-capture-templates
         '(("t" "Task" entry
            (file+headline "~/documents/org/organizer.org" "Tasks")
-           "* TODO %^{Task}")
+           "* TODO %^{Task}\nFile: %F\n%?")
           ("n" "Quick note" entry
            (file+headline "~/documents/org/organizer.org" "Notes")
            "* %^{Note}")
