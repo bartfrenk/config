@@ -8,7 +8,8 @@
                                  (paredit-mode 1)
                                  (clj-refactor-mode 1)
                                  (yas-minor-mode 1)
-                                 (flycheck-clojure-setup)))
+                                 ;;(flycheck-clojure-setup)
+                                 ))
   (add-hook 'cider-repl-mode-hook 'paredit-mode)
   :functions put-clojure-indent
   :config
