@@ -1,4 +1,6 @@
 (require 'use-package)
+(require 'functions)
+
 
 (setq-default tab-width 4 indent-tabs-mode nil fill-column 80)
 (setq inhibit-startup-message t
@@ -45,14 +47,14 @@
   (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
   (setq-default evil-move-cursor-back nil))
 
+(use-package color :ensure t)
 (use-package rainbow-delimiters
   :ensure t
+  :functions color-saturate-name
   :init
   (add-hook 'prog-mode-hook (lambda ()
                               (rainbow-delimiters-mode)))
   :config
-  (use-package color :ensure t)
-
   (defun rainbow-delimiters-saturate (percent)
     "Saturate rainbow delimiters by specified percentage."
     (interactive "nPercentage: ")

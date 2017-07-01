@@ -1,6 +1,8 @@
 (require 'use-package)
 
 
+;; to add file to agenda: org-agenda-file-to-front
+
 (use-package org
 
   :bind
