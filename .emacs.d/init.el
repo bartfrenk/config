@@ -24,7 +24,8 @@
                  clojure
                  haskell
                  erlang
-		 rust)))
+                 jinja2
+                 rust)))
  (dolist (module modules)
    (let ((name (symbol-name module))
          (prefix "init-"))
