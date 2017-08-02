@@ -25,7 +25,9 @@
                  haskell
                  erlang
                  jinja2
-                 rust)))
+                 rust
+                 idris
+                 go)))
  (dolist (module modules)
    (let ((name (symbol-name module))
          (prefix "init-"))
