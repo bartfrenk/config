@@ -22,4 +22,16 @@
           (rename-file filename new-name t)
           (set-visited-file-name new-name t t)))))))
 
+(defun append-to-list (list-var elements)
+  "Append ELEMENTS to the end of LIST-VAR.
+
+The return value is the new value of LIST-VAR."
+  (unless (consp elements)
+    (error "ELEMENTS must be a list"))
+  (let ((list (symbol-value list-var)))
+    (if list
+        (setcdr (last list) elements)
+      (set list-var elements)))
+  (symbol-value list-var))
+
 (provide 'functions)
