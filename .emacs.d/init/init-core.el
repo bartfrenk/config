@@ -123,10 +123,13 @@
 
 (sml/setup)
 
-;; (use-package git-gutter-fringe
-;;   :commands global-git-gutter-mode
-;;   :diminish git-gutter-mode
-;;   :ensure t)
+(use-package git-gutter
+  :ensure t
+  :diminish git-gutter-mode)
+
+(use-package autorevert
+  :ensure t
+  :diminish auto-revert-mode)
 
 (use-package which-function-mode
   :commands which-function-mode
@@ -149,7 +152,6 @@
 (use-package dockerfile-mode :ensure t)
 (use-package magit :ensure t)
 
-;;(require 'git-gutter-fringe) ; to avoid regular git-gutter mode
 (global-git-gutter-mode)
 (global-hl-line-mode)
 (yas-global-mode)
