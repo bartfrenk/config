@@ -17,8 +17,8 @@
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
 (show-paren-mode 1)
-(set-frame-font "Source Code Pro 10" nil t) (add-to-list 'default-frame-alist
-                                                         '(font . "Source Code Pro 10"))
+(set-frame-font "Source Code Pro 9" nil t) (add-to-list 'default-frame-alist
+                                                         '(font . "Source Code Pro 9"))
 (global-set-key (kbd "C-x s") nil)
 (global-set-key (kbd "C-x M-s") 'save-some-buffers)
 (global-set-key (kbd "C-x C-o") nil)
@@ -28,6 +28,12 @@
 (global-set-key (kbd "C--") 'text-scale-decrease)
 (global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "C-c C--") 'linum-mode)
+
+(use-package dired+
+  :commands diredp-toggle-find-file-reuse-dir
+  :ensure t)
+
+(diredp-toggle-find-file-reuse-dir 1)
 
 (use-package ace-window
   :ensure t
