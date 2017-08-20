@@ -20,7 +20,8 @@
                  elisp
                  javascript
                  org
-                 python
+                 python-pyenv
+;                 python
                  clojure
                  haskell
                  erlang
