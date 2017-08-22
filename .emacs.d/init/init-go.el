@@ -13,8 +13,11 @@
               (set (make-local-variable 'whitespace-style)
                    '(face lines-tail trailing))
               (if (not (string-match "go" compile-command))
-              (set (make-local-variable 'compile-command)
-                   "go build -v && go test -v && go vet")))))
+                  (set (make-local-variable 'compile-command)
+                       "go build -v && go test -v && go vet"))
+              (setq imenu-generic-expression
+                    '(("type" "^[\t]*type *\\([^ \t\n\r\f]*[\t]*\\(struct\\|interface\\)\\)" 1)
+                      ("func" "^func *\\(.*\\)" 1))))))
 
 (use-package gorepl-mode
   :ensure t)
