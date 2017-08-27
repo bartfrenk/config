@@ -2,17 +2,13 @@
 (require 'projectile)
 
 
-;; (use-package python
-;;   :config
-;;   (setq python-shell-interpreter "ipython3"
-;;         python-shell-interpreter-args "--simple-prompt --profile=dev -i")
-;;   :init
-;;   (add-hook 'python-mode-hook (lambda ()
-;;                                 (jedi:setup)
-;;                                 (auto-complete-mode -1)
-;;                                 (python-docstring-mode)
-;;                                 (sphinx-doc-mode)))
-;;   :ensure t)
+(use-package python
+  :init
+  (add-hook 'python-mode-hook (lambda ()
+                                (auto-complete-mode -1)
+                                (python-docstring-mode)
+                                (sphinx-doc-mode)))
+  :ensure t)
 
 (use-package pyenv-mode
   :ensure t)
