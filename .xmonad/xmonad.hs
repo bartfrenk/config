@@ -1,36 +1,36 @@
-{-# LANGUAGE NoMonomorphismRestriction, FlexibleContexts #-}
+{-# LANGUAGE FlexibleContexts          #-}
+{-# LANGUAGE NoMonomorphismRestriction #-}
 {-# OPTIONS_GHC -fno-warn-missing-signatures #-}
 
 -- TOOD: define layout for Gimp
-import XMonad
-import XMonad.Actions.GroupNavigation
-import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.ManageDocks
-import XMonad.Util.EZConfig (additionalKeysP)
-import XMonad.Actions.WindowBringer
-import XMonad.Layout.Tabbed
-import XMonad.Layout.ComboP
-import XMonad.Layout.PerWorkspace
-import XMonad.Layout.WindowNavigation
-import XMonad.Layout.NoBorders
-import XMonad.Hooks.SetWMName
-import XMonad.Layout.Combo
-import XMonad.Layout.ZoomRow
-import XMonad.Layout.Fullscreen
-import XMonad.Config.Xfce
-import XMonad.Actions.WindowGo (runOrRaise)
-import XMonad.Util.Dmenu (menuMapArgs)
-
-import Data.Maybe
-import Data.Foldable (forM_)
-import XMonad.Util.WindowProperties ()
-import qualified DBus as D
-import qualified DBus.Client as D
-import qualified Codec.Binary.UTF8.String as UTF8
-import Data.Monoid (Endo)
-import Colors
-import RecentCommands
+import qualified Codec.Binary.UTF8.String       as UTF8
+import           Colors
+import           Data.Foldable                  (forM_)
+import           Data.List                      (isPrefixOf)
+import           Data.Maybe
+import           Data.Monoid                    (Endo)
+import qualified DBus                           as D
+import qualified DBus.Client                    as D
 import qualified Local
+import           RecentCommands
+import           XMonad
+import           XMonad.Actions.GroupNavigation
+import           XMonad.Actions.WindowBringer
+import           XMonad.Actions.WindowGo        (runOrRaise)
+import           XMonad.Config.Xfce
+import           XMonad.Hooks.DynamicLog
+import           XMonad.Hooks.ManageDocks
+import           XMonad.Hooks.SetWMName
+import           XMonad.Layout.Combo
+import           XMonad.Layout.Fullscreen
+import           XMonad.Layout.NoBorders
+import           XMonad.Layout.PerWorkspace
+import           XMonad.Layout.Tabbed
+import           XMonad.Layout.WindowNavigation
+import           XMonad.Layout.ZoomRow
+import           XMonad.Util.Dmenu              (menuMapArgs)
+import           XMonad.Util.EZConfig           (additionalKeysP)
+import           XMonad.Util.WindowProperties   ()
 
 tabTheme :: Theme
 tabTheme = def {
@@ -89,7 +89,8 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
              ("M-S-s", runOrRaise "slack" isSlack),
              ("M-S-t", spawn "~/bin/term-tmux"),
              ("M-S-n", nextMatch History isTerminal),
-             ("M-S-a", runOrRaise "authy" isAuthy)]
+             ("M-S-a", runOrRaise "authy" isAuthy),
+             ("M-S-b", runOrRaise "chromium-browser" isChromium)]
   where setMasterAudio cmd = spawn $ "amixer -D pulse set Master " ++ cmd
         disableTouchPad = let cmd = "xinput --disable \"AlpsPS/2 ALPS DualPoint TouchPad\""
                           in spawnAndNotify cmd "touchpad disabled"
@@ -101,6 +102,8 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
         isThunar = resource =? "thunar"
         isSlack = className =? "Slack"
         isTerminal = className =? "Xfce4-terminal"
+        isChromium = isPrefixOf "chromium-browser" `fmap` resource <&&>
+                     className =? "Chromium-browser"
 
 -- | Construct arguments for passing to dmenu.
 menuArgs :: String -> [String]
@@ -194,8 +197,8 @@ pangoBold = wrap "<b>" "</b>"
 pangoSanitize :: String -> String
 pangoSanitize = foldr sanitize ""
     where
-        sanitize '>' xs = "&gt;" ++ xs
-        sanitize '<' xs = "&lt;" ++ xs
+        sanitize '>' xs  = "&gt;" ++ xs
+        sanitize '<' xs  = "&lt;" ++ xs
         sanitize '\"' xs = "&quot;" ++ xs
-        sanitize '&' xs = "&amp;" ++ xs
-        sanitize x xs = x:xs
+        sanitize '&' xs  = "&amp;" ++ xs
+        sanitize x xs    = x:xs
