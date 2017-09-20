@@ -15,7 +15,7 @@ import qualified Local
 import           RecentCommands
 import           XMonad
 import           XMonad.Actions.GroupNavigation
-import           XMonad.Actions.WindowBringer
+import           XMonad.Actions.WindowBringer   hiding (menuArgs)
 import           XMonad.Actions.WindowGo        (runOrRaise)
 import           XMonad.Config.Xfce
 import           XMonad.Hooks.DynamicLog
@@ -90,7 +90,7 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
              ("M-S-t", spawn "~/bin/term-tmux"),
              ("M-S-n", nextMatch History isTerminal),
              ("M-S-a", runOrRaise "authy" isAuthy),
-             ("M-S-b", runOrRaise "chromium-browser" isChromium)]
+             ("M-S-b", runOrRaise "/usr/bin/chromium-browser" isChromium)]
   where setMasterAudio cmd = spawn $ "amixer -D pulse set Master " ++ cmd
         disableTouchPad = let cmd = "xinput --disable \"AlpsPS/2 ALPS DualPoint TouchPad\""
                           in spawnAndNotify cmd "touchpad disabled"
@@ -142,7 +142,7 @@ main :: IO ()
 main = do
     dbus <- D.connectSession
     getWellKnownName dbus
-    xmonad $ xfceConfig {
+    xmonad $ docks $ xfceConfig {
         borderWidth = 3,
         normalBorderColor = base02,
         focusedBorderColor = red,
