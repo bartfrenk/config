@@ -2,7 +2,7 @@
 {-# LANGUAGE NoMonomorphismRestriction #-}
 {-# OPTIONS_GHC -fno-warn-missing-signatures #-}
 
--- TOOD: define layout for Gimp
+-- TODO: define layout for Gimp
 import qualified Codec.Binary.UTF8.String       as UTF8
 import           Colors
 import           Data.Foldable                  (forM_)
@@ -90,7 +90,7 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
              ("M-S-t", spawn "~/bin/term-tmux"),
              ("M-S-n", nextMatch History isTerminal),
              ("M-S-a", runOrRaise "authy" isAuthy),
-             ("M-S-b", runOrRaise "/usr/bin/chromium-browser" isChromium)]
+             ("M-S-b", nextMatch History isChromium)]
   where setMasterAudio cmd = spawn $ "amixer -D pulse set Master " ++ cmd
         disableTouchPad = let cmd = "xinput --disable \"AlpsPS/2 ALPS DualPoint TouchPad\""
                           in spawnAndNotify cmd "touchpad disabled"
