@@ -27,6 +27,7 @@
                  erlang
                  jinja2
                  rust
+                 rst
                  idris
                  go)))
  (dolist (module modules)
