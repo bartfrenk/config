@@ -1,7 +1,6 @@
 (require 'use-package)
 (require 'projectile)
 
-
 (use-package python
   :init
   (add-hook 'python-mode-hook (lambda ()
@@ -24,6 +23,11 @@
 
 ;; (use-package anaconda-mode
 ;;   :ensure t)
+
+(use-package virtualenvwrapper
+  :ensure t
+  :config
+  (setq venv-location "/home/bart/.pyenv/versions/2.7.4/envs"))
 
 (use-package jedi
   :bind
