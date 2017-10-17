@@ -4,6 +4,7 @@
   :ensure t)
 
 (require 'browse-url)
+(require 'company)
 
 (use-package js2-mode
   :ensure t
@@ -11,6 +12,7 @@
               ("M-]" . tern-find-definition)
               ("M-[" . tern-pop-find-definition))
   :config
+  (add-to-list 'company-backends 'company-tern)
   (setq js2-basic-offset 2
         browse-url-generic-program "/usr/bin/chromium-browser"
         browse-url-browser-function 'browse-url-generic)
