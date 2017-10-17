@@ -3,23 +3,24 @@
   :ensure t)
 
 (use-package js2-mode
+  :ensure t
   :bind (:map js2-mode-map
-              ("M-]" . js2-jump-to-definition))
+              ("M-]" . tern-find-definition)
+              ("M-[" . tern-pop-find-definition))
   :config
   (setq js2-basic-offset 2)
-  :ensure t)
+  (add-hook 'js2-mode-hook (lambda ()
+                             (tern-mode t)
+                             (prettier-js-mode))))
 
 (use-package js2-refactor
   :ensure t)
 
 (use-package company-tern
-;;  :bind (:map js2-mode-map
-              ;; does not work well yet
-              ;; ("M-]" . tern-find-definition)
-              ;; ("M-[" . tern-pop-find-definition))
   :commands tern-mode
-  :init
-  (add-hook 'js-mode-hook (lambda () (tern-mode t)))
+  :ensure t)
+
+(use-package prettier-js
   :ensure t)
 
 (skewer-setup)
