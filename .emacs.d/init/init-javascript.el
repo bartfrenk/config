@@ -1,6 +1,9 @@
 (use-package skewer-mode
   :commands skewer-setup
+  :diminish skewer-mode
   :ensure t)
+
+(require 'browse-url)
 
 (use-package js2-mode
   :ensure t
@@ -8,20 +11,31 @@
               ("M-]" . tern-find-definition)
               ("M-[" . tern-pop-find-definition))
   :config
-  (setq js2-basic-offset 2)
+  (setq js2-basic-offset 2
+        browse-url-generic-program "/usr/bin/chromium-browser"
+        browse-url-browser-function 'browse-url-generic)
+  (js2r-add-keybindings-with-prefix "C-c C-m")
   (add-hook 'js2-mode-hook (lambda ()
                              (tern-mode t)
-                             (prettier-js-mode))))
+                             (prettier-js-mode)
+                             (js2-refactor-mode))))
 
 (use-package js2-refactor
+  :ensure t
+  :diminish js2-refactor-mode)
+
+
+(use-package tern
+  :commands tern-mode
+  :diminish tern-mode
   :ensure t)
 
 (use-package company-tern
-  :commands tern-mode
   :ensure t)
 
 (use-package prettier-js
-  :ensure t)
+  :ensure t
+  :diminish prettier-js-mode)
 
 (skewer-setup)
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
