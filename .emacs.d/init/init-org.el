@@ -49,7 +49,8 @@
   :init
   (advice-add 'org-fill-paragraph :before-while
             #'org-fill-paragraph--latex-environment)
-
+  ;; allow emphasis to extend over two lines
+  (setcar (nthcdr 4 org-emphasis-regexp-components) 2)
   (setq org-log-done t
         org-src-fontify-natively t
         org-confirm-babel-evaluate nil
