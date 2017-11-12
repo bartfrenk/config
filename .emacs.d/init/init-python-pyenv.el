@@ -6,7 +6,9 @@
   (add-hook 'python-mode-hook (lambda ()
                                 (auto-complete-mode -1)
                                 (python-docstring-mode)
-                                (sphinx-doc-mode)))
+                                (sphinx-doc-mode)
+                                ;; fix this: see docs yapfify
+                                (yapf-mode)))
   :ensure t)
 
 (use-package pyenv-mode
@@ -28,6 +30,9 @@
   :ensure t
   :config
   (setq venv-location "/home/bart/.pyenv/versions/2.7.4/envs"))
+
+(use-package yapfify
+  :ensure t)
 
 (use-package jedi
   :bind
