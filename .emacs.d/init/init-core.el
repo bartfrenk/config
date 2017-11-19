@@ -2,7 +2,9 @@
 (require 'functions)
 
 
-(setq-default tab-width 4 indent-tabs-mode nil fill-column 80)
+(setq-default tab-width 4
+              indent-tabs-mode nil
+              fill-column 80)
 (setq inhibit-startup-message t
       ;blink-cursor-interval 0.8
       backup-directory-alist '(("." . "~/.emacs.d/backup"))
@@ -17,8 +19,8 @@
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
 (show-paren-mode 1)
-(set-frame-font "Source Code Pro 9" nil t) (add-to-list 'default-frame-alist
-                                                         '(font . "Source Code Pro 9"))
+(add-to-list 'default-frame-alist '(font . "Source Code Pro 9"))
+
 (global-set-key (kbd "C-x s") nil)
 (global-set-key (kbd "C-x M-s") 'save-some-buffers)
 (global-set-key (kbd "C-x C-o") nil)
@@ -32,8 +34,6 @@
 (use-package dired+
   :commands diredp-toggle-find-file-reuse-dir
   :ensure t)
-
-(diredp-toggle-find-file-reuse-dir 1)
 
 (use-package ace-window
   :ensure t
@@ -54,6 +54,7 @@
   (setq-default evil-move-cursor-back nil))
 
 (use-package color :ensure t)
+
 (use-package rainbow-delimiters
   :ensure t
   :functions color-saturate-name
@@ -121,8 +122,6 @@
          sml/theme 'dark)
    :commands sml/setup)
 
-(sml/setup)
-
 (use-package git-gutter
   :ensure t
   :diminish git-gutter-mode)
@@ -152,9 +151,11 @@
 (use-package dockerfile-mode :ensure t)
 (use-package magit :ensure t)
 
+(diredp-toggle-find-file-reuse-dir 1)
 (global-git-gutter-mode)
 (global-hl-line-mode)
 (yas-global-mode)
+(sml/setup)
 
 (add-to-list 'auto-mode-alist '("\\.raml\\'" . yaml-mode))
 
