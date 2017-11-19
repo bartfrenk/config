@@ -2,29 +2,29 @@
 (require 'projectile)
 
 (use-package python
+  :commands python-shell-send-string
   :init
   (add-hook 'python-mode-hook (lambda ()
                                 (auto-complete-mode -1)
                                 (python-docstring-mode)
                                 (sphinx-doc-mode)
-                                ;; fix this: see docs yapfify
                                 (yapf-mode)))
   :ensure t)
 
 (use-package pyenv-mode
-  :ensure t)
+  :ensure t
+  :commands pyenv-mode-versions
+  :config)
+
 
 (defun projectile-pyenv-mode-set ()
-  "Set pyenv version matching project name."
-  (let ((project (projectile-project-name)))
-    (if (member project (pyenv-mode-versions))
-        (pyenv-mode-set project)
-      (pyenv-mode-unset))))
+    "Set pyenv version matching project name."
+    (let ((project (projectile-project-name)))
+      (if (member project (pyenv-mode-versions))
+          (pyenv-mode-set project)
+        (pyenv-mode-unset))))
 
 (add-hook 'projectile-switch-project-hook 'projectile-pyenv-mode-set)
-
-;; (use-package anaconda-mode
-;;   :ensure t)
 
 (use-package virtualenvwrapper
   :ensure t
@@ -57,13 +57,15 @@
         ("C-c C-a" . py-autopep8-buffer)))
 
 (use-package sphinx-doc
+  :ensure t
+  :diminish sphinx-doc-mode)
+
+(use-package python-docstring
+  :ensure t
+  :diminish python-docstring-mode)
+
+(use-package helm-pydoc
   :ensure t)
-
-;; (use-package python-docstring
-;;   :ensure t)
-
-;; (use-package helm-pydoc
-;;   :ensure t)
 
 (defvar my-python-shell-dir-setup-code
   "import os
