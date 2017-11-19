@@ -10,7 +10,8 @@
         projectile-globally-ignored-file-suffixes '(".png" ".gif" ".pdf"))
   :bind
   ("<f5>" . projectile-compile-project)
-  ("<f6>" . next-error))
+  ("<f6>" . next-error)
+  :diminish projectile-mode)
 
 (use-package helm-projectile
   :ensure t
