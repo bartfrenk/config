@@ -17,14 +17,6 @@
   (use-package flycheck)
 
   ;; TODO: refactor
-  (defun find-organizer-file ()
-    (interactive)
-    (find-file "~/documents/org/organizer.org"))
-
-  (defun find-time-tracking-file ()
-    (interactive)
-    (find-file "~/documents/org/time-tracking.org"))
-
   (defun find-journal-file ()
     (interactive)
     (find-file "~/documents/org/journal.org"))
@@ -61,6 +53,7 @@
         org-outline-path-complete-in-steps nil
         org-default-notes-file "~/documents/org/organizer.org"
         org-hide-leading-stars t
+        org-journal-dir "~/documents/notes/journal"
         org-todo-keywords '((sequence
                              "TODO(t)" "WAIT(w)" "STARTED(s)"
                              "|" "DONE(d)" "CANCELED(c)"))
