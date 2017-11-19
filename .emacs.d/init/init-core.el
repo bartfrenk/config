@@ -126,7 +126,7 @@
                sml/theme-p)
    :init
    (setq sml/no-confirm-load-theme t
-         sml/theme 'dark)
+         sml/theme 'respectful)
    :commands sml/setup)
 
 (use-package git-gutter
