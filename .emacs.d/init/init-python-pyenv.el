@@ -32,7 +32,8 @@
   (setq venv-location "/home/bart/.pyenv/versions/2.7.4/envs"))
 
 (use-package yapfify
-  :ensure t)
+  :ensure t
+  :diminish yapf-mode)
 
 (use-package jedi
   :bind
