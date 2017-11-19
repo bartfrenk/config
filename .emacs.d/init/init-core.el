@@ -55,6 +55,12 @@
 
 (use-package color :ensure t)
 
+(defvar after-load-theme-hook nil
+  "Hook run after a color theme is loaded using `load-theme'.")
+(defadvice load-theme (after run-after-load-theme-hook activate)
+  "Run `after-load-theme-hook'."
+  (run-hooks 'after-load-theme-hook))
+
 (use-package rainbow-delimiters
   :ensure t
   :functions color-saturate-name
@@ -71,11 +77,12 @@
         (unless (null old-color)
           (let ((new-color (color-saturate-name old-color percent)))
             (set-face-foreground face new-color))))))
-
-  (setq rainbow-delimiters-outermost-only-face-count 1)
-  (set-face-attribute 'rainbow-delimiters-depth-1-face nil
-                      :foreground 'unspecified
-                      :weight 'bold))
+  (add-hook 'after-load-theme-hook
+            (lambda ()
+              (setq rainbow-delimiters-outermost-only-face-count 1)
+              (set-face-attribute 'rainbow-delimiters-depth-1-face nil
+                                  :foreground 'unspecified
+                                  :weight 'bold))))
 
 (use-package whitespace
   :ensure t
@@ -151,6 +158,15 @@
 (use-package dockerfile-mode :ensure t)
 (use-package magit :ensure t)
 
+;; Reload theme when a frame is created, since setting a theme when there is no
+;; frame messes up the colors of some themes (material included).
+(if (daemonp)
+    (add-hook 'after-make-frame-functions
+              (lambda (frame)
+                (select-frame frame)
+                (load-theme 'material t)))
+  (load-theme 'material t))
+
 (diredp-toggle-find-file-reuse-dir 1)
 (global-git-gutter-mode)
 (global-hl-line-mode)
@@ -158,5 +174,6 @@
 (sml/setup)
 
 (add-to-list 'auto-mode-alist '("\\.raml\\'" . yaml-mode))
+
 
 (provide 'init-core)
