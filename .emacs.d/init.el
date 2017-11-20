@@ -29,6 +29,7 @@
                  rust
                  rst
                  idris
+                 plantuml
                  go)))
  (dolist (module modules)
    (let ((name (symbol-name module))

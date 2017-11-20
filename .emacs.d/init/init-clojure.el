@@ -1,6 +1,13 @@
 (require 'use-package)
 (require 'evil)
 
+(defun clojure-reformat ()
+  (interactive)
+  (cider-format-buffer)
+  (cljr-clean-ns))
+
+
+
 (use-package clojure-mode
   :commands clojure-mode
   :init
@@ -33,7 +40,7 @@
   :bind (:map clojure-mode-map
               ("M-]" . cider-find-var)
               ("M-[" . cider-pop-back)
-              ("C-c C-a" . cider-format-buffer))
+              ("C-c C-a" . clojure-reformat))
   :init
   (add-hook 'cider-mode-hook (lambda ()
                                (eldoc-mode 1)))

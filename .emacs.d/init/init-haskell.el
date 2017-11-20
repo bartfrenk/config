@@ -10,9 +10,8 @@
 (defun haskell-reformat ()
   (interactive)
   (haskell-sort-imports)
-  (haskell-mode-stylish-buffer)
-  ;;(hindent-reformat-buffer)
-  )
+  (hindent-reformat-buffer)
+  (haskell-mode-stylish-buffer))
 
 (use-package haskell-snippets
   :ensure t)

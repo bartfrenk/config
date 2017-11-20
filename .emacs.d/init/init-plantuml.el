@@ -9,3 +9,5 @@
   (setq plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
   (add-to-list 'evil-emacs-state-modes 'image-mode)
   :ensure t)
+
+(provide 'init-plantuml)

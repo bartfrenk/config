@@ -2,7 +2,9 @@
 (require 'functions)
 
 
-(setq-default tab-width 4 indent-tabs-mode nil fill-column 80)
+(setq-default tab-width 4
+              indent-tabs-mode nil
+              fill-column 80)
 (setq inhibit-startup-message t
       ;blink-cursor-interval 0.8
       backup-directory-alist '(("." . "~/.emacs.d/backup"))
@@ -17,8 +19,8 @@
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
 (show-paren-mode 1)
-(set-frame-font "Source Code Pro 9" nil t) (add-to-list 'default-frame-alist
-                                                         '(font . "Source Code Pro 9"))
+(add-to-list 'default-frame-alist '(font . "Source Code Pro 9"))
+
 (global-set-key (kbd "C-x s") nil)
 (global-set-key (kbd "C-x M-s") 'save-some-buffers)
 (global-set-key (kbd "C-x C-o") nil)
@@ -32,8 +34,6 @@
 (use-package dired+
   :commands diredp-toggle-find-file-reuse-dir
   :ensure t)
-
-(diredp-toggle-find-file-reuse-dir 1)
 
 (use-package ace-window
   :ensure t
@@ -54,6 +54,13 @@
   (setq-default evil-move-cursor-back nil))
 
 (use-package color :ensure t)
+
+(defvar after-load-theme-hook nil
+  "Hook run after a color theme is loaded using `load-theme'.")
+(defadvice load-theme (after run-after-load-theme-hook activate)
+  "Run `after-load-theme-hook'."
+  (run-hooks 'after-load-theme-hook))
+
 (use-package rainbow-delimiters
   :ensure t
   :functions color-saturate-name
@@ -70,11 +77,12 @@
         (unless (null old-color)
           (let ((new-color (color-saturate-name old-color percent)))
             (set-face-foreground face new-color))))))
-
-  (setq rainbow-delimiters-outermost-only-face-count 1)
-  (set-face-attribute 'rainbow-delimiters-depth-1-face nil
-                      :foreground 'unspecified
-                      :weight 'bold))
+  (add-hook 'after-load-theme-hook
+            (lambda ()
+              (setq rainbow-delimiters-outermost-only-face-count 1)
+              (set-face-attribute 'rainbow-delimiters-depth-1-face nil
+                                  :foreground 'unspecified
+                                  :weight 'bold))))
 
 (use-package whitespace
   :ensure t
@@ -118,10 +126,8 @@
                sml/theme-p)
    :init
    (setq sml/no-confirm-load-theme t
-         sml/theme 'dark)
+         sml/theme 'respectful)
    :commands sml/setup)
-
-(sml/setup)
 
 (use-package git-gutter
   :ensure t
@@ -152,10 +158,22 @@
 (use-package dockerfile-mode :ensure t)
 (use-package magit :ensure t)
 
+;; Reload theme when a frame is created, since setting a theme when there is no
+;; frame messes up the colors of some themes (material included).
+(if (daemonp)
+    (add-hook 'after-make-frame-functions
+              (lambda (frame)
+                (select-frame frame)
+                (load-theme 'material t)))
+  (load-theme 'material t))
+
+(diredp-toggle-find-file-reuse-dir 1)
 (global-git-gutter-mode)
 (global-hl-line-mode)
 (yas-global-mode)
+(sml/setup)
 
 (add-to-list 'auto-mode-alist '("\\.raml\\'" . yaml-mode))
+
 
 (provide 'init-core)

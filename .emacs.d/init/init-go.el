@@ -4,12 +4,16 @@
 (use-package go-mode
   :bind (:map go-mode-map
               ("M-]" . godef-jump)
-              ("M-[" . pop-tag-mark))
+              ("M-[" . pop-tag-mark)
+              ("C-c C-r" . go-remove-unused-imports)
+              ("C-c C-g" . go-goto-imports)
+              ("C-c C-z" . go-scratch))
   :ensure t
   :config
   (add-hook 'before-save-hook 'gofmt-before-save)
   (add-hook 'go-mode-hook
             (lambda ()
+              (go-eldoc-setup)
               (set (make-local-variable 'whitespace-style)
                    '(face lines-tail trailing))
               (if (not (string-match "go" compile-command))
@@ -19,7 +23,7 @@
                     '(("type" "^[\t]*type *\\([^ \t\n\r\f]*[\t]*\\(struct\\|interface\\)\\)" 1)
                       ("func" "^func *\\(.*\\)" 1))))))
 
-(use-package gorepl-mode
+(use-package go-scratch
   :ensure t)
 
 (use-package go-projectile

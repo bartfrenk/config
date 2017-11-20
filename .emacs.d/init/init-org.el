@@ -17,14 +17,6 @@
   (use-package flycheck)
 
   ;; TODO: refactor
-  (defun find-organizer-file ()
-    (interactive)
-    (find-file "~/documents/org/organizer.org"))
-
-  (defun find-time-tracking-file ()
-    (interactive)
-    (find-file "~/documents/org/time-tracking.org"))
-
   (defun find-journal-file ()
     (interactive)
     (find-file "~/documents/org/journal.org"))
@@ -49,7 +41,8 @@
   :init
   (advice-add 'org-fill-paragraph :before-while
             #'org-fill-paragraph--latex-environment)
-
+  ;; allow emphasis to extend over two lines
+  (setcar (nthcdr 4 org-emphasis-regexp-components) 2)
   (setq org-log-done t
         org-src-fontify-natively t
         org-confirm-babel-evaluate nil
@@ -60,6 +53,7 @@
         org-outline-path-complete-in-steps nil
         org-default-notes-file "~/documents/org/organizer.org"
         org-hide-leading-stars t
+        org-journal-dir "~/documents/notes/journal"
         org-todo-keywords '((sequence
                              "TODO(t)" "WAIT(w)" "STARTED(s)"
                              "|" "DONE(d)" "CANCELED(c)"))
