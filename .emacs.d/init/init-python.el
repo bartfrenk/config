@@ -3,7 +3,7 @@
 (use-package python
   :config
   (setq python-shell-interpreter "ipython"
-        python-shell-interpreter-args "--profile=dev -i")
+        python-shell-interpreter-args "--profile=dev --simple-prompt -i")
   :init
   (add-hook 'python-mode-hook (lambda ()
                                 (jedi:setup)
