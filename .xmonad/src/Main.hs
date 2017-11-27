@@ -16,6 +16,7 @@ import           RecentCommands
 import           XMonad
 import           XMonad.Actions.GroupNavigation
 import           XMonad.Actions.WindowBringer   hiding (menuArgs)
+  
 import           XMonad.Actions.WindowGo        (runOrRaise)
 import           XMonad.Config.Xfce
 import           XMonad.Hooks.DynamicLog

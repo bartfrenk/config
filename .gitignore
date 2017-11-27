@@ -11,10 +11,9 @@
 
 
 !.xmonad/
-!.xmonad/xmonad.hs
 !.xmonad/.dir-locals.el
-!.xmonad/lib/
-!.xmonad/lib/*.hs
+!.xmonad/src/
+!.xmonad/src/*.hs
 .xmonad/lib/Local.hs
 
 !.ipython/
