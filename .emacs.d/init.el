@@ -18,10 +18,10 @@
                  flycheck
                  company
                  elisp
-                 javascript
+;                 javascript
                  org
-                 python-pyenv
-;                 python
+;                 python-pyenv
+                 python
                  clojure
                  haskell
                  erlang
