@@ -12,6 +12,7 @@
 
 !.xmonad/
 !.xmonad/.dir-locals.el
+!.xmonad/build
 !.xmonad/src/
 !.xmonad/src/*.hs
 .xmonad/lib/Local.hs
