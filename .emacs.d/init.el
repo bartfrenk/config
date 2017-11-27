@@ -25,6 +25,7 @@
                  clojure
                  haskell
                  erlang
+                 elixir
                  jinja2
                  rust
                  rst
