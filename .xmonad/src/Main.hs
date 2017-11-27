@@ -32,6 +32,7 @@ import           XMonad.Layout.ZoomRow
 import           XMonad.Util.Dmenu              (menuMapArgs)
 import           XMonad.Util.EZConfig           (additionalKeysP)
 import           XMonad.Util.WindowProperties   ()
+import qualified Local as Local
 
 tabTheme :: Theme
 tabTheme = def {
@@ -91,6 +92,7 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
              ("M-S-t", spawn "~/bin/term-tmux"),
              ("M-S-n", nextMatch History isTerminal),
              ("M-S-a", runOrRaise "authy" isAuthy),
+             ("M-S-v", runOrRaise "evolution" isEvolution),
              ("M-S-b", nextMatch History isChromium)]
   where setMasterAudio cmd = spawn $ "amixer -D pulse set Master " ++ cmd
         disableTouchPad = let cmd = "xinput --disable \"AlpsPS/2 ALPS DualPoint TouchPad\""
@@ -105,6 +107,7 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
         isTerminal = className =? "Xfce4-terminal"
         isChromium = isPrefixOf "chromium-browser" `fmap` resource <&&>
                      className =? "Chromium-browser"
+        isEvolution = className =? "Evolution"
 
 -- | Construct arguments for passing to dmenu.
 menuArgs :: String -> [String]
