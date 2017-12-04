@@ -6,4 +6,7 @@
 (use-package flycheck-elixir
   :ensure t)
 
+(use-package alchemist
+  :ensure t)
+
 (provide 'init-elixir)
