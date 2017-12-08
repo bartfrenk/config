@@ -1,0 +1,47 @@
+#!/usr/bin/env stack
+-- stack --resolver lts-9.17 script
+
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE RecordWildCards #-}
+
+import Turtle
+
+data Settings = Settings
+  { url :: URL
+  , delay :: NominalDiffTime
+  , total :: Maybe Integer
+  }
+
+main :: IO ()
+main = sh $ do
+  settings <- options "Simple utility for polling URLs." parser
+  poll settings
+
+parser :: Parser Settings
+parser = Settings <$>
+  argText "url" urlMsg <*>
+  ( fromRational . toRational <$> optDouble "delay" 'd' delayMsg <|> pure 1.0) <*>
+  ( Just <$> optInteger "total" 't' totalMsg <|> pure Nothing)
+  where
+    urlMsg = "The URL to poll"
+    delayMsg = "Delay in seconds between requests (default: 1.0)"
+    totalMsg = "Number of times to poll (default: unlimited)"
+
+type URL = Text
+
+poll :: Settings -> Shell ()
+poll settings@Settings{..} = do
+  (code, out) <- curl url
+  case code of
+    ExitSuccess -> do
+      echo $ repr out
+      when (maybe True (> 1) total) $ do
+        sleep delay
+        poll settings { total = dec <$> total }
+    ExitFailure c -> echo $ "Failed to poll (ExitCode " <> repr c <> ")"
+  where
+    dec :: Integer -> Integer
+    dec n = n - 1
+
+curl :: Text -> Shell (ExitCode, Text)
+curl url = procStrict "curl" [url, "-s"] empty
