@@ -153,6 +153,7 @@
 (use-package phabricator :ensure t)
 (use-package yaml-mode :ensure t)
 (use-package markdown-mode :ensure t)
+(use-package edit-indirect :ensure t)
 (use-package eldoc :diminish eldoc-mode :ensure t)
 (use-package undo-tree :diminish undo-tree-mode :ensure t)
 (use-package dockerfile-mode :ensure t)
