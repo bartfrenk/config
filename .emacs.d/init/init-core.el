@@ -91,7 +91,7 @@
   :config (setq whitespace-style '(face tab-mark lines-tail trailing)
                 whitespace-line-column 100
                 ;; avoid highlighting large tables in org-mode
-                whitespace-global-modes '(not latex-mode org-mode)))
+                whitespace-global-modes '(not latex-mode org-mode web-mode)))
 
 (use-package yasnippet
   :commands yas-global-mode

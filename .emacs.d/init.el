@@ -31,12 +31,15 @@
                  rst
                  idris
                  plantuml
-                 go)))
+                 go
+                 html)))
+
  (dolist (module modules)
    (let ((name (symbol-name module))
          (prefix "init-"))
       (message name)
       (require (intern (concat prefix name))))))
+
 
 (message "local")
 ;; do not fail if 'init-local is not provided

@@ -34,4 +34,9 @@ The return value is the new value of LIST-VAR."
       (set list-var elements)))
   (symbol-value list-var))
 
+(defun untabify-buffer ()
+  (interactive)
+  (setq current-prefix-arg t)
+  (call-interactively 'untabify))
+
 (provide 'functions)
