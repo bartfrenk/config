@@ -92,7 +92,8 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
              ("M-S-n", nextMatch History isTerminal),
              ("M-S-a", runOrRaise "authy" isAuthy),
              ("M-S-v", runOrRaise "evolution" isEvolution),
-             ("M-S-b", nextMatch History isChromium)]
+             ("M-S-b", nextMatch History isChromium),
+             ("M-S-p", runOrRaise "spotify" isSpotify)]
   where setMasterAudio cmd = spawn $ "amixer -D pulse set Master " ++ cmd
         disableTouchPad = let cmd = "xinput --disable \"AlpsPS/2 ALPS DualPoint TouchPad\""
                           in spawnAndNotify cmd "touchpad disabled"
@@ -107,6 +108,7 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
         isChromium = isPrefixOf "chromium-browser" `fmap` resource <&&>
                      className =? "Chromium-browser"
         isEvolution = className =? "Evolution"
+        isSpotify = className =? "Spotify"
 
 -- | Construct arguments for passing to dmenu.
 menuArgs :: String -> [String]
