@@ -1,0 +1,6 @@
+# key: sql
+# name: sql block
+# --
+#+BEGIN_SRC sql :exports code
+  $0
+#+END_SRC
