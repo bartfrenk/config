@@ -32,7 +32,9 @@
                  idris
                  plantuml
                  go
-                 html)))
+                 html
+                 coq
+                 tla)))
 
  (dolist (module modules)
    (let ((name (symbol-name module))

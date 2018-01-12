@@ -29,11 +29,14 @@
         ("M-[" . xref-pop-marker-stack))
   :config
   (use-package haskell-doc)
-  (setq haskell-process-type 'ghci ; use dir-locals for stack projects
+  (setq haskell-process-type 'ghci      ; use dir-locals for stack projects
         haskell-process-path-ghci "ghci"
         haskell-hoogle-command "hoogle"
         haskell-process-args-ghci '("-i.")
         haskell-process-suggest-remove-import-lines t
+        ; should fix parsing issues ghc 8.2.2 but doesn't
+        haskell-process-args-stack-ghci
+        '("--ghci-options=-fno-diagnostics-show-caret")
         haskell-process-auto-import-loaded-modules t
         haskell-process-suggest-hoogle-imports t
         haskell-process-log t

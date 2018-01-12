@@ -46,6 +46,8 @@
   :init (setq global-hl-line-sticky-flag nil))
 
 (use-package evil
+  :init
+  (setq evil-want-abbrev-expand-on-insert-exit nil)
   :ensure t
   :config
   (evil-mode t)

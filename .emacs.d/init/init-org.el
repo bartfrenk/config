@@ -58,6 +58,9 @@
                              "TODO(t)" "WAIT(w)" "STARTED(s)"
                              "|" "DONE(d)" "CANCELED(c)"))
         org-refile-targets '((org-agenda-files . (:maxlevel . 3))))
+  (org-babel-do-load-languages 'org-babel-load-languages
+                               '((sql . t)
+                                 (ipython . t)))
   (add-hook 'org-babel-after-execute-hook
             'org-display-inline-images 'append)
   (add-hook 'org-src-mode-hook
@@ -76,5 +79,17 @@
            (file+headline "~/documents/org/journal.org" "Entries")
            "* %^{Title}\nDate: %U\n\n%?"
            :unnarrowed t))))
+
+(use-package org-evil
+  :ensure t)
+
+(use-package ob-ipython
+  :ensure t
+  :config
+  (setq ob-ipython-command "jupyter")
+  (add-to-list 'evil-emacs-state-modes 'special-mode))
+
+(use-package ob-sql-mode
+  :ensure t)
 
 (provide 'init-org)

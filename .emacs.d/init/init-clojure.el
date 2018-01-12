@@ -48,7 +48,8 @@
   (use-package helm-buffers)
   (setq cider-prompt-for-symbol nil
         nrepl-hide-special-buffers t
-        cider-use-overlays t)
+        cider-use-overlays t
+        cider-repl-display-help-banner nil)
   (add-to-list 'evil-emacs-state-modes 'cider-stacktrace-mode)
   (add-to-list 'evil-emacs-state-modes 'cider-test-report-mode)
   (add-to-list 'evil-emacs-state-modes 'cider-docview-mode)
