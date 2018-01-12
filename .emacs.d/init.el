@@ -2,6 +2,9 @@
 (require 'constants (expand-file-name "~/.emacs.d/init/constants.el"))
 (require 'functions (expand-file-name "~/.emacs.d/init/functions.el"))
 
+;; TODO:
+;; 1. make evil work with paredit
+
 (setq-default custom-file (expand-file-name "custom.el" init-dir))
 (load custom-file 'noerror)
 
