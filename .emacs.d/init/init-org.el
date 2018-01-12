@@ -8,7 +8,6 @@
   :bind
   (("C-c l" . org-store-link)
    ("C-c a" . org-agenda)
-   ("C-c o" . find-organizer-file)
    ("C-c t" . find-time-tracking-file)
    ("C-c c" . org-capture)
    ("C-c j" . find-journal-file))
