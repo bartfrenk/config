@@ -3,6 +3,11 @@
 
 ;; to add file to agenda: org-agenda-file-to-front
 
+(defun journal-file ()
+    (let ((journal-name (concat "journal-" (format-time-string "%Y") ".org"))
+          (journal-dir "~/documents/notes/journal"))
+      (concat journal-dir "/" journal-name)))
+
 (use-package org
 
   :bind
@@ -15,10 +20,9 @@
   :config
   (use-package flycheck)
 
-  ;; TODO: refactor
   (defun find-journal-file ()
     (interactive)
-    (find-file "~/documents/org/journal.org"))
+    (find-file (journal-file)))
 
   (defun org-fill-paragraph--latex-environment (&rest args)
     "Use default fill-paragraph in latex environments."
@@ -48,11 +52,9 @@
         org-startup-with-inline-images t
         org-edit-src-content-indentation 0
         org-startup-folded 'content
-        org-completion-use-ido nil
         org-outline-path-complete-in-steps nil
         org-default-notes-file "~/documents/org/organizer.org"
         org-hide-leading-stars t
-        org-journal-dir "~/documents/notes/journal"
         org-todo-keywords '((sequence
                              "TODO(t)" "WAIT(w)" "STARTED(s)"
                              "|" "DONE(d)" "CANCELED(c)"))
@@ -68,15 +70,15 @@
 (use-package org-capture
   :config
   (setq org-capture-templates
-        '(("t" "Task" entry
+        `(("t" "Task" entry
            (file+headline "~/documents/org/organizer.org" "Tasks")
            "* TODO %^{Task}\nFile: %F\n%?")
           ("n" "Quick note" entry
            (file+headline "~/documents/org/organizer.org" "Notes")
            "* %^{Note}")
           ("j" "Journal entry" entry
-           (file+headline "~/documents/org/journal.org" "Entries")
-           "* %^{Title}\nDate: %U\n\n%?"
+           (file+headline ,(journal-file) "Entries")
+           "* %^{Title}\n  Date: %U\n\n  %?"
            :unnarrowed t))))
 
 (use-package org-evil
