@@ -1,28 +1,39 @@
 (require 'use-package)
 
-
 ;; to add file to agenda: org-agenda-file-to-front
 
+(defvar journal-dir
+  "~/documents/notes/journal"
+  "Directory containing journal files."
+  )
+
 (defun journal-file ()
-    (let ((journal-name (concat "journal-" (format-time-string "%Y") ".org"))
-          (journal-dir "~/documents/notes/journal"))
+    (let ((journal-name (concat "journal-" (format-time-string "%Y") ".org")))
       (concat journal-dir "/" journal-name)))
+
+(defun open-journal-file ()
+  "Opens the active journal file."
+    (interactive)
+    (find-file (journal-file)))
+
+(defvar inbox-file
+  "~/documents/notes/inbox.org"
+  "Location for the inbox file, containing unsorted notes.")
+
+(defun open-inbox-file ()
+  "Opens the inbox file, set in `inbox-file'."
+  (interactive)
+  (find-file inbox-file))
 
 (use-package org
 
   :bind
   (("C-c l" . org-store-link)
    ("C-c a" . org-agenda)
-   ("C-c t" . find-time-tracking-file)
-   ("C-c c" . org-capture)
-   ("C-c j" . find-journal-file))
+   ("C-c c" . org-capture))
 
   :config
   (use-package flycheck)
-
-  (defun find-journal-file ()
-    (interactive)
-    (find-file (journal-file)))
 
   (defun org-fill-paragraph--latex-environment (&rest args)
     "Use default fill-paragraph in latex environments."
@@ -53,7 +64,7 @@
         org-edit-src-content-indentation 0
         org-startup-folded 'content
         org-outline-path-complete-in-steps nil
-        org-default-notes-file "~/documents/org/organizer.org"
+        org-default-notes-file inbox-file
         org-hide-leading-stars t
         org-todo-keywords '((sequence
                              "TODO(t)" "WAIT(w)" "STARTED(s)"
@@ -71,10 +82,10 @@
   :config
   (setq org-capture-templates
         `(("t" "Task" entry
-           (file+headline "~/documents/org/organizer.org" "Tasks")
+           (file+headline inbox-file "Tasks")
            "* TODO %^{Task}\nFile: %F\n%?")
           ("n" "Quick note" entry
-           (file+headline "~/documents/org/organizer.org" "Notes")
+           (file+headline inbox-file "Notes")
            "* %^{Note}")
           ("j" "Journal entry" entry
            (file+headline ,(journal-file) "Entries")
