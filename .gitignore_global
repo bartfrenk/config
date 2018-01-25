@@ -4,10 +4,12 @@
 *.class
 *.jar
 *.hi
+*-checkpoint.ipynb
 
 # stack
 .stack-work/
 
 # emacs
 \#*#
+.#*#
 .dir-locals.el
