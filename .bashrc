@@ -53,5 +53,11 @@ if ! shopt -oq posix; then
   fi
 fi
 
+if [[ -z "${PYTHONPATH}" ]]; then
+    export PYTHONPATH=.
+else
+    export PYTHONPATH=.:${PYTHONPATH}
+fi
+
 # tab completion for stack
 eval "$(stack --bash-completion-script stack)"
