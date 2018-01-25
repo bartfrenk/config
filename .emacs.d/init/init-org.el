@@ -54,7 +54,7 @@
 
   :init
   (advice-add 'org-fill-paragraph :before-while
-            #'org-fill-paragraph--latex-environment)
+              #'org-fill-paragraph--latex-environment)
   ;; allow emphasis to extend over two lines
   (setcar (nthcdr 4 org-emphasis-regexp-components) 2)
   (setq org-log-done t
@@ -70,13 +70,16 @@
                              "TODO(t)" "WAIT(w)" "STARTED(s)"
                              "|" "DONE(d)" "CANCELED(c)"))
         org-refile-targets '((org-agenda-files . (:maxlevel . 3))))
-  (org-babel-do-load-languages 'org-babel-load-languages
-                               '((sql . t)
-                                 (ipython . t)))
   (add-hook 'org-babel-after-execute-hook
             'org-display-inline-images 'append)
   (add-hook 'org-src-mode-hook
-            'disable-checkers-in-org-src-block))
+            'disable-checkers-in-org-src-block)
+  :config
+  (org-babel-do-load-languages 'org-babel-load-languages
+                               '((emacs-lisp . t)
+                                 (sql . t)
+                                 (ipython . t))))
+
 
 (use-package org-capture
   :config
@@ -103,5 +106,12 @@
 
 (use-package ob-sql-mode
   :ensure t)
+
+;; (use-package ob-clojure-literate
+;;   :after org
+;;   :ensure t
+;;   :init
+;;   (setq ob-clojure-literate-auto-jackin-p t)
+;;   (add-hook 'org-mode-hook #'ob-clojure-literate-mode))
 
 (provide 'init-org)
