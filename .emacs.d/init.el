@@ -37,7 +37,8 @@
                  go
                  html
                  coq
-                 tla)))
+                 tla
+                 maxima)))
 
  (dolist (module modules)
    (let ((name (symbol-name module))
