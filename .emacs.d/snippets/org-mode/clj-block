@@ -1,0 +1,6 @@
+# key: clj
+# name: clojure block
+# --
+#+BEGIN_SRC clojure
+$0
+#+END_SRC
