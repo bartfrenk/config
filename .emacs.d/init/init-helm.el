@@ -39,12 +39,15 @@
 (use-package helm-gtags
   :ensure t)
 
-(use-package helm-swoop
-  :ensure t
-  :bind
-  (("C-c s" . helm-multi-swoop-all)
-   ("C-s" . helm-swoop)
-   ("C-r" . helm-resume)))
+;; Currently broken, wait for update on thread:
+;;   https://github.com/ShingoFukuyama/helm-swoop/issues/58
+;; (use-package helm-swoop
+;;   :pin melpa-stable
+;;   :ensure t
+;;   :bind
+;;   (("C-c s" . helm-multi-swoop-all)
+;;    ("C-s" . helm-swoop)
+;;    ("C-r" . helm-resume)))
 
 (use-package helm-ag
   :ensure t
