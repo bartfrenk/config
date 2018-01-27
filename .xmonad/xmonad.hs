@@ -155,6 +155,7 @@ main = do
         focusFollowsMouse = False,
         workspaces = map show (take 9 [(1 :: Integer)..]),
         modMask = mod4Mask,
+        clickJustFocuses = False,
         manageHook = managePlacement <+>
                      manageDocks <+>
                      manageHook def,
