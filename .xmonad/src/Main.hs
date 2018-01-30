@@ -16,7 +16,7 @@ import           RecentCommands
 import           XMonad
 import           XMonad.Actions.GroupNavigation
 import           XMonad.Actions.WindowBringer   hiding (menuArgs)
-  
+
 import           XMonad.Actions.WindowGo        (runOrRaise)
 import           XMonad.Config.Xfce
 import           XMonad.Hooks.DynamicLog
@@ -54,8 +54,6 @@ managePlacement = composeAll [title =? "Save As" --> doFloat,
                               title =? "Whisker Menu" --> doFloat,
                               isAuthy --> doFloat]
 
-
-
 spawnAndNotify cmd message = do
   spawn cmd
   spawn $ "notify-send -t 1000 " ++ quote message
@@ -85,7 +83,7 @@ extraKeys = [("<XF86AudioLowerVolume>", setMasterAudio "10%-"),
              ("M-p", spawn $ dmenuRun ++ " " ++ unwords (menuArgs "Run")),
              ("M-g", gotoMenuArgs $ menuArgs "Go"),
              ("M-b", bringMenuArgs $ menuArgs "Bring"),
-             ("M-S-m", runOrRaise "/home/bart/bin/emacs" isEmacs),
+             ("M-S-m", runOrRaise "/home/bart/bin/em" isEmacs),
              ("M-r", recentCommandsMenu dmenu "/home/bart/.local/share/recently-used.xbel"),
              ("M-S-f", runOrRaise "thunar" isThunar),
              ("M-S-s", runOrRaise "slack" isSlack),
