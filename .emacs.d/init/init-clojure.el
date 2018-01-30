@@ -58,12 +58,6 @@
   :diminish cider-mode
   :ensure t)
 
-(use-package paredit
-  :ensure t)
-
-(use-package evil-paredit
-  :ensure t)
-
 (use-package clj-refactor
   :ensure t)
 

@@ -31,9 +31,9 @@
 (global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "C-c C--") 'linum-mode)
 
-(use-package dired+
-  :commands diredp-toggle-find-file-reuse-dir
-  :ensure t)
+;(use-package dired+
+;  :commands diredp-toggle-find-file-reuse-dir
+;  :ensure t)
 
 (use-package ace-window
   :ensure t
@@ -163,6 +163,13 @@
 
 ;; Reload theme when a frame is created, since setting a theme when there is no
 ;; frame messes up the colors of some themes (material included).
+(use-package material-theme :ensure t)
+(use-package paredit :ensure t)
+(use-package evil-paredit :ensure t)
+
+
+
+
 (if (daemonp)
     (add-hook 'after-make-frame-functions
               (lambda (frame)
@@ -170,7 +177,7 @@
                 (load-theme 'material t)))
   (load-theme 'material t))
 
-(diredp-toggle-find-file-reuse-dir 1)
+;(diredp-toggle-find-file-reuse-dir 1)
 (global-git-gutter-mode)
 (global-hl-line-mode)
 (yas-global-mode)
