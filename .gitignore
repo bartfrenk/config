@@ -13,6 +13,7 @@
 !.xmonad/
 !.xmonad/.dir-locals.el
 !.xmonad/stack.yaml
+!.xmonad/xmonad-exe.cabal
 !.xmonad/build
 !.xmonad/src/
 !.xmonad/src/*.hs
