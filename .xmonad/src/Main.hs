@@ -32,7 +32,7 @@ import           XMonad.Layout.ZoomRow
 import           XMonad.Util.Dmenu              (menuMapArgs)
 import           XMonad.Util.EZConfig           (additionalKeysP)
 import           XMonad.Util.WindowProperties   ()
-import qualified Local as Local
+import qualified Local
 
 tabTheme :: Theme
 tabTheme = def {
