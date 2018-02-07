@@ -31,7 +31,7 @@
 
     ;; Compojure
     (ANY 2) (GET 2) (POST 2) (PUT 2) (PATCH 2) (DELETE 2)
-    (OPTIONS 2) (context 2) (api 2)
+    (OPTIONS 2) (context 2) (api 2) (for-all 2)
 
     ;; Expect-call
     (expect-call 1)))
