@@ -13,7 +13,8 @@
                 flycheck-standard-error-navigation nil
                 flycheck-checker-error-threshold nil ;; no limit to errors
                 flycheck-disabled-checkers '(emacs-lisp-checkdoc
-                                             python-flake8)))
+                                             python-flake8))
+  (setq flycheck-global-modes '(not org-mode)))
 
 (global-flycheck-mode)
 
