@@ -29,6 +29,8 @@ import           XMonad.Layout.ZoomRow
 import           XMonad.Util.Dmenu              (menuMapArgs)
 import           XMonad.Util.EZConfig           (additionalKeysP)
 import           XMonad.Util.WindowProperties   ()
+import           XMonad.Util.Font
+import           XMonad.Util.Loggers
 
 import qualified Local
 import qualified Track
@@ -122,7 +124,6 @@ extraKeys track =
 menuArgs :: String -> [String]
 menuArgs s = ["-fn", "SourceCodePro-9", "-p", s, "-l", "6"]
 
-
 issueMenuArgs :: String -> [String]
 issueMenuArgs s = ["-fn", "SourceCodePro-9", "-p", s, "-l", "20"]
 
@@ -195,6 +196,10 @@ prettyPrinter dbus =
   , ppHidden = pangoColor "gray"
   , ppUrgent = pangoColor "red"
   , ppLayout = const ""
+  , ppExtras = [onLogger
+                 (pangoColor "gray")
+                 (fixedWidthL AlignLeft " " 10 $ logCmd "echo ' CMD'")]
+  , ppOrder = \(ws:_:t:xs) -> ws:xs ++ [t]
   , ppSep = " "
   }
 
