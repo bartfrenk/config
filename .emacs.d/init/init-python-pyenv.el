@@ -26,11 +26,11 @@
 
 (add-hook 'projectile-switch-project-hook 'projectile-pyenv-mode-set)
 
-(use-package auto-virtualenvwrapper
-  :ensure t
-  :config
-  (add-hook 'python-mode-hook #'auto-virtualenvwrapper-activate)
-  (add-hook 'projectile-after-switch-project-hook #'auto-virtualenvwrapper-activate))
+;; (use-package auto-virtualenvwrapper
+;;   :ensure t
+;;   :config
+;;   (add-hook 'python-mode-hook #'auto-virtualenvwrapper-activate)
+;;   (add-hook 'projectile-after-switch-project-hook #'auto-virtualenvwrapper-activate))
 
 (use-package virtualenvwrapper
   :ensure t
