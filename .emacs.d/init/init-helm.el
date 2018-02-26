@@ -39,8 +39,6 @@
 (use-package helm-gtags
   :ensure t)
 
-Currently broken, wait for update on thread:
-  https://github.com/ShingoFukuyama/helm-swoop/issues/58
 (use-package helm-swoop
   :pin melpa-stable
   :ensure t
