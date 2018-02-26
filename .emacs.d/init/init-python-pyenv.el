@@ -1,21 +1,36 @@
 (require 'use-package)
 (require 'projectile)
 
+; requires yapf to be installed
+
+
+(defun python-format-buffer ()
+  "Format a Python buffer."
+  (interactive)
+  (yapfify-buffer))
+
 (use-package python
   :commands python-shell-send-string
+  :bind
+  (:map python-mode-map
+        ("C-c C-a" . python-format-buffer))
   :init
   (add-hook 'python-mode-hook (lambda ()
                                 (auto-complete-mode -1)
                                 (python-docstring-mode)
-                                (sphinx-doc-mode)
-                                (yapf-mode)))
+                                (sphinx-doc-mode))
+            ;; add yapf-mode to get autoformat on save
+            )
+  ;; (when (executable-find "ipython")
+  ;;   (setq python-shell-interpreter "ipython"
+  ;;         python-shell-interpreter-args "--simple-prompt"))
+
   :ensure t)
 
 (use-package pyenv-mode
   :ensure t
   :commands pyenv-mode-versions
   :config)
-
 
 (defun projectile-pyenv-mode-set ()
     "Set pyenv version matching project name."
@@ -26,18 +41,13 @@
 
 (add-hook 'projectile-switch-project-hook 'projectile-pyenv-mode-set)
 
-;; (use-package auto-virtualenvwrapper
-;;   :ensure t
-;;   :config
-;;   (add-hook 'python-mode-hook #'auto-virtualenvwrapper-activate)
-;;   (add-hook 'projectile-after-switch-project-hook #'auto-virtualenvwrapper-activate))
-
 (use-package virtualenvwrapper
   :ensure t
   :config
-  (setq venv-location "/home/bart/.pyenv/versions/2.7.4/envs"))
+  (setq venv-location "/home/bart/.pyenv/versions"))
 
 (use-package yapfify
+  :commands yapfify-buffer
   :ensure t
   :diminish yapf-mode)
 
@@ -45,22 +55,16 @@
   :bind
   (:map python-mode-map
         ("M-]" . jedi:goto-definition)
-        ("M-[" . jedi:goto-definition-pop-marker))
+        ("M-[" . jedi:goto-definition-pop-marker)
+        )
   :commands jedi:setup
   :ensure t)
 
 (use-package company-jedi
   :after (company jedi)
   :init
-  (use-package company)
   (add-to-list 'company-backends 'company-jedi)
   :ensure t)
-
-(use-package py-autopep8
-  :ensure t
-  :bind
-  (:map python-mode-map
-        ("C-c C-a" . py-autopep8-buffer)))
 
 (use-package sphinx-doc
   :ensure t
