@@ -45,6 +45,7 @@
         haskell-process-args-cabal-repl
         '("--ghc-options=-ferror-spans -fshow-loaded-modules")
         haskell-process-args-stack-ghci
+        ;; remove -fshow-loaded-modules for GHC < 8.2.2 (i.e, Stack LTS < 10)
         '("--ghci-options=-ferror-spans -fshow-loaded-modules"
           "--no-build" "--no-load")
         haskell-process-args-cabal-new-repl
