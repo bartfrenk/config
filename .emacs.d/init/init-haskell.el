@@ -40,16 +40,16 @@
         haskell-process-load-or-reload-prompt t)
 
   ;; see https://github.com/haskell/haskell-mode/issues/1553
-  (setq haskell-process-args-ghci
-        '("-ferror-spans" "-fshow-loaded-modules")
-        haskell-process-args-cabal-repl
-        '("--ghc-options=-ferror-spans -fshow-loaded-modules")
-        haskell-process-args-stack-ghci
-        ;; remove -fshow-loaded-modules for GHC < 8.2.2 (i.e, Stack LTS < 10)
-        '("--ghci-options=-ferror-spans -fshow-loaded-modules"
-          "--no-build" "--no-load")
-        haskell-process-args-cabal-new-repl
-        '("--ghc-options=-ferror-spans -fshow-loaded-modules"))
+  ;; (setq haskell-process-args-ghci
+  ;;       '("-ferror-spans" "-fshow-loaded-modules")
+  ;;       haskell-process-args-cabal-repl
+  ;;       '("--ghc-options=-ferror-spans -fshow-loaded-modules")
+  ;;       haskell-process-args-stack-ghci
+  ;;       ;; remove -fshow-loaded-modules for GHC < 8.2.2 (i.e, Stack LTS < 10)
+  ;;       '("--ghci-options=-ferror-spans -fshow-loaded-modules"
+  ;;         "--no-build" "--no-load")
+  ;;       haskell-process-args-cabal-new-repl
+  ;;       '("--ghc-options=-ferror-spans -fshow-loaded-modules"))
 
   (add-to-list 'evil-emacs-state-modes 'haskell-error-mode)
   :ensure t
