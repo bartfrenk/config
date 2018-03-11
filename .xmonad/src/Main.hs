@@ -198,7 +198,7 @@ prettyPrinter dbus =
   , ppLayout = const ""
   , ppExtras = [onLogger
                  (pangoColor "gray")
-                 (fixedWidthL AlignLeft " " 10 $ logCmd "echo ' CMD'")]
+                 (fixedWidthL AlignLeft " " 15 $ logCmd "track status --active")]
   , ppOrder = \(ws:_:t:xs) -> ws:xs ++ [t]
   , ppSep = " "
   }
