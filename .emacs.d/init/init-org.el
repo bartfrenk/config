@@ -78,7 +78,8 @@
   (org-babel-do-load-languages 'org-babel-load-languages
                                '((emacs-lisp . t)
                                  (sql . t)
-                                 (ipython . t))))
+                                 (ipython . t)
+                                 (sh . t))))
 
 
 (use-package org-capture
