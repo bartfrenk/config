@@ -24,6 +24,9 @@
   (interactive)
   (find-file inbox-file))
 
+(use-package ob-http
+  :ensure t)
+
 (use-package org
 
   :bind
@@ -78,7 +81,11 @@
   (org-babel-do-load-languages 'org-babel-load-languages
                                '((emacs-lisp . t)
                                  (sql . t)
-                                 (ipython . t))))
+                                 (ipython . t)
+                                 (sh . t)
+                                 (http . t)
+                                 (maxima . t))))
+
 
 
 (use-package org-capture
