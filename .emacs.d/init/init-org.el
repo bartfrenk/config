@@ -4,8 +4,7 @@
 
 (defvar journal-dir
   "~/documents/notes/journal"
-  "Directory containing journal files."
-  )
+  "Directory containing journal files.")
 
 (defun journal-file ()
     (let ((journal-name (concat "journal-" (format-time-string "%Y") ".org")))
@@ -25,12 +24,16 @@
   (interactive)
   (find-file inbox-file))
 
+(use-package ob-http
+  :ensure t)
+
 (use-package org
 
   :bind
   (("C-c l" . org-store-link)
    ("C-c a" . org-agenda)
-   ("C-c c" . org-capture))
+   ("C-c c" . org-capture)
+   ("C-c C-j" . open-journal-file))
 
   :config
   (use-package flycheck)
@@ -79,7 +82,10 @@
                                '((emacs-lisp . t)
                                  (sql . t)
                                  (ipython . t)
-                                 (sh . t))))
+                                 (sh . t)
+                                 (http . t)
+                                 (maxima . t))))
+
 
 
 (use-package org-capture

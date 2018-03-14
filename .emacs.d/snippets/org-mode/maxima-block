@@ -1,0 +1,7 @@
+# key: maxima
+# name: maxima block
+# --
+#+BEGIN_SRC maxima :results output
+programmode: false;
+$0
+#+END_SRC
