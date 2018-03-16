@@ -198,10 +198,28 @@ prettyPrinter dbus =
   , ppLayout = const ""
   , ppExtras = [onLogger
                  (pangoColor "gray")
-                 (fixedWidthL AlignLeft " " 15 $ logCmd "track status --active")]
+                 (atMostFixedWidthL AlignRight " " 15 $ logCmd "track status --active")]
   , ppOrder = \(ws:_:t:xs) -> ws:xs ++ [t]
-  , ppSep = " "
+  , ppSep = "  "
   }
+
+atMostFixedWidthL :: Align  -- ^ AlignCenter, AlignRight, or AlignLeft
+                  -> String -- ^ String to cycle to pad missing logger output
+                  -> Int    -- ^ Fixed length to output (including invisible formatting characters)
+                  -> Logger -> Logger
+atMostFixedWidthL a str n logger = do
+    mbl <- logger
+    case mbl of
+      Just l ->
+        case a of
+          AlignCenter -> toL (take n $ padhalf l ++ l ++ cs)
+          AlignRight -> toL (reverse (take n $ reverse l ++ cs))
+          _ -> toL (take n $ l ++ cs)
+      Nothing -> toL ""
+  where
+    toL = return . Just
+    cs  = cycle str
+    padhalf x = reverse $ take ((n - length x) `div` 2) cs
 
 getWellKnownName :: D.Client -> IO ()
 getWellKnownName dbus =
