@@ -77,6 +77,8 @@
             'org-display-inline-images 'append)
   (add-hook 'org-src-mode-hook
             'disable-checkers-in-org-src-block)
+  (add-hook 'org-mode-hook
+            (lambda () (linum-mode -1)))
   :config
   (org-babel-do-load-languages 'org-babel-load-languages
                                '((emacs-lisp . t)
