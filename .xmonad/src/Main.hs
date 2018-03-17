@@ -90,7 +90,7 @@ extraKeys track =
   , ("M-p", spawn $ dmenuRun ++ " " ++ unwords (menuArgs "Run"))
   , ("M-g", gotoMenuArgs $ menuArgs "Go")
   , ("M-b", bringMenuArgs $ menuArgs "Bring")
-  , ("M-S-m", runOrRaise "/home/bart/bin/emacs" isEmacs)
+  , ("M-S-m", runOrRaise "/home/bart/bin/em" isEmacs)
   , ( "M-r", recentCommandsMenu dmenu "/home/bart/.local/share/recently-used.xbel")
   , ("M-S-f", runOrRaise "thunar" isThunar)
   , ("M-S-s", runOrRaise "slack" isSlack)
