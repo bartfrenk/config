@@ -24,6 +24,11 @@
   (interactive)
   (find-file inbox-file))
 
+(defun insert-time-stamp ()
+  "Inserts an inactive timestamp of the current time."
+  (interactive)
+  (org-time-stamp '(16) t))
+
 (use-package ob-http
   :ensure t)
 
@@ -33,7 +38,7 @@
   (("C-c l" . org-store-link)
    ("C-c a" . org-agenda)
    ("C-c c" . org-capture)
-   ("C-c C-j" . open-journal-file))
+   ("C-c j" . open-journal-file))
 
   :config
   (use-package flycheck)
@@ -69,6 +74,7 @@
         org-outline-path-complete-in-steps nil
         org-default-notes-file inbox-file
         org-hide-leading-stars t
+        org-startup-indented t
         org-todo-keywords '((sequence
                              "TODO(t)" "WAIT(w)" "STARTED(s)"
                              "|" "DONE(d)" "CANCELED(c)"))
