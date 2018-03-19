@@ -21,7 +21,8 @@
                  flycheck
                  company
                  elisp
-                 javascript
+;                 javascript
+                 jsx
                  org
                  python-pyenv
 ;                 python
