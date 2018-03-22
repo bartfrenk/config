@@ -12,17 +12,19 @@
   :commands python-shell-send-string
   :bind
   (:map python-mode-map
-        ("C-c C-a" . python-format-buffer))
+        ("C-c C-a" . python-format-buffer)
+        ("C-c M-j" . run-python))
   :init
   (add-hook 'python-mode-hook (lambda ()
                                 (auto-complete-mode -1)
                                 (python-docstring-mode)
                                 (sphinx-doc-mode)
                                 (yapf-mode)))
-  ;; (when (executable-find "ipython")
-  ;;   (setq python-shell-interpreter "ipython"
-  ;;         python-shell-interpreter-args "--simple-prompt"))
-
+  (when (executable-find "ipython")
+    (setq python-shell-interpreter "ipython"
+          python-shell-interpreter-args "--simple-prompt"))
+  :config
+  (setq python-shell-completion-native-enable nil)
   :ensure t)
 
 (use-package pyenv-mode
