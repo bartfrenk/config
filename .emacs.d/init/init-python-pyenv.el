@@ -3,7 +3,6 @@
 
 ; requires yapf to be installed
 
-
 (defun python-format-buffer ()
   "Format a Python buffer."
   (interactive)
@@ -18,9 +17,8 @@
   (add-hook 'python-mode-hook (lambda ()
                                 (auto-complete-mode -1)
                                 (python-docstring-mode)
-                                (sphinx-doc-mode))
-            ;; add yapf-mode to get autoformat on save
-            )
+                                (sphinx-doc-mode)
+                                (yapf-mode)))
   ;; (when (executable-find "ipython")
   ;;   (setq python-shell-interpreter "ipython"
   ;;         python-shell-interpreter-args "--simple-prompt"))
@@ -48,6 +46,9 @@
 
 (use-package yapfify
   :commands yapfify-buffer
+  :config
+  (use-package helm-buffers)
+  (add-to-list 'helm-boring-buffer-regexp-list "*yapfify.**")
   :ensure t
   :diminish yapf-mode)
 
@@ -56,7 +57,7 @@
   (:map python-mode-map
         ("M-]" . jedi:goto-definition)
         ("M-[" . jedi:goto-definition-pop-marker)
-        )
+        ("C-c C-d" . jedi:show-doc))
   :commands jedi:setup
   :ensure t)
 
