@@ -1,0 +1,7 @@
+# key: py
+# name: python block
+# --
+#+BEGIN_SRC python :session :exports code
+$0
+#+END_SRC
+

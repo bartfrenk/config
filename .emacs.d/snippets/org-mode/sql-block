@@ -2,5 +2,5 @@
 # name: sql block
 # --
 #+BEGIN_SRC sql
-  $0
+$0
 #+END_SRC

@@ -1,6 +1,6 @@
-# key: py
+# key: ipy
 # name: ipython block
 # --
 #+BEGIN_SRC ipython :session :exports code
-  $0
+$0
 #+END_SRC
