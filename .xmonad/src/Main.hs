@@ -91,7 +91,7 @@ extraKeys track =
   , ("M-g", gotoMenuArgs $ menuArgs "Go")
   , ("M-b", bringMenuArgs $ menuArgs "Bring")
   , ("M-S-m", runOrRaise "/home/bart/bin/em" isEmacs)
-  , ( "M-r", recentCommandsMenu dmenu "/home/bart/.local/share/recently-used.xbel")
+  , ("C-M-r", recentCommandsMenu dmenu "/home/bart/.local/share/recently-used.xbel")
   , ("M-S-f", runOrRaise "thunar" isThunar)
   , ("M-S-s", runOrRaise "slack" isSlack)
   , ("M-S-t", spawn "~/bin/term-tmux")
