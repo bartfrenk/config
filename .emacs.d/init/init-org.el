@@ -92,9 +92,8 @@
                                  (ipython . t)
                                  (sh . t)
                                  (http . t)
-                                 (maxima . t))))
-
-
+                                 (maxima . t)
+                                 (dockerfile . t))))
 
 (use-package org-capture
   :config
