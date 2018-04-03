@@ -78,7 +78,8 @@
         org-todo-keywords '((sequence
                              "TODO(t)" "WAIT(w)" "STARTED(s)"
                              "|" "DONE(d)" "CANCELED(c)"))
-        org-refile-targets '((org-agenda-files . (:maxlevel . 3))))
+        org-refile-targets '((org-agenda-files . (:maxlevel . 3)))
+        org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
   (add-hook 'org-babel-after-execute-hook
             'org-display-inline-images 'append)
   (add-hook 'org-src-mode-hook
@@ -92,7 +93,9 @@
                                  (ipython . t)
                                  (sh . t)
                                  (http . t)
-                                 (maxima . t))))
+                                 (maxima . t)
+                                 (plantuml . t))))
+
 
 
 
