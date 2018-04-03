@@ -29,9 +29,6 @@
   (interactive)
   (org-time-stamp '(16) t))
 
-(use-package ob-http
-  :ensure t)
-
 (use-package org
 
   :bind
@@ -121,6 +118,13 @@
   :config
   (setq ob-ipython-command "jupyter")
   (add-to-list 'evil-emacs-state-modes 'special-mode))
+
+(use-package ob-http
+  :ensure t)
+
+(use-package ob-python
+  :config
+  (setq org-babel-python-command "python3"))
 
 (use-package ob-sql-mode
   :ensure t)
