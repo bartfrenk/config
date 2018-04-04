@@ -84,6 +84,7 @@
   (add-hook 'org-mode-hook
             (lambda () (linum-mode -1)))
   :config
+  (setq org-babel-sh-command "bash")
   (org-babel-do-load-languages 'org-babel-load-languages
                                '((emacs-lisp . t)
                                  (sql . t)
@@ -92,6 +93,7 @@
                                  (http . t)
                                  (maxima . t)
                                  (plantuml . t))))
+
 
 
 
