@@ -1,0 +1,7 @@
+# key: plantuml
+# name: plantuml block
+# --
+#+BEGIN_SRC plantuml :file $0
+$1
+#+END_SRC
+
