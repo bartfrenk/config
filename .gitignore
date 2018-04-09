@@ -43,6 +43,9 @@
 !.tmuxinator/
 !.tmuxinator/*
 
+!.aws/
+!.aws/config
+
 !.bashrc
 !.bash_aliases
 !.gitignore_global
