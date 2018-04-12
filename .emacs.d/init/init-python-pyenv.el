@@ -19,7 +19,8 @@
                                 (auto-complete-mode -1)
                                 (python-docstring-mode)
                                 (sphinx-doc-mode)
-                                (yapf-mode)))
+                                ;(yapf-mode)
+                                ))
   (when (executable-find "ipython")
     (setq python-shell-interpreter "ipython"
           python-shell-interpreter-args "--simple-prompt"))
