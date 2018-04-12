@@ -19,7 +19,7 @@
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
 (show-paren-mode 1)
-(add-to-list 'default-frame-alist '(font . "Source Code Pro 9"))
+(add-to-list 'default-frame-alist '(font . "Source Code Pro 8"))
 
 (global-set-key (kbd "C-x s") nil)
 (global-set-key (kbd "C-x M-s") 'save-some-buffers)
