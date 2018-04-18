@@ -11,7 +11,7 @@
       initial-scratch-message nil scroll-preserve-screen-position nil
       scroll-conservatively 101
       scroll-margin 20)
-(setq-default line-spacing '0.2)
+(setq-default line-spacing '0.3)
 (fset 'yes-or-no-p 'y-or-n-p)
 (column-number-mode t)
 (blink-cursor-mode 0)
