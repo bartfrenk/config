@@ -184,6 +184,6 @@
 (sml/setup)
 
 (add-to-list 'auto-mode-alist '("\\.raml\\'" . yaml-mode))
-
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 
 (provide 'init-core)
