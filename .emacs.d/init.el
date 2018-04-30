@@ -39,7 +39,8 @@
                  html
                  coq
                  tla
-                 maxima)))
+                 maxima
+                 groovy)))
 
  (dolist (module modules)
    (let ((name (symbol-name module))
