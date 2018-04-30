@@ -28,7 +28,7 @@
         ("M-]" . haskell-mode-jump-to-def-or-tag)
         ("M-[" . xref-pop-marker-stack))
   :config
-  (use-package haskell-doc)
+  ;(use-package haskell-doc)
 
   (setq haskell-process-type 'auto
         haskell-hoogle-command "hoogle"
