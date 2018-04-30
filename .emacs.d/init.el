@@ -21,8 +21,8 @@
                  flycheck
                  company
                  elisp
-;                 javascript
-                 jsx
+                 javascript
+;                 jsx
                  org
                  python-pyenv
 ;                 python
@@ -39,7 +39,8 @@
                  html
                  coq
                  tla
-                 maxima)))
+                 maxima
+                 groovy)))
 
  (dolist (module modules)
    (let ((name (symbol-name module))

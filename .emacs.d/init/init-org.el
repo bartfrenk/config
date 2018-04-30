@@ -89,7 +89,7 @@
                                '((emacs-lisp . t)
                                  (sql . t)
                                  (ipython . t)
-                                 (sh . t)
+                                 (shell . t)
                                  (http . t)
                                  (maxima . t)
                                  (plantuml . t)
@@ -130,8 +130,9 @@
   :config
   (setq org-babel-python-command "python3"))
 
-(use-package ob-sql-mode
-  :ensure t)
+;; (use-package ob-sql-mode
+;;   :pin melpa-stable
+;;   :ensure t)
 
 ;; (use-package ob-clojure-literate
 ;;   :after org

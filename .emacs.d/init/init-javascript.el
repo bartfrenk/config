@@ -10,7 +10,9 @@
   :ensure t
   :bind (:map js2-mode-map
               ("M-]" . tern-find-definition)
-              ("M-[" . tern-pop-find-definition))
+              ("M-[" . tern-pop-find-definition)
+              ("C-c C-l" . skewer-load-buffer)
+              ("C-M-x" . skewer-eval-defun))
   :config
   (add-to-list 'company-backends 'company-tern)
   (setq js2-basic-offset 2
@@ -35,12 +37,28 @@
 (use-package company-tern
   :ensure t)
 
+(use-package rjsx-mode
+  :ensure t
+  :pin melpa-stable
+  :config
+  (add-hook 'rjsx-mode-hook 'prettier-js-mode))
+
 (use-package prettier-js
   :ensure t
-  :diminish prettier-js-mode)
+  :pin melpa-stable
+  :config
+  (setq-default js-indent-level 2)
+  (setq-default js2-indent-level 2)
+  (setq-default jsx-indent-level 2)
+  (setq-default sgml-basic-offset 2)
+  (setq-default js2-basic-offset 2))
+
+(use-package add-node-modules-path
+  :ensure t
+  :pin melpa-stable
+  :config
+  (add-hook 'prettier-js-mode-hook 'add-node-modules-path))
 
 (skewer-setup)
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-(add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-mode))
 
 (provide 'init-javascript)
