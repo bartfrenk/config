@@ -28,13 +28,14 @@ import           XMonad.Layout.WindowNavigation
 import           XMonad.Layout.ZoomRow
 import           XMonad.Util.Dmenu              (menuMapArgs)
 import           XMonad.Util.EZConfig           (additionalKeysP)
-import           XMonad.Util.WindowProperties   ()
 import           XMonad.Util.Font
 import           XMonad.Util.Loggers
+import           XMonad.Util.Run                (safeSpawnProg)
+import           XMonad.Util.WindowProperties   ()
 
 import qualified Local
-import qualified Track
 import           RecentCommands
+import qualified Track
 
 tabTheme :: Theme
 tabTheme =
@@ -90,16 +91,18 @@ extraKeys track =
   , ("M-p", spawn $ dmenuRun ++ " " ++ unwords (menuArgs "Run"))
   , ("M-g", gotoMenuArgs $ menuArgs "Go")
   , ("M-b", bringMenuArgs $ menuArgs "Bring")
-  , ("M-S-;", runOrRaise "/home/bart/bin/em" isEmacs)
-  , ("M-S-m", nextMatch History isEmacs)
-  , ("C-M-r", recentCommandsMenu dmenu "/home/bart/.local/share/recently-used.xbel")
+  , ("M-S-m", nextMatchOrDo History isEmacs $ safeSpawnProg "/home/bart/bin/em")
+  , ( "C-M-r"
+    , recentCommandsMenu dmenu "/home/bart/.local/share/recently-used.xbel")
   , ("M-S-f", runOrRaise "thunar" isThunar)
   , ("M-S-s", runOrRaise "slack" isSlack)
   , ("M-S-t", spawn "~/bin/term-tmux")
   , ("M-S-n", nextMatch History isTerminal)
   , ("M-S-a", runOrRaise "authy" isAuthy)
   , ("M-S-v", runOrRaise "evolution" isEvolution)
-  , ("M-S-b", nextMatch History isChromium)
+  , ( "M-S-b"
+    , nextMatchOrDo History isChromium $
+      safeSpawnProg "usr/bin/chromium-browser")
   , ("C-M-t", issueSelectionMenu dmenu track)
   ]
   where
@@ -198,29 +201,33 @@ prettyPrinter dbus =
   , ppHidden = pangoColor "gray"
   , ppUrgent = pangoColor "red"
   , ppLayout = const ""
-  , ppExtras = [onLogger
-                 (pangoColor "gray")
-                 (atMostFixedWidthL AlignRight " " 15 $ logCmd "track status --active")]
-  , ppOrder = \(ws:_:t:xs) -> ws:xs ++ [t]
+  , ppExtras =
+      [ onLogger
+          (pangoColor "gray")
+          (atMostFixedWidthL AlignRight " " 15 $ logCmd "track status --active")
+      ]
+  , ppOrder = \(ws:_:t:xs) -> ws : xs ++ [t]
   , ppSep = "  "
   }
 
-atMostFixedWidthL :: Align  -- ^ AlignCenter, AlignRight, or AlignLeft
-                  -> String -- ^ String to cycle to pad missing logger output
-                  -> Int    -- ^ Fixed length to output (including invisible formatting characters)
-                  -> Logger -> Logger
+atMostFixedWidthL ::
+     Align -- ^ AlignCenter, AlignRight, or AlignLeft
+  -> String -- ^ String to cycle to pad missing logger output
+  -> Int -- ^ Fixed length to output (including invisible formatting characters)
+  -> Logger
+  -> Logger
 atMostFixedWidthL a str n logger = do
-    mbl <- logger
-    case mbl of
-      Just l ->
-        case a of
-          AlignCenter -> toL (take n $ padhalf l ++ l ++ cs)
-          AlignRight -> toL (reverse (take n $ reverse l ++ cs))
-          _ -> toL (take n $ l ++ cs)
-      Nothing -> toL ""
+  mbl <- logger
+  case mbl of
+    Just l ->
+      case a of
+        AlignCenter -> toL (take n $ padhalf l ++ l ++ cs)
+        AlignRight -> toL (reverse (take n $ reverse l ++ cs))
+        _ -> toL (take n $ l ++ cs)
+    Nothing -> toL ""
   where
     toL = return . Just
-    cs  = cycle str
+    cs = cycle str
     padhalf x = reverse $ take ((n - length x) `div` 2) cs
 
 getWellKnownName :: D.Client -> IO ()
