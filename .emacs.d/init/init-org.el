@@ -92,11 +92,13 @@
                                  (sh . t)
                                  (http . t)
                                  (maxima . t)
-                                 (plantuml . t))))
+                                 (plantuml . t)
+                                 (gnuplot . t))))
 
 
-
-
+(use-package gnuplot
+  :ensure t
+  :pin melpa-stable)
 
 (use-package org-capture
   :config
