@@ -102,7 +102,7 @@ extraKeys track =
   , ("M-S-v", runOrRaise "evolution" isEvolution)
   , ( "M-S-b"
     , nextMatchOrDo History isChromium $
-      safeSpawnProg "usr/bin/chromium-browser")
+      safeSpawnProg "/usr/bin/chromium-browser")
   , ("C-M-t", issueSelectionMenu dmenu track)
   ]
   where
