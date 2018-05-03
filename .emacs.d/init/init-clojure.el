@@ -7,6 +7,9 @@
   (cljr-clean-ns))
 
 
+(use-package flycheck-joker
+  :ensure t
+  :pin melpa-stable)
 
 (use-package clojure-mode
   :commands clojure-mode
@@ -36,15 +39,19 @@
     ;; Expect-call
     (expect-call 1)))
 
+
 (use-package cider
   :bind (:map clojure-mode-map
               ("M-]" . cider-find-var)
               ("M-[" . cider-pop-back)
-              ("C-c C-a" . clojure-reformat))
+              ("C-c C-a" . clojure-reformat)
+              ("C-c C-p" . flycheck-previous-error))
   :init
   (add-hook 'cider-mode-hook (lambda ()
                                (eldoc-mode 1)))
   :config
+  (require 'bind-key)
+  (bind-key* "C-c C-p" 'flycheck-previous-error)
   (use-package helm-buffers)
   (setq cider-prompt-for-symbol nil
         nrepl-hide-special-buffers t
@@ -57,6 +64,7 @@
   (add-to-list 'helm-boring-buffer-regexp-list "*nrepl-messages.*")
   :diminish cider-mode
   :ensure t)
+
 
 (use-package clj-refactor
   :ensure t)
