@@ -96,14 +96,13 @@ extraKeys track =
     , recentCommandsMenu dmenu "/home/bart/.local/share/recently-used.xbel")
   , ("M-S-f", runOrRaise "thunar" isThunar)
   , ("M-S-s", runOrRaise "slack" isSlack)
-  , ("M-S-t", spawn "~/bin/term-tmux")
-  , ("M-S-n", nextMatch History isTerminal)
+  , ("M-S-n", nextMatchOrDo History isTerminal $ safeSpawnProg "/home/bart/bin/term-tmux")
   , ("M-S-a", runOrRaise "authy" isAuthy)
   , ("M-S-v", runOrRaise "evolution" isEvolution)
   , ( "M-S-b"
     , nextMatchOrDo History isChromium $
-      safeSpawnProg "usr/bin/chromium-browser")
-  , ("C-M-t", issueSelectionMenu dmenu track)
+      safeSpawnProg "/usr/bin/chromium-browser")
+  , ("M-t", issueSelectionMenu dmenu track)
   ]
   where
     setMasterAudio cmd = spawn $ "amixer -D pulse set Master " ++ cmd
