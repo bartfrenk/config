@@ -8,6 +8,11 @@
 ;;        conj '[cider.nrepl/cider-middleware
 ;;               refactor-nrepl.middleware/wrap-refactor])
 
+(swap! boot.repl/*default-dependencies*
+       concat '[[criterium "0.4.4"]
+                [pjstadig/humane-test-output "0.8.3"]])
+
+
 (configure-repositories!
   (fn [{:keys [url] :as repo-map}]
     (->> (condp re-find url
