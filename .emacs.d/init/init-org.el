@@ -24,11 +24,6 @@
   (interactive)
   (find-file inbox-file))
 
-(defun insert-time-stamp ()
-  "Inserts an inactive timestamp of the current time."
-  (interactive)
-  (org-time-stamp '(16) t))
-
 (use-package org
 
   :bind
@@ -39,6 +34,10 @@
 
   :config
   (use-package flycheck)
+  (defun insert-time-stamp ()
+    "Inserts an inactive timestamp of the current time."
+    (interactive)
+    (org-time-stamp '(16) t))
 
   (defun org-fill-paragraph--latex-environment (&rest args)
     "Use default fill-paragraph in latex environments."
@@ -51,6 +50,8 @@
                                              python-pycompile)))
 
   :ensure t
+
+  :pin melpa-stable
 
   :functions
   (org-fill-paragraph--latex-environment
@@ -101,6 +102,7 @@
   :pin melpa-stable)
 
 (use-package org-capture
+  :pin melpa-stable
   :config
   (setq org-capture-templates
         `(("t" "Task" entry
@@ -115,30 +117,23 @@
            :unnarrowed t))))
 
 (use-package org-evil
+  :pin melpa-stable
   :ensure t)
 
 (use-package ob-ipython
+  :pin melpa-stable
   :ensure t
   :config
   (setq ob-ipython-command "jupyter")
   (add-to-list 'evil-emacs-state-modes 'special-mode))
 
 (use-package ob-http
+  :pin melpa-stable
   :ensure t)
 
 (use-package ob-python
+  :pin melpa-stable
   :config
   (setq org-babel-python-command "python3"))
-
-;; (use-package ob-sql-mode
-;;   :pin melpa-stable
-;;   :ensure t)
-
-;; (use-package ob-clojure-literate
-;;   :after org
-;;   :ensure t
-;;   :init
-;;   (setq ob-clojure-literate-auto-jackin-p t)
-;;   (add-hook 'org-mode-hook #'ob-clojure-literate-mode))
 
 (provide 'init-org)
