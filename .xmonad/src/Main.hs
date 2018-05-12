@@ -102,7 +102,7 @@ extraKeys track =
   , ( "M-S-b"
     , nextMatchOrDo History isChromium $
       safeSpawnProg "/usr/bin/chromium-browser")
-  , ("M-t", issueSelectionMenu dmenu track)
+  , ("C-M-t", issueSelectionMenu dmenu track)
   ]
   where
     setMasterAudio cmd = spawn $ "amixer -D pulse set Master " ++ cmd
