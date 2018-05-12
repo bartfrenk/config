@@ -9,7 +9,6 @@
 
 (defun haskell-reformat ()
   (interactive)
-  (haskell-sort-imports)
   (hindent-reformat-buffer)
   (haskell-mode-stylish-buffer))
 
@@ -32,9 +31,10 @@
 
   (setq haskell-process-type 'auto
         haskell-hoogle-command "hoogle"
-        haskell-process-suggest-remove-import-lines t
+        haskell-process-suggest-remove-import-lines nil
         haskell-process-auto-import-loaded-modules t
         haskell-process-suggest-hoogle-imports t
+        haskell-stylish-on-save t
         haskell-process-log nil
         haskell-interactive-popup-errors nil
         haskell-process-load-or-reload-prompt t)
