@@ -98,19 +98,6 @@
          sml/theme 'respectful)
    :commands sml/setup)
 
-(set-face-attribute
- 'mode-line
- nil
- :foreground "gray80"
- :background "black"
- :box '(:line-width 1 :style released-button))
-(set-face-attribute
- 'mode-line-inactive
- nil
- :foreground "gray80"
- :background "gray20"
- :box '(:line-width 1 :style released-button))
-
 (use-package git-gutter
   :diminish git-gutter-mode)
 
@@ -140,6 +127,7 @@
 
 (global-git-gutter-mode)
 (yas-global-mode)
+(global-hl-line-mode 1)
 (which-function-mode 1)
 (sml/setup)
 
