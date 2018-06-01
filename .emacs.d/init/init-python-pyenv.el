@@ -1,5 +1,6 @@
 (require 'use-package)
 (require 'projectile)
+(require 'helm-buffers)
 
 ; requires yapf to be installed
 
@@ -50,7 +51,6 @@
 (use-package yapfify
   :commands yapfify-buffer
   :config
-  (use-package helm-buffers)
   (add-to-list 'helm-boring-buffer-regexp-list "*yapfify.**")
   :ensure t
   :diminish yapf-mode)

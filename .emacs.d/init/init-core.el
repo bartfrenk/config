@@ -31,17 +31,11 @@
 (global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "C-c C--") 'linum-mode)
 
-;(use-package dired+
-;  :commands diredp-toggle-find-file-reuse-dir
-;  :ensure t)
-
 (use-package ace-window
-  :ensure t
   :config
   (global-set-key (kbd "M-m") 'ace-window))
 
 (use-package hl-line
-  :ensure t
   :commands global-hl-line-mode
   :init (setq global-hl-line-sticky-flag nil))
 
@@ -55,7 +49,7 @@
   (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
   (setq-default evil-move-cursor-back nil))
 
-(use-package color :ensure t)
+(use-package color)
 
 (defvar after-load-theme-hook nil
   "Hook run after a color theme is loaded using `load-theme'.")
@@ -64,7 +58,6 @@
   (run-hooks 'after-load-theme-hook))
 
 (use-package rainbow-delimiters
-  :ensure t
   :functions color-saturate-name
   :init
   (add-hook 'prog-mode-hook (lambda ()
@@ -97,33 +90,12 @@
 
 (use-package yasnippet
   :commands yas-global-mode
-  :ensure t
   :diminish yas-minor-mode
   :init
   (use-package helm-c-yasnippet :ensure t)
   (global-set-key (kbd "C-c y") 'helm-yas-complete))
 
-(use-package linum
-  :ensure t
-  :init
-  ;; Ensure that there is sufficient space for line numbers.
-  (global-linum-mode)
-  (defvar linum-format-fmt "%d" "Cached line number format string.")
-  (add-hook 'linum-before-numbering-hook
-            (lambda ()
-              (setq-local linum-format-fmt (let
-                              ((w (length (number-to-string
-                                           (count-lines (point-min) (point-max))))))
-                            (concat "%" (number-to-string (+ w 1)) "d")))))
-  (defun linum-format-func (line)
-    (concat
-     (propertize (format linum-format-fmt line) 'face 'linum)
-     (propertize " " 'face 'linum)))
-  :config
-  (setq linum-format 'linum-format-func))
-
 (use-package smart-mode-line
-   :ensure t
    :functions (sml/faces-from-theme
                sml/theme-p)
    :init
@@ -132,43 +104,23 @@
    :commands sml/setup)
 
 (use-package git-gutter
-  :ensure t
   :diminish git-gutter-mode)
 
 (use-package autorevert
-  :ensure t
   :diminish auto-revert-mode)
 
-(use-package which-function-mode
-  :commands which-function-mode
-  :diminish which-function-mode
-  :config
-  (which-function-mode)
-  (setq-default header-line-format
-                '((which-func-mode (""which-func-format " "))))
-  (setq mode-line-misc-info
-        (assq-delete-all 'which-func-mode mode-line-misc-info)))
-
-
-(use-package smooth-scrolling :ensure t)
-(use-package fringe-helper :ensure t)
-(use-package phabricator :ensure t)
-(use-package yaml-mode :ensure t)
-(use-package markdown-mode :ensure t)
-(use-package edit-indirect :ensure t)
-(use-package eldoc :diminish eldoc-mode :ensure t)
-(use-package undo-tree :diminish undo-tree-mode :ensure t)
-(use-package dockerfile-mode :ensure t)
-(use-package magit :ensure t)
-
-;; Reload theme when a frame is created, since setting a theme when there is no
-;; frame messes up the colors of some themes (material included).
-(use-package material-theme :ensure t)
-(use-package paredit :ensure t)
-(use-package evil-paredit :ensure t)
-
-
-
+(use-package fringe-helper)
+(use-package phabricator)
+(use-package yaml-mode)
+(use-package markdown-mode)
+(use-package edit-indirect)
+(use-package eldoc :diminish eldoc-mode)
+(use-package undo-tree :diminish undo-tree-mode)
+(use-package dockerfile-mode)
+(use-package magit)
+(use-package material-theme)
+(use-package paredit)
+(use-package evil-paredit)
 
 (if (daemonp)
     (add-hook 'after-make-frame-functions
@@ -177,10 +129,10 @@
                 (load-theme 'material t)))
   (load-theme 'material t))
 
-;(diredp-toggle-find-file-reuse-dir 1)
 (global-git-gutter-mode)
 (global-hl-line-mode)
 (yas-global-mode)
+(which-function-mode 1)
 (sml/setup)
 
 (add-to-list 'auto-mode-alist '("\\.raml\\'" . yaml-mode))

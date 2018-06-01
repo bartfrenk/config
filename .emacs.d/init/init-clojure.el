@@ -1,5 +1,6 @@
 (require 'use-package)
 (require 'evil)
+(require 'helm-buffers)
 
 (defun clojure-reformat ()
   (interactive)
@@ -52,7 +53,6 @@
   :config
   (require 'bind-key)
   (bind-key* "C-c C-p" 'flycheck-previous-error)
-  (use-package helm-buffers)
   (setq cider-prompt-for-symbol nil
         nrepl-hide-special-buffers t
         cider-use-overlays t
@@ -65,19 +65,6 @@
   :diminish cider-mode
   :ensure t)
 
+(use-package clj-refactor)
 
-(use-package clj-refactor
-  :ensure t)
-
-
-;; (use-package helm-clojuredocs
-;;  :ensure t)
-
-;; TODO: does not work too well yet
-(use-package flycheck-clojure
-  :commands flycheck-clojure-setup
-  :ensure t)
-
-
-;; (eval-after-load 'flycheck '(flycheck-clojure-setup))
 (provide 'init-clojure)
