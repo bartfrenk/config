@@ -17,6 +17,7 @@
   :init
   (add-hook 'clojure-mode-hook (lambda ()
                                  (paredit-mode 1)
+                                 (evil-paredit-mode 1)
                                  (clj-refactor-mode 1)
                                  (yas-minor-mode 1)
                                  ;;(flycheck-clojure-setup)
