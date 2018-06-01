@@ -34,10 +34,6 @@
   :config
   (global-set-key (kbd "M-m") 'ace-window))
 
-(use-package hl-line
-  :commands global-hl-line-mode
-  :init (setq global-hl-line-sticky-flag nil))
-
 (use-package evil
   :init
   (setq evil-want-abbrev-expand-on-insert-exit nil)
@@ -120,6 +116,7 @@
 (use-package material-theme)
 (use-package paredit)
 (use-package evil-paredit)
+(use-package smooth-scrolling)
 
 (if (daemonp)
     (add-hook 'after-make-frame-functions
@@ -129,7 +126,6 @@
   (load-theme 'material t))
 
 (global-git-gutter-mode)
-(global-hl-line-mode)
 (yas-global-mode)
 (which-function-mode 1)
 (sml/setup)
