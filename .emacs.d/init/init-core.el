@@ -6,12 +6,11 @@
               indent-tabs-mode nil
               fill-column 80)
 (setq inhibit-startup-message t
-      ;blink-cursor-interval 0.8
       backup-directory-alist '(("." . "~/.emacs.d/backup"))
       initial-scratch-message nil scroll-preserve-screen-position nil
       scroll-conservatively 101
       scroll-margin 20)
-(setq-default line-spacing '0.3)
+(setq-default line-spacing '0.4)
 (fset 'yes-or-no-p 'y-or-n-p)
 (column-number-mode t)
 (blink-cursor-mode 0)
