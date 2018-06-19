@@ -9,7 +9,9 @@
       backup-directory-alist '(("." . "~/.emacs.d/backup"))
       initial-scratch-message nil scroll-preserve-screen-position nil
       scroll-conservatively 101
-      scroll-margin 20)
+      scroll-margin 20
+      auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
+
 (setq-default line-spacing '0.4)
 (fset 'yes-or-no-p 'y-or-n-p)
 (column-number-mode t)
