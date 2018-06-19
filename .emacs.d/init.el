@@ -21,7 +21,7 @@
                  org
                  python-pyenv
                  clojure
-                 haskell
+                 haskell-intero
                  erlang
                  elixir
                  jinja2
