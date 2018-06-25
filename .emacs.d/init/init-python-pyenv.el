@@ -81,16 +81,29 @@
 (use-package helm-pydoc
   :ensure t)
 
-(defvar my-python-shell-dir-setup-code
-  "import os
+;; (use-package flycheck-mypy
+;;   :pin melpa ;; not available on melpa-stable
+;;   :config
+;;   (flycheck-add-next-checker 'python-pylint 'python-mypy))
+
+(defvar set-up-python-repl
+  "
+import sys
+import os
 home = os.path.expanduser('~')
 while os.path.isfile('__init__.py') and (os.getcwd() != home):
     os.chdir('..')
-del os")
+sys.path.append(os.getcwd())
+if os.path.basename(os.getcwd()) == 'src':
+    os.chdir('..')
+del os
+del sys
+"
+  "Python script to run immediately after starting the REPL.")
 
 (defun my-python-shell-dir-setup ()
   (let ((process (get-buffer-process (current-buffer))))
-    (python-shell-send-string my-python-shell-dir-setup-code process)
+    (python-shell-send-string set-up-python-repl process)
     (message "Setup project path")))
 
 (add-hook 'inferior-python-mode-hook 'my-python-shell-dir-setup)
