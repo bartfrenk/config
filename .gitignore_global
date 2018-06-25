@@ -5,6 +5,7 @@
 *.jar
 *.hi
 *-checkpoint.ipynb
+.mypy_cache
 
 # stack
 .stack-work/
