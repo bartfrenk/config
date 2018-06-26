@@ -39,4 +39,13 @@ The return value is the new value of LIST-VAR."
   (setq current-prefix-arg t)
   (call-interactively 'untabify))
 
+(defun scan-list (func xs &optional init)
+  "Fold LIST with FUNC and keeps the intermediate results."
+  (let ((result (when init (list init))))
+    (dolist (x xs result)
+      (let ((head (if result
+                      (funcall func (car result) x)
+                    x)))
+        (setq result (cons head result))))))
+
 (provide 'functions)
