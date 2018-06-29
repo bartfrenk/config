@@ -44,7 +44,7 @@ if os.path.basename(os.getcwd()) == 'src':
     os.chdir('..')
 del os
 del sys"
-  "Python script to run immediately after starting the REPL.")
+  "*Python script to run immediately after starting the REPL.")
 
 (defun python-shell-set-up-project-dirs ()
   "Configures the current Python shell to work well with multi-package projects.
