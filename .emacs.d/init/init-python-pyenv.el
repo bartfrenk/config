@@ -2,18 +2,73 @@
 (require 'projectile)
 (require 'helm-buffers)
 
-; requires yapf to be installed
+;; ==== python-mode utility functions ====
+
+(defun python--package-name (path)
+  "Derive the package name for the file specified by PATH."
+  (let* ((segments (reverse (split-string path "/")))
+         (py-file-name (car segments))
+         (package (if (string= py-file-name "__init__.py")
+                      nil
+                      (list (file-name-base py-file-name))))
+         (path (string-remove-suffix (concat "/" py-file-name) path))
+         (segments (cdr segments)))
+    (while (file-exists-p (concat path "/__init__.py") )
+      (setq package (cons (car segments) package)
+            path (string-remove-suffix (concat "/" (car segments)) path )
+            segments (cdr segments)))
+    (string-join package ".")))
+
+(defun python-shell-import-package ()
+  "Imports the symbols of the current package into the running Python shell."
+  (interactive)
+  (let* ((process (get-buffer-process (current-buffer)))
+         (package-name  (python--package-name buffer-file-name))
+         (snippet (concat "from " package-name " import *")))
+    (message (concat "Importing package " package-name))
+    (python-shell-send-string snippet process)))
 
 (defun python-format-buffer ()
-  "Format a Python buffer." (interactive)
+  "Format a Python buffer. Requires yapf to be available."
+  (interactive)
   (yapfify-buffer))
+
+(defvar python-shell-set-up-project-dirs-snippet "
+import sys
+import os
+home = os.path.expanduser('~')
+while os.path.isfile('__init__.py') and (os.getcwd() != home):
+    os.chdir('..')
+sys.path.append(os.getcwd())
+if os.path.basename(os.getcwd()) == 'src':
+    os.chdir('..')
+del os
+del sys"
+  "Python script to run immediately after starting the REPL.")
+
+(defun python-shell-set-up-project-dirs ()
+  "Configures the current Python shell to work well with multi-package projects.
+
+Appends the projects source directory (in src if it exist,
+otherwise the project base dir) to the system path, and moves the
+working directory to the project base dir."
+
+  (interactive)
+  (let ((process (get-buffer-process (current-buffer))))
+    (message "Setting up project paths")
+    (python-shell-send-string python-shell-set-up-project-dirs-snippet process)))
+
+(add-hook 'inferior-python-mode-hook 'python-shell-set-up-project-dirs)
+
+;; ==== configuration =====
 
 (use-package python
   :commands python-shell-send-string
   :bind
   (:map python-mode-map
         ("C-c C-a" . python-format-buffer)
-        ("C-c M-j" . run-python))
+        ("C-c M-j" . run-python)
+        ("C-c C-k" . python-shell-import-package))
   :init
   (add-hook 'python-mode-hook (lambda ()
                                 (auto-complete-mode -1)
@@ -24,11 +79,9 @@
   (when (executable-find "ipython") (setq python-shell-interpreter "ipython"
           python-shell-interpreter-args "--simple-prompt"))
   :config
-  (setq python-shell-completion-native-enable nil)
-  :ensure t)
+  (setq python-shell-completion-native-enable nil))
 
 (use-package pyenv-mode
-  :ensure t
   :commands pyenv-mode-versions
   :config)
 
@@ -42,7 +95,6 @@
 (add-hook 'projectile-switch-project-hook 'projectile-pyenv-mode-set)
 
 (use-package virtualenvwrapper
-  :ensure t
   :config
   (setq venv-location "/home/bart/.pyenv/versions"))
 
@@ -50,7 +102,6 @@
   :commands yapfify-buffer
   :config
   (add-to-list 'helm-boring-buffer-regexp-list "*yapfify.**")
-  :ensure t
   :diminish yapf-mode)
 
 (use-package jedi
@@ -59,99 +110,19 @@
         ("M-]" . jedi:goto-definition)
         ("M-[" . jedi:goto-definition-pop-marker)
         ("C-c C-d" . jedi:show-doc))
-  :commands jedi:setup
-  :ensure t)
+  :commands jedi:setup)
 
 (use-package company-jedi
   :after (company jedi)
   :init
-  (add-to-list 'company-backends 'company-jedi)
-  :ensure t)
+  (add-to-list 'company-backends 'company-jedi))
 
 (use-package sphinx-doc
-  :ensure t
   :diminish sphinx-doc-mode)
 
 (use-package python-docstring
-  :ensure t
   :diminish python-docstring-mode)
 
-(use-package helm-pydoc
-  :ensure t)
-
-;; (use-package flycheck-mypy
-;;   :pin melpa ;; not available on melpa-stable
-;;   :config
-;;   (flycheck-add-next-checker 'python-pylint 'python-mypy))
-
-(defvar set-up-python-repl
-  "
-import sys
-import os
-home = os.path.expanduser('~')
-while os.path.isfile('__init__.py') and (os.getcwd() != home):
-    os.chdir('..')
-sys.path.append(os.getcwd())
-if os.path.basename(os.getcwd()) == 'src':
-    os.chdir('..')
-del os
-del sys
-"
-  "Python script to run immediately after starting the REPL.")
-
-(defun python--shell-set-up-dirs ()
-  (let ((process (get-buffer-process (current-buffer))))
-    (python-shell-send-string set-up-python-repl process)
-    (message "Setup project path")))
-
-(add-hook 'inferior-python-mode-hook 'python--shell-set-up-dirs)
-
-;; TODO: deal with __init__.py buffers
-(defun python--package-name (path)
-  "Derive the package name for the file specified by PATH."
-  (let* ((segments (reverse (split-string path "/")))
-         (package (list (file-name-base (car segments))))
-         (path (string-remove-suffix (concat "/" (car segments)) path))
-         (segments (cdr segments)))
-    (while (file-exists-p (concat path "/__init__.py") )
-      (setq package (cons (car segments) package)
-            path (string-remove-suffix (concat "/" (car segments)) path )
-            segments (cdr segments)))
-    (string-join package ".")))
-
-(python--package-name "/home/bart/dev/projects/experiments/py-bandit/src/bandit/web/generic.py")
-
-;; TODO: might be better to deal with this via from <package name> import *, and relying on
-;; ipython's autoreload extension.
-(defun python--shell-set-package-name (orig-func &rest args)
-  (let ((process (get-buffer-process (current-buffer)))
-        (snippet (concat "__name__ = \""
-                         (python--package-name buffer-file-name)
-                         "\"")))
-    (python-shell-send-string snippet process))
-  (apply orig-func args))
-
-(advice-add 'python-shell-send-buffer :around #'python--shell-set-package-name)
-
-
-
-
-
-
-
-
-;; (defun python-set-name-to-current-buffer
-;;     (orig-fun &rest args)
-;;   (message buffer-file-name)
-;;   (let ((res (apply orig-fun args)))
-;;     res))
-
-;; (advice-add
-;;  'python-shell-send-buffer
-;;  :around
-;;  #'python-set-name-to-current-buffer)
-
-
-
+(use-package helm-pydoc)
 
 (provide 'init-python-pyenv)
