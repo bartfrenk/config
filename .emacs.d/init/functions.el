@@ -48,4 +48,7 @@ The return value is the new value of LIST-VAR."
                     x)))
         (setq result (cons head result))))))
 
+(defun unlines (strings)
+  (mapconcat #'identity strings "\n"))
+
 (provide 'functions)
