@@ -30,6 +30,8 @@
   :ensure t)
 
 (use-package go-snippets
+  ;; not available on melpa-stable
+  :pin "melpa"
   :ensure t)
 
 (use-package company-go
