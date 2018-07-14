@@ -46,14 +46,11 @@
   :bind (:map clojure-mode-map
               ("M-]" . cider-find-var)
               ("M-[" . cider-pop-back)
-              ("C-c C-a" . clojure-reformat)
-              ("C-c C-p" . flycheck-previous-error))
+              ("C-c C-a" . clojure-reformat))
   :init
   (add-hook 'cider-mode-hook (lambda ()
                                (eldoc-mode 1)))
   :config
-  (require 'bind-key)
-  (bind-key* "C-c C-p" 'flycheck-previous-error)
   (setq cider-prompt-for-symbol nil
         nrepl-hide-special-buffers t
         cider-use-overlays t

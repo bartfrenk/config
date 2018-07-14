@@ -69,7 +69,9 @@
   (add-hook 'org-src-mode-hook
             'disable-checkers-in-org-src-block)
   (add-hook 'org-mode-hook
-            (lambda () (linum-mode -1)))
+            (lambda ()
+              (linum-mode -1)
+              (flycheck-mode -1)))
   :config
   (setq org-log-done t
         org-src-fontify-natively t
