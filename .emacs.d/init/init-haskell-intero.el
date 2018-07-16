@@ -1,5 +1,5 @@
 (require 'use-package)
-(require 'stack-hoogle)
+(require 'hs-hoogle)
 
 ;; Useful key bindings:
 ;; C-u C-c C-t Insert type signature for thing at point
@@ -9,7 +9,10 @@
 
 (defun haskell-reformat-buffer ()
     (interactive)
-    (hindent-reformat-buffer))
+    (hindent-reformat-buffer)
+    (haskell-mode-stylish-buffer))
+
+
 
 (use-package intero
   :bind
@@ -17,7 +20,8 @@
         ("M-]" . intero-goto-definition)
         ("M-[" . xref-pop-marker-stack)
         ("C-c C-a" . haskell-reformat-buffer)
-        ("C-C C-d" . stack-hoogle-info))
+        ("C-C C-d" . hs-hoogle/info)
+        ("C-c h" . hs-hoogle/helm))
   :commands intero-global-mode)
 
 (use-package company-ghci
