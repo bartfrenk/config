@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# key: exercise
+# name: latex exercise
+# --
+#+ATTR_LATEX: :options {$1}
+#+BEGIN_exercise
+$0
+#+END_exercise
