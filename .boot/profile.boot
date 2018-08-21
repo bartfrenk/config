@@ -9,8 +9,8 @@
 ;;               refactor-nrepl.middleware/wrap-refactor])
 
 (swap! boot.repl/*default-dependencies*
-       concat '[[criterium "0.4.4"]
-                [pjstadig/humane-test-output "0.8.3"]])
+       concat '[[criterium "0.4.4" :scope "test"]
+                [pjstadig/humane-test-output "0.8.3" :scope "test"]])
 
 
 (configure-repositories!
