@@ -34,7 +34,9 @@
                  coq
                  tla
                  maxima
-                 groovy)))
+                 groovy
+                 antlr
+                 )))
 
  (dolist (module modules)
    (let ((name (symbol-name module))
