@@ -1,4 +1,6 @@
 (require 'use-package)
+(require 'flycheck)
+(require 'ob-python)
 
 ;; to add file to agenda: org-agenda-file-to-front
 
@@ -33,7 +35,6 @@
    ("C-c j" . open-journal-file))
 
   :config
-  (use-package flycheck)
   (defun insert-time-stamp ()
     "Inserts an inactive timestamp of the current time."
     (interactive)
@@ -63,11 +64,21 @@
               #'org-fill-paragraph--latex-environment)
   ;; allow emphasis to extend over two lines
   (setcar (nthcdr 4 org-emphasis-regexp-components) 2)
+  (add-hook 'org-babel-after-execute-hook
+            'org-display-inline-images 'append)
+  (add-hook 'org-src-mode-hook
+            'disable-checkers-in-org-src-block)
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (linum-mode -1)
+              (flycheck-mode -1)))
+  :config
   (setq org-log-done t
         org-src-fontify-natively t
         org-confirm-babel-evaluate nil
         org-startup-with-inline-images t
         org-edit-src-content-indentation 0
+        org-babel-python-command "python3"
         org-startup-folded 'content
         org-outline-path-complete-in-steps nil
         org-default-notes-file inbox-file
@@ -77,15 +88,18 @@
                              "TODO(t)" "WAIT(w)" "STARTED(s)"
                              "|" "DONE(d)" "CANCELED(c)"))
         org-refile-targets '((org-agenda-files . (:maxlevel . 3)))
-        org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
-  (add-hook 'org-babel-after-execute-hook
-            'org-display-inline-images 'append)
-  (add-hook 'org-src-mode-hook
-            'disable-checkers-in-org-src-block)
-  (add-hook 'org-mode-hook
-            (lambda () (linum-mode -1)))
-  :config
-  (setq org-babel-sh-command "bash")
+        org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar"
+        org-capture-templates
+        `(("t" "Task" entry
+           (file+headline inbox-file "Tasks")
+           "* TODO %^{Task}\nFile: %F\n%?")
+          ("n" "Quick note" entry
+           (file+headline inbox-file "Notes")
+           "* %^{Note}")
+          ("j" "Journal entry" entry
+           (file+headline ,(journal-file) "Entries")
+           "* %^{Title}\n  Date: %U\n\n  %?"
+           :unnarrowed t)))
   (org-babel-do-load-languages 'org-babel-load-languages
                                '((emacs-lisp . t)
                                  (sql . t)
@@ -97,43 +111,15 @@
                                  (gnuplot . t))))
 
 
-(use-package gnuplot
-  :ensure t
-  :pin melpa-stable)
+(use-package gnuplot)
 
-(use-package org-capture
-  :pin melpa-stable
-  :config
-  (setq org-capture-templates
-        `(("t" "Task" entry
-           (file+headline inbox-file "Tasks")
-           "* TODO %^{Task}\nFile: %F\n%?")
-          ("n" "Quick note" entry
-           (file+headline inbox-file "Notes")
-           "* %^{Note}")
-          ("j" "Journal entry" entry
-           (file+headline ,(journal-file) "Entries")
-           "* %^{Title}\n  Date: %U\n\n  %?"
-           :unnarrowed t))))
-
-(use-package org-evil
-  :pin melpa-stable
-  :ensure t)
+(use-package org-evil)
 
 (use-package ob-ipython
-  :pin melpa-stable
-  :ensure t
   :config
   (setq ob-ipython-command "jupyter")
   (add-to-list 'evil-emacs-state-modes 'special-mode))
 
-(use-package ob-http
-  :pin melpa-stable
-  :ensure t)
-
-(use-package ob-python
-  :pin melpa-stable
-  :config
-  (setq org-babel-python-command "python3"))
+(use-package ob-http)
 
 (provide 'init-org)

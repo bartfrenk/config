@@ -1,4 +1,13 @@
 (require 'use-package)
+(require 'helm-buffers)
+(require 'helm-mode)
+(require 'helm-config)
+(require 'helm-bookmark)
+(require 'helm-misc)
+(require 'helm-files)
+(require 'helm-command)
+(require 'helm-locate)
+(require 'helm-org)
 
 (use-package helm
   :diminish helm-mode
@@ -6,16 +15,7 @@
   :init
   (helm-mode)
   :config
-  (use-package helm-buffers)
-  (use-package helm-mode)
-  (use-package helm-config)
-  (use-package helm-bookmark)
-  (use-package helm-misc)
-  (use-package helm-files)
-  (use-package helm-command)
-  (use-package helm-locate)
-  (use-package helm-org)
-  (setq helm-split-window-in-side-p t
+  (setq helm-split-window-inside-p t
         helm-bookmark-show-location t
         helm-buffers-fuzzy-matching t
         helm-buffer-max-length nil
@@ -29,7 +29,8 @@
     (setq header-line-format nil))
 
   :bind
-  (("C-x C-b" . helm-buffers-list) ("M-x" . helm-M-x)
+  (("C-x C-b" . helm-buffers-list)
+   ("M-x" . helm-M-x)
    ("C-x C-f" . helm-find-files)
    ("C-c i" . helm-imenu)
    :map helm-map
@@ -50,6 +51,7 @@
 (use-package helm-ag
   :ensure t
   :bind (("C-c a" . helm-ag)))
+
 (use-package helm-flycheck
   :ensure t
   :bind

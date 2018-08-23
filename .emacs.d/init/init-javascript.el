@@ -47,11 +47,11 @@
   :ensure t
   :pin melpa-stable
   :config
-  (setq-default js-indent-level 2)
-  (setq-default js2-indent-level 2)
-  (setq-default jsx-indent-level 2)
-  (setq-default sgml-basic-offset 2)
-  (setq-default js2-basic-offset 2))
+  (setq-default js-indent-level 2
+                js2-indent-level 2
+                jsx-indent-level 2
+                sgml-basic-offset 2
+                js2-basic-offset 2))
 
 (use-package add-node-modules-path
   :ensure t

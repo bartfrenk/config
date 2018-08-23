@@ -114,7 +114,7 @@ extraKeys track =
       in spawnAndNotify cmd "touchpad enabled"
     dmenuRun = "/usr/bin/dmenu_run"
     dmenu = "/usr/bin/dmenu"
-    isEmacs = resource =? "emacs24" <||> resource =? "emacs"
+    isEmacs = className =? "Emacs"
     isThunar = resource =? "thunar"
     isSlack = className =? "Slack"
     isTerminal = className =? "Xfce4-terminal"

@@ -1,5 +1,6 @@
 (require 'use-package)
 (require 'evil)
+(require 'helm-buffers)
 
 (defun clojure-reformat ()
   (interactive)
@@ -16,6 +17,7 @@
   :init
   (add-hook 'clojure-mode-hook (lambda ()
                                  (paredit-mode 1)
+                                 (evil-paredit-mode 1)
                                  (clj-refactor-mode 1)
                                  (yas-minor-mode 1)
                                  ;;(flycheck-clojure-setup)
@@ -44,15 +46,11 @@
   :bind (:map clojure-mode-map
               ("M-]" . cider-find-var)
               ("M-[" . cider-pop-back)
-              ("C-c C-a" . clojure-reformat)
-              ("C-c C-p" . flycheck-previous-error))
+              ("C-c C-a" . clojure-reformat))
   :init
   (add-hook 'cider-mode-hook (lambda ()
                                (eldoc-mode 1)))
   :config
-  (require 'bind-key)
-  (bind-key* "C-c C-p" 'flycheck-previous-error)
-  (use-package helm-buffers)
   (setq cider-prompt-for-symbol nil
         nrepl-hide-special-buffers t
         cider-use-overlays t
@@ -65,19 +63,8 @@
   :diminish cider-mode
   :ensure t)
 
-
 (use-package clj-refactor
-  :ensure t)
+  :pin "melpa"
+  )
 
-
-;; (use-package helm-clojuredocs
-;;  :ensure t)
-
-;; TODO: does not work too well yet
-(use-package flycheck-clojure
-  :commands flycheck-clojure-setup
-  :ensure t)
-
-
-;; (eval-after-load 'flycheck '(flycheck-clojure-setup))
 (provide 'init-clojure)
