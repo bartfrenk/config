@@ -4,6 +4,7 @@
   :ensure t)
 
 (use-package flycheck-elixir
+  :pin "melpa"
   :ensure t)
 
 (use-package alchemist

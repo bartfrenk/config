@@ -2,6 +2,7 @@
 (require 'evil)
 
 (use-package flycheck-plantuml
+  :pin "melpa"
   :ensure t)
 
 (use-package plantuml-mode

@@ -1,0 +1,34 @@
+#!/bin/bash
+
+usage="$(basename "$0") [-h] [-v] [-s stack] [-n name] inspect ec2 instances\n
+-h\t show this help text\n
+-v\t don't format json response\n
+-s\t filter on instance stack\n
+-n\t filter on instance name"
+
+jq_format='
+  .Reservations[] |
+  .Instances[] |
+  { state: .State.Name,
+    ip: .NetworkInterfaces[0].PrivateIpAddresses[0].PrivateIpAddress,
+    tags: .Tags | map(select(.Key == "Version" or .Key == "Name" or .Key == "Stack")) | map(.Key + "=" + .Value) | sort}'
+
+OPTIND=1
+
+filters=()
+
+while getopts "vhs:n:" opt; do
+    case "$opt" in
+    h)  echo -e $usage
+        exit
+        ;;
+    s)  filters+=("Name=tag:Stack,Values=$OPTARG")
+        ;;
+    n)  filters+=("Name=tag:Name,Values=$OPTARG")
+        ;;
+    v)  jq_format=""
+    esac
+done
+
+shift $((OPTIND-1))
+aws ec2 describe-instances --filters ${filters[@]} | ( [[ -n $jq_format ]] && jq "$jq_format" || cat)

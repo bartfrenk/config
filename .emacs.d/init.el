@@ -9,7 +9,7 @@
 (package-initialize)
 
 ; silence 'tramp-read-passwd and 'find-tag-noselect redefinition warnings
-(setq ad-redefinition-action 'accept)
+; (setq ad-redefinition-action 'accept)
 (let ((modules '(packages
                  core
                  projectile
@@ -35,12 +35,11 @@
                  tla
                  maxima
                  groovy
-                 antlr
-                 )))
+                 antlr)))
 
- (dolist (module modules)
-   (let ((name (symbol-name module))
-         (prefix "init-"))
+  (dolist (module modules)
+    (let ((name (symbol-name module))
+          (prefix "init-"))
       (message name)
       (require (intern (concat prefix name))))))
 

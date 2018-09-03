@@ -25,6 +25,7 @@
   :commands intero-global-mode)
 
 (use-package company-ghci
+  :pin "melpa"
   :config
   (add-to-list 'company-backends 'company-ghci))
 

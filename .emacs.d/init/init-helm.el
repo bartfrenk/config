@@ -41,7 +41,6 @@
   :ensure t)
 
 (use-package helm-swoop
-  :pin melpa-stable
   :ensure t
   :bind
   (("C-c s" . helm-multi-swoop-all)

@@ -116,6 +116,7 @@
 (use-package org-evil)
 
 (use-package ob-ipython
+  :pin "melpa"
   :config
   (setq ob-ipython-command "jupyter")
   (add-to-list 'evil-emacs-state-modes 'special-mode))

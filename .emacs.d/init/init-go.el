@@ -27,7 +27,9 @@
   :ensure t)
 
 (use-package go-projectile
+  :pin "melpa"
   :ensure t)
+
 
 (use-package go-snippets
   ;; not available on melpa-stable

@@ -28,7 +28,6 @@
   :ensure t)
 
 (use-package py-autopep8
-  :ensure t
   :bind
   (:map python-mode-map
         ("C-c C-a" . py-autopep8-buffer)))
@@ -37,10 +36,11 @@
   :ensure t)
 
 (use-package python-docstring
+  :pin "melpa"
   :ensure t)
 
-(use-package helm-pydoc
-  :ensure t)
+;; (use-package helm-pydoc
+;;   :ensure t)
 
 (defvar my-python-shell-dir-setup-code
   "import os

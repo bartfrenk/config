@@ -1,5 +1,6 @@
-(require 'haskell-mode)
 (require 'helm)
+
+(use-package haskell-mode)
 
 ;; Somehow this silence the compiler warning
 (declare-function format-spec "elisp")

@@ -63,8 +63,8 @@
   :diminish cider-mode
   :ensure t)
 
-(use-package clj-refactor
-  :pin "melpa"
-  )
+
+;; (use-package clj-refactor
+;;   :pin "melpa")
 
 (provide 'init-clojure)

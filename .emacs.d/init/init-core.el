@@ -109,7 +109,6 @@
   :diminish auto-revert-mode)
 
 (use-package fringe-helper)
-(use-package phabricator)
 (use-package yaml-mode)
 (use-package markdown-mode)
 (use-package edit-indirect)
@@ -118,8 +117,8 @@
 (use-package dockerfile-mode)
 (use-package magit)
 (use-package material-theme)
-(use-package paredit)
-(use-package evil-paredit)
+(use-package paredit :pin "melpa")
+(use-package evil-paredit :pin "melpa")
 (use-package smooth-scrolling)
 
 (if (daemonp)

@@ -123,6 +123,4 @@ working directory to the project base dir."
 (use-package python-docstring
   :diminish python-docstring-mode)
 
-(use-package helm-pydoc)
-
 (provide 'init-python-pyenv)

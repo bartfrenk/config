@@ -7,7 +7,6 @@
 (require 'company)
 
 (use-package js2-mode
-  :ensure t
   :bind (:map js2-mode-map
               ("M-]" . tern-find-definition)
               ("M-[" . tern-pop-find-definition)
@@ -39,13 +38,12 @@
 
 (use-package rjsx-mode
   :ensure t
-  :pin melpa-stable
   :config
   (add-hook 'rjsx-mode-hook 'prettier-js-mode))
 
 (use-package prettier-js
   :ensure t
-  :pin melpa-stable
+  :pin "melpa"
   :config
   (setq-default js-indent-level 2
                 js2-indent-level 2
@@ -55,7 +53,6 @@
 
 (use-package add-node-modules-path
   :ensure t
-  :pin melpa-stable
   :config
   (add-hook 'prettier-js-mode-hook 'add-node-modules-path))
 
