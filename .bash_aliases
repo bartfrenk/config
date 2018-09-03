@@ -11,6 +11,10 @@ alias boot-new="boot -d seancorfield/boot-new new"
 alias boot-deps="boot -d boot-deps"
 alias takeover="tmux detach -a"
 alias ghc="stack ghc --"
+# do not waste time switching between profiling and non-profiling build. See
+# this Stack Overflow post:
+# https://stackoverflow.com/questions/32123475/profiling-builds-with-stack
+alias stack-profile="stack --work-dir .stack-work-profile --profile"
 
 if [ "$1" == true ]; then
     alias ls='ls --color=auto --group-directories-first --classify'
