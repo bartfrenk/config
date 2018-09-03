@@ -39,7 +39,6 @@
 (use-package evil
   :init
   (setq evil-want-abbrev-expand-on-insert-exit nil)
-  :ensure t
   :config
   (evil-mode t)
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
@@ -47,6 +46,8 @@
   (define-key evil-normal-state-map (kbd "C-n") nil)
   (define-key evil-normal-state-map (kbd "C-p") nil)
   (setq-default evil-move-cursor-back nil))
+
+(use-package evil-surround)
 
 (use-package color)
 
