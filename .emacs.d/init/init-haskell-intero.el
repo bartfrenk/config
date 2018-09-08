@@ -9,7 +9,7 @@
 
 (defun haskell-reformat-buffer ()
     (interactive)
-    (hindent-reformat-buffer)
+    ;(hindent-reformat-buffer)
     (haskell-mode-stylish-buffer))
 
 
