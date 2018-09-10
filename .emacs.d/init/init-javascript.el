@@ -1,7 +1,9 @@
 (use-package skewer-mode
+  :bind (:map skewer-mode-map
+              ("C-c C-l" . skewer-load-buffer)
+              ("C-M-x" . skewer-eval-defun))
   :commands skewer-setup
-  :diminish skewer-mode
-  :ensure t)
+  :diminish skewer-mode)
 
 (require 'browse-url)
 (require 'company)
@@ -17,32 +19,31 @@
   (setq js2-basic-offset 2
         browse-url-generic-program "/usr/bin/chromium-browser"
         browse-url-browser-function 'browse-url-generic)
-  (js2r-add-keybindings-with-prefix "C-c C-m")
   (add-hook 'js2-mode-hook (lambda ()
                              (tern-mode t)
                              (prettier-js-mode)
+                             (skewer-mode)
                              (js2-refactor-mode))))
 
+;; Useful key binding: C-c C-m l t to log the identifier at point.
 (use-package js2-refactor
-  :ensure t
-  :diminish js2-refactor-mode)
-
+  :diminish js2-refactor-mode
+  :config
+  (js2r-add-keybindings-with-prefix "C-c C-m"))
 
 (use-package tern
+  :bind (:map tern-mode-keymap
+              ("M-]" . tern-find-definition)
+              ("M-[" . tern-pop-find-definition))
   :commands tern-mode
-  :diminish tern-mode
-  :ensure t)
+  :diminish tern-mode)
 
-(use-package company-tern
-  :ensure t)
+(use-package company-tern)
 
-(use-package rjsx-mode
-  :ensure t
-  :config
-  (add-hook 'rjsx-mode-hook 'prettier-js-mode))
+;; Runs the hooks of its parent modes, among which js2-mode
+(use-package rjsx-mode)
 
 (use-package prettier-js
-  :ensure t
   :pin "melpa"
   :config
   (setq-default js-indent-level 2
@@ -52,7 +53,6 @@
                 js2-basic-offset 2))
 
 (use-package add-node-modules-path
-  :ensure t
   :config
   (add-hook 'prettier-js-mode-hook 'add-node-modules-path))
 
