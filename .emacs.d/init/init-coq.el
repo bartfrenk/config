@@ -2,7 +2,6 @@
 
 (load "~/.emacs.d/lisp/PG/generic/proof-site")
 
-(use-package company-coq
-  :ensure t)
+(use-package company-coq)
 
 (provide 'init-coq)
