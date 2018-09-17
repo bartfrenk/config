@@ -9,8 +9,9 @@
   "Directory containing journal files.")
 
 (defun journal-file ()
-    (let ((journal-name (concat "journal-" (format-time-string "%Y") ".org")))
-      (concat journal-dir "/" journal-name)))
+  (let ((journal-name
+         (concat "journal-" (format-time-string "%Y") ".org")))
+    (concat journal-dir "/" journal-name)))
 
 (defun open-journal-file ()
   "Opens the active journal file."
@@ -86,7 +87,7 @@
         org-startup-indented t
         org-todo-keywords '((sequence
                              "TODO(t)" "WAIT(w)" "STARTED(s)"
-                             "|" "DONE(d)" "CANCELED(c)"))
+                             "|" "DONE(d)" "POSTPONED(p)" "CANCELED(c)"))
         org-refile-targets '((org-agenda-files . (:maxlevel . 3)))
         org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar"
         org-capture-templates
@@ -98,7 +99,7 @@
            "* %^{Note}")
           ("j" "Journal entry" entry
            (file+headline ,(journal-file) "Entries")
-           "* %^{Title}\n  Date: %U\n\n  %?"
+           "* %^{Title}\nDate: %U\n\n%?"
            :unnarrowed t)))
   (org-babel-do-load-languages 'org-babel-load-languages
                                '((emacs-lisp . t)
