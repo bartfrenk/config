@@ -32,6 +32,8 @@
 (global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "C-c C--") 'linum-mode)
 
+(use-package diminish)
+
 (use-package ace-window
   :config
   (global-set-key (kbd "M-m") 'ace-window))
