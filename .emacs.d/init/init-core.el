@@ -1,7 +1,6 @@
 (require 'use-package)
 (require 'functions)
 
-
 (setq-default tab-width 4
               indent-tabs-mode nil
               fill-column 80)
@@ -47,7 +46,10 @@
   (define-key evil-normal-state-map (kbd "C-p") nil)
   (setq-default evil-move-cursor-back nil))
 
-(use-package evil-surround)
+(use-package evil-surround
+  :commands (global-evil-surround-mode))
+
+(global-evil-surround-mode)
 
 (use-package color)
 
@@ -121,6 +123,11 @@
 (use-package paredit :pin "melpa")
 (use-package evil-paredit :pin "melpa")
 (use-package smooth-scrolling)
+(use-package helm-dash
+  :commands (helm-dash)
+  :config
+  (setq helm-dash-common-docsets '("Bash")))
+
 
 (if (daemonp)
     (add-hook 'after-make-frame-functions
