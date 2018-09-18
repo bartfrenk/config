@@ -113,7 +113,7 @@ extraKeys track =
       let cmd = "xinput --disable \"" ++ touchpadName ++ "\""
       in spawnAndNotify cmd "touchpad disabled"
     enableTouchPad =
-      let cmd = "xinput --enable \"AlpsPS/2 ALPS DualPoint TouchPad\""
+      let cmd = "xinput --enable \"" ++ touchpadName ++ "\""
       in spawnAndNotify cmd "touchpad enabled"
     dmenuRun = "/usr/bin/dmenu_run"
     dmenu = "/usr/bin/dmenu"
