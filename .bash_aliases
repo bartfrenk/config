@@ -15,6 +15,8 @@ alias ghc="stack ghc --"
 # this Stack Overflow post:
 # https://stackoverflow.com/questions/32123475/profiling-builds-with-stack
 alias stack-profile="stack --work-dir .stack-work-profile --profile"
+alias py-clean="find . -name \"*.py[c|o]\" -o -name __pycache__ | xargs rm -rf"
+
 
 if [ "$1" == true ]; then
     alias ls='ls --color=auto --group-directories-first --classify'
