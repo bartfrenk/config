@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Rust function
+# key: fn
+# --
+fn $1 {
+    $0
+}
