@@ -80,6 +80,7 @@
         org-startup-with-inline-images t
         org-edit-src-content-indentation 0
         org-babel-python-command "python3"
+        org-agenda-files (directory-files-recursively "~/documents/notes/learning" ".*\.org")
         org-startup-folded 'content
         org-outline-path-complete-in-steps nil
         org-default-notes-file inbox-file
