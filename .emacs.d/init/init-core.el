@@ -97,6 +97,8 @@
   (use-package helm-c-yasnippet :ensure t)
   (global-set-key (kbd "C-c y") 'helm-yas-complete))
 
+(use-package yasnippet-snippets)
+
 (use-package smart-mode-line
    :functions (sml/faces-from-theme
                sml/theme-p)
