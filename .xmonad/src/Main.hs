@@ -67,9 +67,6 @@ spawnAndNotify cmd message = do
 quote :: String -> String
 quote str = "\"" ++ str ++ "\""
 
-touchpadName :: String
-touchpadName = "DLL079F:01 044E:120B"
-
 extraKeys :: Track.Handle X -> [(String, X ())]
 extraKeys track =
   [ ("<XF86AudioLowerVolume>", setMasterAudio "10%-")
@@ -110,10 +107,10 @@ extraKeys track =
   where
     setMasterAudio cmd = spawn $ "amixer -D pulse set Master " ++ cmd
     disableTouchPad =
-      let cmd = "xinput --disable \"" ++ touchpadName ++ "\""
+      let cmd = "xinput --disable \"" ++ Local.touchpadName ++ "\""
       in spawnAndNotify cmd "touchpad disabled"
     enableTouchPad =
-      let cmd = "xinput --enable \"" ++ touchpadName ++ "\""
+      let cmd = "xinput --enable \"" ++ Local.touchpadName ++ "\""
       in spawnAndNotify cmd "touchpad enabled"
     dmenuRun = "/usr/bin/dmenu_run"
     dmenu = "/usr/bin/dmenu"
