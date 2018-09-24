@@ -1,3 +1,10 @@
+(require 'browse-url)
+(require 'company)
+(require 'helm-dash)
+
+(defun javascript/setup-dash ()
+  (setq-local helm-dash-docsets '("React" "JavaScript" "Bootstrap_4")))
+
 (use-package skewer-mode
   :bind (:map skewer-mode-map
               ("C-c C-l" . skewer-load-buffer)
@@ -5,21 +12,20 @@
   :commands skewer-setup
   :diminish skewer-mode)
 
-(require 'browse-url)
-(require 'company)
-
 (use-package js2-mode
   :bind (:map js2-mode-map
               ("M-]" . tern-find-definition)
               ("M-[" . tern-pop-find-definition)
               ("C-c C-l" . skewer-load-buffer)
-              ("C-M-x" . skewer-eval-defun))
+              ("C-M-x" . skewer-eval-defun)
+              ("C-c C-d" . helm-dash-at-point))
   :config
   (add-to-list 'company-backends 'company-tern)
   (setq js2-basic-offset 2
         browse-url-generic-program "/usr/bin/chromium-browser"
         browse-url-browser-function 'browse-url-generic)
   (add-hook 'js2-mode-hook (lambda ()
+                             (javascript/setup-dash)
                              (tern-mode t)
                              (prettier-js-mode)
                              (skewer-mode)
@@ -36,7 +42,9 @@
               ("M-]" . tern-find-definition)
               ("M-[" . tern-pop-find-definition))
   :commands tern-mode
-  :diminish tern-mode)
+  :diminish tern-mode
+  :config
+  (define-key tern-mode-keymap (kbd "C-c C-d") nil))
 
 (use-package company-tern)
 
@@ -59,3 +67,8 @@
 (skewer-setup)
 
 (provide 'init-javascript)
+
+;; Silence warning about assignment to free variable helm-dash-docsets.
+;; Local Variables:
+;; byte-compile-warnings: (not free-vars)
+;; End:
