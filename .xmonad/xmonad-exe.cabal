@@ -1,7 +1,5 @@
 name:                xmonad-exe
 version:             0.1.0.0
--- synopsis:
--- description:
 license:             BSD3
 author:              Bart Frenk
 maintainer:          bart.frenk@gmail.com
@@ -11,10 +9,12 @@ build-type:          Simple
 cabal-version:       >=1.10
 
 executable xmonad
+  ghc-options:         -Wall -O2
   hs-source-dirs:      src
   other-modules:       Colors
                        Local
                        RecentCommands
+                       Track
   main-is:             Main.hs
   default-language:    Haskell2010
   build-depends:       base >= 4.7 && < 5
@@ -31,5 +31,4 @@ executable xmonad
                      , xmonad-contrib
                      , process
                      , split
-  default-extensions: OverloadedStrings
-                      RecordWildCards
+  default-extensions: RecordWildCards

@@ -17,7 +17,7 @@
 !.xmonad/build
 !.xmonad/src/
 !.xmonad/src/*.hs
-.xmonad/lib/Local.hs
+.xmonad/src/Local.hs
 
 !.ipython/
 !.ipython/profile_default/
