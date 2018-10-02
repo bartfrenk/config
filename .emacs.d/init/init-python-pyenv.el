@@ -29,10 +29,14 @@
     (message (concat "Importing package " package-name))
     (python-shell-send-string snippet process)))
 
-(defun python-format-buffer ()
-  "Format a Python buffer. Requires yapf to be available."
-  (interactive)
-  (yapfify-buffer))
+;; (defun python-shell-autoreload ()
+;;   "Sets the python shell process to autoreload imports, when it
+;;   is ipython. Does nothing otherwise."
+;;   (interactive)
+;;   (let* ((process (get-buffer-process (current-buffer)))
+;;          (snippet "%load_ext autoreload"))
+;;     (message "Enabling autoreload")
+;;     (python-shell-send-string snippet process)))
 
 (defvar python-shell-set-up-project-dirs-snippet "
 import sys
@@ -59,7 +63,17 @@ working directory to the project base dir."
     (message "Setting up project paths")
     (python-shell-send-string python-shell-set-up-project-dirs-snippet process)))
 
+(defun python-format-buffer ()
+  "Format a Python buffer. Requires yapf to be available."
+  (interactive)
+  (yapfify-buffer))
+
 (add-hook 'inferior-python-mode-hook 'python-shell-set-up-project-dirs)
+
+(defun jedi:set-virtualenv ()
+  "Set the virtualenv for jedi."
+  (setq jedi:server-args (list "--virtual-env" venv-current-dir)))
+
 
 ;; ==== configuration =====
 
@@ -80,16 +94,17 @@ working directory to the project base dir."
                                 (python-docstring-mode)
                                 (sphinx-doc-mode)
                                 (python/setup-dash)
+                                (jedi-mode t)
                                 ;(yapf-mode)
                                 ))
-  (when (executable-find "ipython") (setq python-shell-interpreter "ipython"
-          python-shell-interpreter-args "--simple-prompt"))
+  (when (executable-find "ipython")
+    (setq python-shell-interpreter "ipython"
+          python-shell-interpreter-args "--simple-prompt --profile=dev"))
   :config
   (setq python-shell-completion-native-enable nil))
 
 (use-package pyenv-mode
-  :commands pyenv-mode-versions
-  :config)
+  :commands pyenv-mode-versions)
 
 (defun projectile-pyenv-mode-set ()
     "Set pyenv version matching project name."
@@ -102,7 +117,10 @@ working directory to the project base dir."
 
 (use-package virtualenvwrapper
   :config
-  (setq venv-location "/home/bart/.pyenv/versions"))
+  (setq venv-location "/home/bart/.pyenv/versions")
+  ;; Does not seem to necessary, after enabling jedi-mode
+  ;; (advice-add 'venv-workon :after 'jedi:set-virtualenv)
+  )
 
 (use-package yapfify
   :commands yapfify-buffer
@@ -110,16 +128,22 @@ working directory to the project base dir."
   (add-to-list 'helm-boring-buffer-regexp-list "*yapfify.**")
   :diminish yapf-mode)
 
-(use-package jedi
+;; (use-package jedi
+;;   :bind
+;;   (:map python-mode-map
+;;         ("M-]" . jedi:goto-definition)
+;;         ("M-[" . jedi:goto-definition-pop-marker)
+;;         ("C-c C-d" . jedi:show-doc))
+;;   :commands jedi:setup)
+
+(use-package company-jedi
+  :commands (jedi:setup)
   :bind
   (:map python-mode-map
         ("M-]" . jedi:goto-definition)
         ("M-[" . jedi:goto-definition-pop-marker)
         ("C-c C-d" . jedi:show-doc))
-  :commands jedi:setup)
-
-(use-package company-jedi
-  :after (company jedi)
+  :after (company)
   :init
   (add-to-list 'company-backends 'company-jedi))
 
@@ -129,6 +153,8 @@ working directory to the project base dir."
 (use-package python-docstring
   :pin "melpa"
   :diminish python-docstring-mode)
+
+(jedi:setup)
 
 (provide 'init-python-pyenv)
 
