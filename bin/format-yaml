@@ -1,0 +1,6 @@
+#!/usr/bin/python3
+import sys
+from ruamel.yaml import YAML
+
+yaml = YAML()
+yaml.dump(yaml.load(sys.stdin), sys.stdout)
