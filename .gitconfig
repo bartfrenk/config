@@ -13,3 +13,5 @@
     ls = log --oneline -n 20
 [core]
     excludesfile = /home/bart/.gitignore_global
+[credential]
+	helper = store

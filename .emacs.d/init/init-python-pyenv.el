@@ -1,6 +1,7 @@
 (require 'use-package)
 (require 'projectile)
 (require 'helm-buffers)
+(require 'helm-dash)
 
 ;; ==== python-mode utility functions ====
 
@@ -62,18 +63,23 @@ working directory to the project base dir."
 
 ;; ==== configuration =====
 
+(defun python/setup-dash ()
+  (setq-local helm-dash-docsets '("Airflow" "Python_3")))
+
 (use-package python
   :commands python-shell-send-string
   :bind
   (:map python-mode-map
         ("C-c C-a" . python-format-buffer)
         ("C-c M-j" . run-python)
-        ("C-c C-k" . python-shell-import-package))
+        ("C-c C-k" . python-shell-import-package)
+        ("C-c h" . helm-dash-at-point))
   :init
   (add-hook 'python-mode-hook (lambda ()
                                 (auto-complete-mode -1)
                                 (python-docstring-mode)
                                 (sphinx-doc-mode)
+                                (python/setup-dash)
                                 ;(yapf-mode)
                                 ))
   (when (executable-find "ipython") (setq python-shell-interpreter "ipython"
@@ -125,3 +131,8 @@ working directory to the project base dir."
   :diminish python-docstring-mode)
 
 (provide 'init-python-pyenv)
+
+;; Silence warning about assignment to free variable helm-dash-docsets.
+;; Local Variables:
+;; byte-compile-warnings: (not free-vars)
+;; End:
