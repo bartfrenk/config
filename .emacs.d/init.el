@@ -35,7 +35,8 @@
                  tla
                  maxima
                  groovy
-                 antlr)))
+                 antlr
+                 purescript)))
 
   (dolist (module modules)
     (let ((name (symbol-name module))
