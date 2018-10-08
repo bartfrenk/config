@@ -103,6 +103,7 @@ extraKeys track =
     , nextMatchOrDo History isChromium $
       safeSpawnProg "/usr/bin/chromium-browser")
   , ("C-M-t", issueSelectionMenu dmenu track)
+  , ("M-S-d", runOrRaise "rocketchat-desktop" isRocketChat)
   ]
   where
     setMasterAudio cmd = spawn $ "amixer -D pulse set Master " ++ cmd
@@ -118,6 +119,7 @@ extraKeys track =
     isThunar = resource =? "thunar"
     isSlack = className =? "Slack"
     isTerminal = className =? "Xfce4-terminal"
+    isRocketChat = className =? "Rocket.Chat+"
     isChromium =
       isPrefixOf "chromium-browser" `fmap` resource <&&> className =?
       "Chromium-browser"
