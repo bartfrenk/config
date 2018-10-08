@@ -29,15 +29,6 @@
     (message (concat "Importing package " package-name))
     (python-shell-send-string snippet process)))
 
-;; (defun python-shell-autoreload ()
-;;   "Sets the python shell process to autoreload imports, when it
-;;   is ipython. Does nothing otherwise."
-;;   (interactive)
-;;   (let* ((process (get-buffer-process (current-buffer)))
-;;          (snippet "%load_ext autoreload"))
-;;     (message "Enabling autoreload")
-;;     (python-shell-send-string snippet process)))
-
 (defvar python-shell-set-up-project-dirs-snippet "
 import sys
 import os
@@ -94,7 +85,9 @@ working directory to the project base dir."
                                 (python-docstring-mode)
                                 (sphinx-doc-mode)
                                 (python/setup-dash)
+                                (jedi:setup)
                                 (jedi-mode t)
+                                ;; YAPF mode reformats buffer on save
                                 ;(yapf-mode)
                                 ))
   (when (executable-find "ipython")
@@ -118,9 +111,10 @@ working directory to the project base dir."
 (use-package virtualenvwrapper
   :config
   (setq venv-location "/home/bart/.pyenv/versions")
-  ;; Does not seem to necessary, after enabling jedi-mode
-  ;; (advice-add 'venv-workon :after 'jedi:set-virtualenv)
+  ;; Seems not to be required for JEDI
+  ; (advice-add 'venv-workon :after 'jedi:set-virtualenv)
   )
+
 
 (use-package yapfify
   :commands yapfify-buffer
@@ -128,14 +122,8 @@ working directory to the project base dir."
   (add-to-list 'helm-boring-buffer-regexp-list "*yapfify.**")
   :diminish yapf-mode)
 
-;; (use-package jedi
-;;   :bind
-;;   (:map python-mode-map
-;;         ("M-]" . jedi:goto-definition)
-;;         ("M-[" . jedi:goto-definition-pop-marker)
-;;         ("C-c C-d" . jedi:show-doc))
-;;   :commands jedi:setup)
-
+;; JEDI requires `pip install epc` among others.
+;; See http://tkf.github.io/emacs-jedi/released/
 (use-package company-jedi
   :commands (jedi:setup)
   :bind
