@@ -61,6 +61,8 @@
    org-element-context)
 
   :init
+  (setq org-agenda-files
+        (directory-files-recursively "~/documents/notes/learning" ".*\.org"))
   (advice-add 'org-fill-paragraph :before-while
               #'org-fill-paragraph--latex-environment)
   ;; allow emphasis to extend over two lines
@@ -73,7 +75,6 @@
             (lambda ()
               (linum-mode -1)
               (flycheck-mode -1)))
-  (setq org-agenda-files (directory-files-recursively "~/documents/notes/learning" ".*\.org"))
   :config
   (setq org-log-done t
         org-src-fontify-natively t
