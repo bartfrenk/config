@@ -118,8 +118,6 @@ working directory to the project base dir."
 
 (use-package yapfify
   :commands yapfify-buffer
-  :config
-  (add-to-list 'helm-boring-buffer-regexp-list "*yapfify.**")
   :diminish yapf-mode)
 
 ;; JEDI requires `pip install epc` among others.
