@@ -100,8 +100,8 @@ extraKeys track =
   , ("M-S-a", runOrRaise "authy" isAuthy)
   , ("M-S-v", runOrRaise "evolution" isEvolution)
   , ( "M-S-b"
-    , nextMatchOrDo History isChromium $
-      safeSpawnProg "/usr/bin/chromium-browser")
+    , nextMatchOrDo History isFirefox $
+      safeSpawnProg "/usr/bin/firefox")
   , ("C-M-t", issueSelectionMenu dmenu track)
   , ("M-S-d", runOrRaise "rocketchat-desktop" isRocketChat)
   ]
@@ -124,6 +124,7 @@ extraKeys track =
       isPrefixOf "chromium-browser" `fmap` resource <&&> className =?
       "Chromium-browser"
     isEvolution = className =? "Evolution"
+    isFirefox = className =? "Firefox"
 
 -- | Construct arguments for passing to dmenu.
 menuArgs :: String -> [String]
