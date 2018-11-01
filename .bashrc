@@ -55,9 +55,9 @@ if ! shopt -oq posix; then
 fi
 
 if [[ -z "${PYTHONPATH}" ]]; then
-    export PYTHONPATH=.
+    export PYTHONPATH=.:./src
 else
-    export PYTHONPATH=.:${PYTHONPATH}
+    export PYTHONPATH=.:./src:${PYTHONPATH}
 fi
 
 # Tab completion for stack

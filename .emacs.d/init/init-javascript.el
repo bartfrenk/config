@@ -21,9 +21,7 @@
               ("C-c C-d" . helm-dash-at-point))
   :config
   (add-to-list 'company-backends 'company-tern)
-  (setq js2-basic-offset 2
-        browse-url-generic-program "/usr/bin/chromium-browser"
-        browse-url-browser-function 'browse-url-generic)
+  (setq js2-basic-offset 2)
   (add-hook 'js2-mode-hook (lambda ()
                              (javascript/setup-dash)
                              (tern-mode t)

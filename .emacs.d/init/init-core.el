@@ -1,5 +1,6 @@
 (require 'use-package)
 (require 'functions)
+(require 'browse-url)
 
 (setq-default tab-width 4
               indent-tabs-mode nil
@@ -9,7 +10,9 @@
       initial-scratch-message nil scroll-preserve-screen-position nil
       scroll-conservatively 101
       scroll-margin 20
-      auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
+      auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
+      browse-url-generic-program "/usr/bin/firefox"
+      browse-url-browser-function 'browse-url-generic)
 
 (setq-default line-spacing '0.4)
 (fset 'yes-or-no-p 'y-or-n-p)
