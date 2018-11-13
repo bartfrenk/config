@@ -148,6 +148,7 @@
 (use-package autorevert
   :diminish auto-revert-mode)
 
+(use-package dotenv-mode)
 (use-package fringe-helper)
 (use-package yaml-mode)
 (use-package markdown-mode)
