@@ -54,3 +54,6 @@
 (defun gnutls-available-p ()
   "Function redefined in order not to use built-in GnuTLS support"
   nil)
+
+(load-file (let ((coding-system-for-read 'utf-8))
+                (shell-command-to-string "agda-mode locate")))
