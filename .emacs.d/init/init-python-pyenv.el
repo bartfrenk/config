@@ -138,7 +138,6 @@ working directory to the project base dir."
   :diminish sphinx-doc-mode)
 
 (use-package python-docstring
-  :pin "melpa"
   :diminish python-docstring-mode)
 
 ;; Disable mypy
