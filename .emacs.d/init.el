@@ -36,6 +36,7 @@
                  maxima
                  groovy
                  antlr
+                 scala
                  purescript)))
 
   (dolist (module modules)
