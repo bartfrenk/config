@@ -140,10 +140,11 @@ working directory to the project base dir."
 (use-package python-docstring
   :diminish python-docstring-mode)
 
-(use-package flycheck-mypy
-  :config
-  (add-to-list 'flycheck-checkers 'python-mypy t)
-  (flycheck-add-next-checker 'python-pylint 'python-mypy t))
+;; Disable mypy
+;; (use-package flycheck-mypy
+;;   :config
+;;   (add-to-list 'flycheck-checkers 'python-mypy t)
+;;   (flycheck-add-next-checker 'python-pylint 'python-mypy t))
 
 (jedi:setup)
 
