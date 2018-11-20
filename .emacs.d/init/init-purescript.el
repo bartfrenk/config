@@ -23,10 +23,6 @@
   (interactive)
   (purescript-mode-format-imports))
 
-(let ((root (string-join (reverse segments) "/")))
-  (message (concat "Starting server in " root))
-  (psc-ide-server-start root ))
-
 ;; Attempt to get REPL support in Emacs (not yet working: see also
 ;; https://github.com/purescript/purescript/issues/2886.
 (use-package psci
