@@ -95,7 +95,6 @@ extraKeys track =
   , ( "C-M-r"
     , recentCommandsMenu dmenu "/home/bart/.local/share/recently-used.xbel")
   , ("M-S-f", runOrRaise "thunar" isThunar)
-  , ("M-S-s", runOrRaise "slack" isSlack)
   , ("M-S-n", nextMatchOrDo History isTerminal $ safeSpawnProg "/home/bart/bin/term-tmux")
   , ("M-S-a", runOrRaise "authy" isAuthy)
   , ("M-S-v", runOrRaise "evolution" isEvolution)
