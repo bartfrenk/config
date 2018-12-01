@@ -8,7 +8,8 @@ disable=missing-docstring,
         invalid-name,
         too-few-public-methods,
         redefined-builtin,
-        invalid-name
+        invalid-name,
+        redefined-outer-name
 
 [SIMILARITIES]
 ignore-imports=yes
