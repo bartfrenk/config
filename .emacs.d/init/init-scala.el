@@ -6,6 +6,8 @@
 
 (use-package ensime
   :pin "melpa"
+  :init
+  (setq ensime-startup-notification nil)
   :config
   (setq ensime-sem-high-faces
         '((implicitConversion nil)
