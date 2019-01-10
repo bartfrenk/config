@@ -123,7 +123,7 @@
   :config (setq whitespace-style '(face tab-mark lines-tail trailing)
                 whitespace-line-column 100
                 ;; avoid highlighting large tables in org-mode
-                whitespace-global-modes '(not latex-mode org-mode web-mode mhtml-mode yaml-mode)))
+                whitespace-global-modes '(not latex-mode org-mode web-mode mhtml-mode)))
 
 (use-package yasnippet
   :commands yas-global-mode
@@ -150,7 +150,10 @@
 
 (use-package dotenv-mode)
 (use-package fringe-helper)
-(use-package yaml-mode)
+(use-package yaml-mode
+  :init (add-hook 'yaml-mode-hook
+                  (lambda ()
+                    (setq whitespace-style '(face tab-mark trailing)))))
 (use-package markdown-mode)
 (use-package edit-indirect)
 (use-package eldoc :diminish eldoc-mode)
