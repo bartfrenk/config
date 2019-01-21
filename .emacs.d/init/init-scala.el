@@ -12,6 +12,7 @@
           (implicitParams nil))
         ensime-implicit-gutter-icons t))
 
-
 (use-package sbt-mode
   :pin "melpa")
+
+(provide 'init-scala)
