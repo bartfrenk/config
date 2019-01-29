@@ -12,7 +12,8 @@
     ;(hindent-reformat-buffer)
     (haskell-mode-stylish-buffer))
 
-
+(with-eval-after-load 'intero
+  (flycheck-add-next-checker 'intero '(warning . haskell-hlint)))
 
 (use-package intero
   :bind
