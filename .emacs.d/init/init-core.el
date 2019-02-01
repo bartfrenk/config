@@ -186,5 +186,6 @@
 (add-to-list 'auto-mode-alist '("\\.raml\\'" . yaml-mode))
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.g4\\'" . antlr-mode))
+(add-to-list 'auto-mode-alist '("\\.yapf\\'" . confmode))
 
 (provide 'init-core)

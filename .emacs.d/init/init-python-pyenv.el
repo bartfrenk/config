@@ -37,7 +37,7 @@ home = os.path.expanduser('~')
 while os.path.isfile('__init__.py') and (os.getcwd() != home):
     os.chdir('..')
 sys.path.append(os.getcwd())
-if os.path.basename(os.getcwd()) == 'src':
+if os.path.basename(os.getcwd()) in ['src', 'test']:
     os.chdir('..')
 del os
 del sys"
@@ -58,7 +58,8 @@ working directory to the project base dir."
 (defun python-format-buffer ()
   "Format a Python buffer. Requires yapf to be available."
   (interactive)
-  (yapfify-buffer))
+  (yapfify-buffer)
+  (py-isort-buffer))
 
 (add-hook 'inferior-python-mode-hook 'python-shell-set-up-project-dirs)
 
@@ -71,6 +72,9 @@ working directory to the project base dir."
 
 (defun python/setup-dash ()
   (setq-local helm-dash-docsets '("Airflow" "Python_3")))
+
+(use-package py-isort)
+
 
 (use-package python
   :commands python-shell-send-string
@@ -91,6 +95,7 @@ working directory to the project base dir."
                                 ;; YAPF mode reformats buffer on save
                                 ;(yapf-mode)
                                 ))
+  (flycheck-add-next-checker 'python-flake8 'python-pylint)
   (when (executable-find "ipython")
     (setq python-shell-interpreter "ipython"
           python-shell-interpreter-args "--simple-prompt --profile=dev"))
@@ -140,11 +145,10 @@ working directory to the project base dir."
 (use-package python-docstring
   :diminish python-docstring-mode)
 
-;; Disable mypy
-;; (use-package flycheck-mypy
-;;   :config
-;;   (add-to-list 'flycheck-checkers 'python-mypy t)
-;;   (flycheck-add-next-checker 'python-pylint 'python-mypy t))
+(use-package flycheck-mypy
+  :config
+  (add-to-list 'flycheck-checkers 'python-mypy t)
+  (flycheck-add-next-checker 'python-pylint 'python-mypy t))
 
 (jedi:setup)
 
