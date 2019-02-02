@@ -17,8 +17,7 @@
          (segments (cdr segments)))
     (while (file-exists-p (concat path "/__init__.py") )
       (setq package (cons (car segments) package)
-            path (string-remove-suffix (concat "/" (car segments)) path )
-            segments (cdr segments)))
+            path (string-remove-suffix (concat "/" (car segments)) path ) segments (cdr segments)))
     (string-join package ".")))
 
 (defun python-shell-import-package ()
@@ -97,10 +96,18 @@ working directory to the project base dir."
                                 ))
   (flycheck-add-next-checker 'python-flake8 'python-pylint)
   (when (executable-find "ipython")
+    ;; Use ipython<5 since later versions are not compatible with inferior. It
+    ;; would be better to distinguish based on the output of ipython --version.
+    ;; Later version of ipython require the option --simple-prompt, but this
+    ;; disables autocompletion.
+
+    ;;
+    ;;    (setq python-shell-interpreter "ipython"
+    ;;          python-shell-interpreter-args "--simple-prompt --profile=dev)
     (setq python-shell-interpreter "ipython"
-          python-shell-interpreter-args "--simple-prompt --profile=dev"))
-  :config
-  (setq python-shell-completion-native-enable nil))
+          python-shell-interpreter-args "--profile=dev"))
+    :config
+    (setq python-shell-completion-native-enable t))
 
 (use-package pyenv-mode
   :commands pyenv-mode-versions)
@@ -134,10 +141,12 @@ working directory to the project base dir."
   (:map python-mode-map
         ("M-]" . jedi:goto-definition)
         ("M-[" . jedi:goto-definition-pop-marker)
-        ("C-c C-d" . jedi:show-doc))
+        ("C-c C-d" . jedi:show-doc)
+        ("C-c C-p" . nil))
   :after (company)
   :init
   (add-to-list 'company-backends 'company-jedi))
+
 
 (use-package sphinx-doc
   :diminish sphinx-doc-mode)
