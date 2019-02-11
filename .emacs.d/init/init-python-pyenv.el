@@ -85,7 +85,8 @@ working directory to the project base dir."
         ("C-c h" . helm-dash-at-point))
   :init
   (add-hook 'python-mode-hook (lambda ()
-                                (auto-complete-mode -1)
+                                (when (fboundp 'auto-complete-mode)
+                                  (auto-complete-mode -1))
                                 (python-docstring-mode)
                                 (sphinx-doc-mode)
                                 (python/setup-dash)
@@ -106,8 +107,8 @@ working directory to the project base dir."
     ;;          python-shell-interpreter-args "--simple-prompt --profile=dev)
     (setq python-shell-interpreter "ipython"
           python-shell-interpreter-args "--profile=dev"))
-    :config
-    (setq python-shell-completion-native-enable t))
+  :config
+  (setq python-shell-completion-native-enable t))
 
 (use-package pyenv-mode
   :commands pyenv-mode-versions)
