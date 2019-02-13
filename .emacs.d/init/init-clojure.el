@@ -64,7 +64,6 @@
   :ensure t)
 
 
-;; (use-package clj-refactor
-;;   :pin "melpa")
+(use-package clj-refactor)
 
 (provide 'init-clojure)
