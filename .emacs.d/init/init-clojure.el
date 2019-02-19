@@ -1,6 +1,7 @@
 (require 'use-package)
 (require 'evil)
 (require 'helm-buffers)
+(require 'clojure-mode)
 
 (defun clojure-reformat ()
   (interactive)
@@ -8,9 +9,11 @@
   (cljr-clean-ns))
 
 
-(use-package flycheck-joker
-  :ensure t
-  :pin melpa-stable)
+(use-package flycheck-joker)
+
+
+(use-package sesman)
+
 
 (use-package clojure-mode
   :commands clojure-mode
@@ -18,38 +21,48 @@
   (add-hook 'clojure-mode-hook (lambda ()
                                  (paredit-mode 1)
                                  (evil-paredit-mode 1)
-                                 (clj-refactor-mode 1)
-                                 (yas-minor-mode 1)
                                  ;;(flycheck-clojure-setup)
-                                 ))
-  (add-hook 'cider-repl-mode-hook 'paredit-mode)
-  :functions put-clojure-indent
+                                 (clj-refactor-mode 1)
+                                 (yas-minor-mode 1)))
   :config
-  (setq clojure-indent-style :align-arguments)
+ 
+  ;; (define-clojure-indent
+  ;;   ;;(api 2)
+  ;;   ;; (send-off 1)
+  ;;   ;; (cli 1)
+  ;;   ;; (go-loop 1)
+  ;;   ;; (fdef 1)
+  ;;   ;; (cli 1)
+  ;;   ;; (send-off 1)
+  ;;   ;; (api 2)
+  ;;   ;; (ANY 2)
+  ;;   ;; (GET 2)
+  ;;   ;; (POST 2)
+  ;;   ;; (PUT 2)
+  ;;   ;; (PATCH 2)
+  ;;   ;; (DELETE 2)
+  ;;   ;; (OPTIONS 2)
+  ;;   ;; (context 2)
+  ;;   ;; (for-all 2)
+  ;;   ;; (expect-call 1)
 
-  (define-clojure-indent
-    ;; Core
-    (send-off 1) (cli 1) (go-loop 1)
+  ;;   )
 
-    ;; Miscellaneous
-    (fdef 1) (cli 1) (send-off 1)
+  (setq clojure-indent-style 'always-indent
+        clojure-align-forms-automatically t))
 
-    ;; Compojure
-    (ANY 2) (GET 2) (POST 2) (PUT 2) (PATCH 2) (DELETE 2)
-    (OPTIONS 2) (context 2) (api 2) (for-all 2)
-
-    ;; Expect-call
-    (expect-call 1)))
 
 
 (use-package cider
   :bind (:map clojure-mode-map
               ("M-]" . cider-find-var)
               ("M-[" . cider-pop-back)
-              ("C-c C-a" . clojure-reformat))
+              ("C-c C-a" . cider-format-buffer))
   :init
   (add-hook 'cider-mode-hook (lambda ()
-                               (eldoc-mode 1)))
+                               (eldoc-mode 1)
+                               (paredit-mode 1)))
+  (add-hook 'cider-repl-mode-hook 'paredit-mode)
   :config
   (setq cider-prompt-for-symbol nil
         nrepl-hide-special-buffers t
@@ -62,6 +75,7 @@
   (add-to-list 'helm-boring-buffer-regexp-list "*nrepl-messages.*")
   :diminish cider-mode
   :ensure t)
+
 
 
 (use-package clj-refactor)
