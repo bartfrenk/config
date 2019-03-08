@@ -85,6 +85,7 @@
         org-default-notes-file inbox-file
         org-hide-leading-stars t
         org-tags-column 80
+        org-use-tag-inheritance nil
         org-startup-indented t
         org-todo-keywords '((sequence
                              "TODO(t)" "WAIT(w)" "STARTED(s)"
