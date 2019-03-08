@@ -8,15 +8,28 @@
   "~/documents/notes/journal"
   "Directory containing journal files.")
 
+(defvar clock-dir
+  "~/documents/notes/ghg/ai-team/clock")
+
 (defun journal-file ()
   (let ((journal-name
          (concat "journal-" (format-time-string "%Y") ".org")))
     (concat journal-dir "/" journal-name)))
 
+(defun clock-file ()
+  (let ((clock-name
+         (concat "clock-" (format-time-string "%Y-%m") ".org")))
+    (concat clock-dir "/" clock-name)))
+
+(defun open-clock-file ()
+  "Opens the active journal file."
+  (interactive)
+  (find-file (clock-file)))
+
 (defun open-journal-file ()
   "Opens the active journal file."
-    (interactive)
-    (find-file (journal-file)))
+  (interactive)
+  (find-file (journal-file)))
 
 (defvar inbox-file
   "~/documents/notes/inbox.org"
@@ -79,6 +92,7 @@
         org-confirm-babel-evaluate nil
         org-startup-with-inline-images t
         org-edit-src-content-indentation 0
+        org-list-description-max-indent 2
         org-babel-python-command "python3"
         org-startup-folded 'content
         org-outline-path-complete-in-steps nil
