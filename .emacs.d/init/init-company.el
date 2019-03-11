@@ -12,6 +12,7 @@
   :config
   (setq company-tooltip-limit 20
         company-idle-delay .1
+        company-tooltip-align-annotations t
         company-echo-delay 0
         company-begin-commands '(self-insert-command))
   :diminish company-mode
