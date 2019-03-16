@@ -48,7 +48,7 @@
 
   ;;   )
 
-  (setq clojure-indent-style 'always-indent
+  (setq clojure-indent-style :always-align
         clojure-align-forms-automatically t))
 
 
