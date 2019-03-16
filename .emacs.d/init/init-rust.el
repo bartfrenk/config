@@ -7,10 +7,11 @@
   (setq-local helm-dash-docsets '("Rust")))
 
 (use-package racer
-  :bind (:map racer-mode-map
+  :bind (:map rust-mode-map
               ("M-]" . racer-find-definition)
               ("M-[" . xref-pop-marker-stack)
               ("C-c C-d" . racer-describe))
+  :diminish racer-mode
   :init
   (add-hook 'racer-mode #'eldoc-mode)
   :config
@@ -32,8 +33,17 @@
                               ))
   :config
   (setq rust-format-on-save t
-        rust-rustfmt-bin "rustfmt-force")
+        rust-rustfmt-bin "rustfmt")
   :ensure t)
+
+
+(use-package cargo
+  :init (add-hook 'rust-mode-hook 'cargo-minor-mode)
+  :diminish cargo-minor-mode
+  :bind (:map cargo-minor-mode-map
+              ("C-c C-c C-b" . cargo-process-build)
+              ("C-c C-c C-r" . cargo-process-run)
+              ("C-c C-c C-t" . cargo-process-test)))
 
 
 (use-package flycheck-rust
