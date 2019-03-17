@@ -21,6 +21,7 @@
                 "/lib/rustlib/src/rust/src"))
   (add-to-list 'evil-emacs-state-modes 'racer-help-mode))
 
+(require 'company)
 
 (use-package rust-mode
   :bind (:map rust-mode-map
@@ -30,7 +31,12 @@
   (add-hook 'rust-mode-hook (lambda ()
                               (rust/setup-dash)
                               (racer-mode)
-                              ))
+                              ;; Sometimes racer completion is slow. Turn of
+                              ;; automatic autocompletion completely. The issue
+                              ;; has been noticed,
+                              ;; see:https://github.com/racer-rust/emacs-racer/issues/86.
+                              ;; Use Alt-Tab to complete.
+                              (setq company-idle-delay nil)))
   :config
   (setq rust-format-on-save t
         rust-rustfmt-bin "rustfmt")
