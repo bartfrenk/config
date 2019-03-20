@@ -25,8 +25,11 @@
                                  (clj-refactor-mode 1)
                                  (yas-minor-mode 1)))
   :config
- 
-  ;; (define-clojure-indent
+
+  (define-clojure-indent
+    (GET 2)
+    (POST 2))
+
   ;;   ;;(api 2)
   ;;   ;; (send-off 1)
   ;;   ;; (cli 1)
@@ -36,8 +39,8 @@
   ;;   ;; (send-off 1)
   ;;   ;; (api 2)
   ;;   ;; (ANY 2)
-  ;;   ;; (GET 2)
-  ;;   ;; (POST 2)
+  ;;   ;; 
+  ;;   ;; 
   ;;   ;; (PUT 2)
   ;;   ;; (PATCH 2)
   ;;   ;; (DELETE 2)
@@ -50,6 +53,7 @@
 
   (setq clojure-indent-style :always-align
         clojure-align-forms-automatically t))
+
 
 
 
