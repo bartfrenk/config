@@ -70,7 +70,7 @@ working directory to the project base dir."
 ;; ==== configuration =====
 
 (defun python/setup-dash ()
-  (setq-local helm-dash-docsets '("Airflow" "Python_3")))
+  (setq-local helm-dash-docsets '("Airflow" "Python_3" "SQLAlchemy")))
 
 (use-package py-isort)
 
