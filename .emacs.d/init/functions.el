@@ -61,6 +61,17 @@ The return value is the new value of LIST-VAR."
       (set-selective-display
        (if selective-display nil (or col 1))))))
 
+(defun delete-file-and-buffer ()
+  "Kill the current buffer and deletes the file it is visiting."
+  (interactive)
+  (let ((filename (buffer-file-name)))
+    (when filename
+      (if (vc-backend filename)
+          (vc-delete-file filename)
+        (progn
+          (delete-file filename)
+          (message "Deleted file %s" filename)
+          (kill-buffer))))))
 
 
 (provide 'functions)
