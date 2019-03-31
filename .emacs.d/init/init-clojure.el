@@ -28,19 +28,20 @@
 
   (define-clojure-indent
     (GET 2)
-    (POST 2))
+    (POST 2)
+    (go-loop 1))
 
   ;;   ;;(api 2)
   ;;   ;; (send-off 1)
   ;;   ;; (cli 1)
-  ;;   ;; (go-loop 1)
+  ;;   ;;
   ;;   ;; (fdef 1)
   ;;   ;; (cli 1)
   ;;   ;; (send-off 1)
   ;;   ;; (api 2)
   ;;   ;; (ANY 2)
-  ;;   ;; 
-  ;;   ;; 
+  ;;   ;;
+  ;;   ;;
   ;;   ;; (PUT 2)
   ;;   ;; (PATCH 2)
   ;;   ;; (DELETE 2)
