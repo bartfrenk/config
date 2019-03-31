@@ -3,4 +3,4 @@ set -e
 RESTORE="$(unxrandr)"
 xrandr --output eDP1 --off
 $RESTORE
-killall xfce4-panel && xfce4-panel & > /dev/null
+xfce4-panel -r
