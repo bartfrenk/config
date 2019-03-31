@@ -97,10 +97,10 @@ working directory to the project base dir."
                                 ))
   (flycheck-add-next-checker 'python-flake8 'python-pylint)
   (when (executable-find "ipython")
-    ;; Use ipython<5 since later versions are not compatible with inferior. It
-    ;; would be better to distinguish based on the output of ipython --version.
-    ;; Later version of ipython require the option --simple-prompt, but this
-    ;; disables autocompletion.
+    ;; CHECK: Use ipython<5 since later versions are not compatible with
+    ;; inferior. It would be better to distinguish based on the output of
+    ;; ipython --version.  Later version of ipython require the option
+    ;; --simple-prompt, but this disables autocompletion.
 
     ;;
     ;;    (setq python-shell-interpreter "ipython"
