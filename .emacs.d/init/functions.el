@@ -73,5 +73,15 @@ The return value is the new value of LIST-VAR."
           (message "Deleted file %s" filename)
           (kill-buffer))))))
 
+(defmacro with-restore (var &rest body)
+  (declare (indent defun))
+  (let ((sym (gensym)))
+    `(let ((,sym ,var))
+       (unwind-protect
+           (progn ,@body)
+         (setq ,var ,sym)))))
+
+(defun join (&rest rest)
+  (mapconcat 'identity rest " "))
 
 (provide 'functions)
