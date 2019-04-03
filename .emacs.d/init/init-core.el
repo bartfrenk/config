@@ -164,6 +164,7 @@
 (use-package undo-tree :diminish undo-tree-mode)
 (use-package dockerfile-mode)
 (use-package magit)
+(use-package evil-magit)
 (use-package material-theme)
 (use-package paredit :pin "melpa")
 (use-package evil-paredit :pin "melpa")
