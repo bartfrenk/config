@@ -36,6 +36,10 @@
 
 (use-package diminish)
 
+;; Automically reload PDFs when changed on disk
+(add-hook 'doc-view-mode-hook (lambda ()
+                           (auto-revert-mode t)))
+
 (use-package neotree
   :commands (neotree-project-dir)
   :config
