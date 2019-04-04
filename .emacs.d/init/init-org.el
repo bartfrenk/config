@@ -47,7 +47,7 @@
    ("C-c a" . org-agenda)
    ("C-c c" . org-capture)
    ("C-c j" . open-journal-file)
-   ("C-c C-g" . org-latex-export-to-pdf))
+   ("C-c M-p" . org-latex-export-to-pdf))
 
   :config
   (defun insert-time-stamp ()
