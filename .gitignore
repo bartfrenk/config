@@ -9,6 +9,8 @@
 !.emacs.d/snippets/*/
 !.emacs.d/snippets/*/*
 
+!.clojure/
+!.clojure/deps.edn
 
 !.xmonad/
 !.xmonad/.dir-locals.el
