@@ -12,6 +12,7 @@
 ; (setq ad-redefinition-action 'accept)
 (let ((modules '(packages
                  core
+                 magit
                  projectile
                  helm
                  flycheck
