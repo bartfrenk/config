@@ -1,7 +1,7 @@
 div#notebook {
  font-family: sans-serif;
  font-size: 11pt;
- line-height: 200%;
+ line-height: 250%;
  color: #cdd2e9;
  -webkit-font-smoothing: antialiased !important;
  padding-top: 25px !important;
@@ -1599,15 +1599,15 @@ div.prompt,
  font-family: monospace, monospace;
  font-size: 9pt !important;
  font-weight: normal;
- color: transparent;
+ color: #546386;
  line-height: 170%;
  padding: 0px;
  padding-top: 4px;
  padding-left: 0px;
  padding-right: 1px;
  text-align: right !important;
- min-width: 8ex !important;
- width: 8ex !important;
+ min-width: 11.5ex !important;
+ width: 11.5ex !important;
 }
 div.prompt.input_prompt {
  font-size: 9pt !important;
@@ -1617,8 +1617,8 @@ div.prompt.input_prompt {
  border-bottom-left-radius: 0px;
  border-bottom-right-radius: 0px;
  padding-right: 3px;
- min-width: 8ex;
- width: 8ex !important;
+ min-width: 11.5ex;
+ width: 11.5ex !important;
 }
 div.cell.code_cell .input_prompt {
  border-right: 2px solid rgba(0,156,209,.5);
@@ -1738,8 +1738,8 @@ div.prompt.output_prompt {
  border-top-right-radius: 0px;
  border-top-left-radius: 0px;
  border-bottom-right-radius: 0px;
- min-width: 11ex !important;
- width: 11ex !important;
+ min-width: 11.5ex !important;
+ width: 11.5ex !important;
  border-right: 2px solid transparent;
 }
 div.out_prompt_overlay.prompt {
@@ -1750,8 +1750,8 @@ div.out_prompt_overlay.prompt {
  border-top-right-radius: 0px;
  border-top-left-radius: 0px;
  border-bottom-right-radius: 0px;
- min-width: 11ex !important;
- width: 11ex !important;
+ min-width: 11.5ex !important;
+ width: 11.5ex !important;
  border-right: 2px solid transparent;
  color: transparent;
 }
@@ -1764,8 +1764,8 @@ div.out_prompt_overlay.prompt:hover {
  -moz-border-radius: 2px;
  border-top-right-radius: 0px;
  border-top-left-radius: 0px;
- min-width: 11ex !important;
- width: 11ex !important;
+ min-width: 11.5ex !important;
+ width: 11.5ex !important;
  border-right: 2px solid #374556 !important;
 }
 div.cell.code_cell .output_prompt {
@@ -1819,28 +1819,28 @@ div.cell.text_cell .CodeMirror pre {
 }
 div.cell.text_cell.rendered.selected {
  font-family: sans-serif;
- line-height: 200% !important;
+ line-height: 250% !important;
  background: #293340;
  background-color: #293340;
  border-radius: 0px;
 }
 div.cell.text_cell.unrendered.selected {
  font-family: sans-serif;
- line-height: 200% !important;
+ line-height: 250% !important;
  background: #293340;
  background-color: #293340;
  border-radius: 0px;
 }
 div.cell.text_cell.selected {
  font-family: sans-serif;
- line-height: 200% !important;
+ line-height: 250% !important;
  background: #293340;
  background-color: #293340;
  border-radius: 0px;
 }
 .edit_mode div.cell.text_cell.selected {
  font-family: sans-serif;
- line-height: 200% !important;
+ line-height: 250% !important;
  background: #293340;
  background-color: #293340;
  border-radius: 0px;
@@ -1849,54 +1849,54 @@ div.text_cell.unrendered,
 div.text_cell.unrendered.selected,
 div.edit_mode div.text_cell.unrendered {
  font-family: sans-serif;
- line-height: 200% !important;
+ line-height: 250% !important;
  background: #293340;
  background-color: #293340;
  border-radius: 0px;
 }
 div.cell.text_cell .prompt {
  border-right: 0;
- min-width: 8ex !important;
- width: 8ex !important;
+ min-width: 11.5ex !important;
+ width: 11.5ex !important;
 }
 div.cell.text_cell.rendered .prompt {
  font-family: monospace, monospace;
  font-size: 9.5pt !important;
  font-weight: normal;
- color: transparent !important;
+ color: #546386 !important;
  text-align: right !important;
- min-width: 11ex !important;
- width: 11ex !important;
+ min-width: 14.5ex !important;
+ width: 14.5ex !important;
  background-color: #293340;
- border-right: 2px solid transparent;
+ border-right: 2px solid rgba(0,156,209,.5);
  border-left: 4px solid #293340;
 }
 div.cell.text_cell.unrendered .prompt {
  font-family: monospace, monospace;
  font-size: 9.5pt !important;
  font-weight: normal;
- color: transparent !important;
+ color: #546386 !important;
  text-align: right !important;
- min-width: 11ex !important;
- width: 11ex !important;
- border-right: 2px solid transparent;
+ min-width: 14.5ex !important;
+ width: 14.5ex !important;
+ border-right: 2px solid rgba(0,156,209,.5);
  border-left: 4px solid #293340;
  background-color: #293340;
 }
 div.cell.text_cell.rendered .prompt {
- border-right: 2px solid transparent;
+ border-right: 2px solid rgba(0,156,209,.5);
 }
 div.cell.text_cell.rendered.selected .prompt {
  top: 0;
  border-left: 4px solid #0b98c8;
- border-right: 2px solid transparent;
+ border-right: 2px solid rgba(0,156,209,.5);
 }
 div.text_cell.unrendered.selected .prompt,
 div.text_cell.rendered.selected .prompt {
  top: 0;
  background: #293340;
  border-left: 4px solid #005573;
- border-right: 2px solid transparent;
+ border-right: 2px solid rgba(0,156,209,.5);
 }
 div.rendered_html code {
  font-family: monospace, monospace;
@@ -1917,7 +1917,7 @@ samp {
 code {
  font-family: monospace, monospace;
  font-size: 11pt !important;
- line-height: 200% !important;
+ line-height: 250% !important;
  color: #b0bdd7;
  background: #252e3a;
  background-color: #252e3a;
@@ -1957,7 +1957,7 @@ div.rendered_html {
 div.rendered_html pre {
  font-family: monospace, monospace;
  font-size: 11pt !important;
- line-height: 200% !important;
+ line-height: 250% !important;
  color: #b0bdd7 !important;
  background: #252e3a;
  background-color: #252e3a;
@@ -1973,7 +1973,7 @@ div.text_cell_render pre,
 div.text_cell_render code {
  font-family: monospace, monospace;
  font-size: 11pt !important;
- line-height: 200% !important;
+ line-height: 250% !important;
  color: #b0bdd7;
  background: #1a2028;
  background-color: #1a2028;
@@ -2788,7 +2788,7 @@ div#short-key-bindings-intro.well,
 .terminal-app .terminal {
  font-family: monospace, monospace;
  font-size: 11pt;
- line-height: 200%;
+ line-height: 250%;
  color: #cdd2e9;
  background: #293340;
  padding: 0.4em;
@@ -2904,7 +2904,7 @@ div.CodeMirror,
 div.CodeMirror pre {
  font-family: monospace, monospace;
  font-size: 11pt;
- line-height: 200%;
+ line-height: 250%;
  color: #cdd2e9;
 }
 div.CodeMirror-lines {
@@ -2966,7 +2966,7 @@ div.js-error {
 .ipython_tooltip {
  font-family: monospace, monospace;
  font-size: 11pt;
- line-height: 200%;
+ line-height: 250%;
  border: 2px solid #252c36;
  background: #363f4e;
  background-color: #363f4e;
@@ -2980,7 +2980,7 @@ div.js-error {
 .ipython_tooltip .tooltiptext pre {
  font-family: monospace, monospace;
  font-size: 11pt;
- line-height: 200%;
+ line-height: 250%;
  background: #363f4e;
  background-color: #363f4e;
  color: #cdd2e9;
