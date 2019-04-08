@@ -67,5 +67,6 @@ eval "$(stack --bash-completion-script stack)"
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 export PYTHONPATH=./src:./test
+export EDITOR=vim
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
