@@ -1674,7 +1674,7 @@ div.cell.code_cell.rendered.unselected.jupyter-soft-selected .run_this_cell:hove
  color: #005573 !important;
 }
 div.output_wrapper {
- background-color: #1a2028;
+ background-color: #323a48;
  border: 0px;
  left: 0px;
  margin-bottom: 0em;
@@ -1685,9 +1685,9 @@ div.output_wrapper {
 div.output_subarea.output_text.output_stream.output_stdout,
 div.output_subarea.output_text {
  font-family: monospace, monospace;
- font-size: 10pt !important;
+ font-size: 11pt !important;
  line-height: 150% !important;
- background-color: #1a2028;
+ background-color: #323a48;
  color: #b4bcde;
  border-top-right-radius: 0px;
  border-top-left-radius: 0px;
@@ -1695,7 +1695,7 @@ div.output_subarea.output_text {
 }
 div.output_area pre {
  font-family: monospace, monospace;
- font-size: 10pt !important;
+ font-size: 11pt !important;
  line-height: 151% !important;
  color: #b4bcde;
  border-top-right-radius: 0px;
@@ -1706,10 +1706,10 @@ div.output_area {
 }
 div.output_html {
  font-family: monospace, monospace;
- font-size: 10pt;
+ font-size: 11pt;
  color: #e2e5f2;
- background-color: #1a2028;
- background: #1a2028;
+ background-color: #323a48;
+ background: #323a48;
 }
 div.output_subarea {
  overflow-x: auto;
@@ -1732,7 +1732,7 @@ div.btn.btn-default.output_collapsed:hover {
 div.prompt.output_prompt {
  font-family: monospace, monospace;
  font-weight: bold !important;
- background-color: #1a2028;
+ background-color: #323a48;
  color: transparent;
  border-bottom-left-radius: 4px;
  border-top-right-radius: 0px;
@@ -1745,7 +1745,7 @@ div.prompt.output_prompt {
 div.out_prompt_overlay.prompt {
  font-family: monospace, monospace;
  font-weight: bold !important;
- background-color: #1a2028;
+ background-color: #323a48;
  border-bottom-left-radius: 2px;
  border-top-right-radius: 0px;
  border-top-left-radius: 0px;
@@ -1775,20 +1775,20 @@ div.cell.code_cell .output_prompt {
 div.cell.selected .output_prompt,
 div.cell.selected .out_prompt_overlay.prompt {
  border-left: 5px solid #005573;
- border-right: 2px solid #1a2028;
+ border-right: 2px solid #323a48;
  border-radius: 0px !important;
 }
 .edit_mode div.cell.selected .output_prompt,
 .edit_mode div.cell.selected .out_prompt_overlay.prompt {
  border-left: 5px solid #005573;
- border-right: 2px solid #1a2028;
+ border-right: 2px solid #323a48;
  border-radius: 0px !important;
 }
 div.text_cell,
 div.text_cell_render pre,
 div.text_cell_render {
  font-family: sans-serif;
- font-size: 10pt;
+ font-size: 11pt;
  line-height: 130% !important;
  color: #b0bdd7;
  background: #293340;
@@ -2083,7 +2083,7 @@ div#_vivaldi-spatnav-focus-indicator._vivaldi-spatnav-focus-indicator {
 }
 .rendered_html td {
  font-family: sans-serif !important;
- font-size: 10pt;
+ font-size: 11pt;
 }
 .rendered_html table {
  font-family: sans-serif !important;
@@ -2097,7 +2097,7 @@ div#_vivaldi-spatnav-focus-indicator._vivaldi-spatnav-focus-indicator {
 }
 .rendered_html thead {
  font-family: sans-serif !important;
- font-size: 11.0pt !important;
+ font-size: 12.0pt !important;
  background: #27313d;
  color: #bbc2e1;
  border-bottom: 1px solid #27313d;
@@ -2119,8 +2119,8 @@ div#_vivaldi-spatnav-focus-indicator._vivaldi-spatnav-focus-indicator {
  margin-top: .05em;
 }
 div.widget-area {
- background-color: #1a2028;
- background: #1a2028;
+ background-color: #323a48;
+ background: #323a48;
  color: #b4bcde;
 }
 div.widget-area a {
@@ -3195,7 +3195,7 @@ div.cell.text_cell .cm-s-default span.cm-variable-3 {
 .MathJax_Display,
 .MathJax {
  border: 0 !important;
- font-size: 10% !important;
+ font-size: 100% !important;
  text-align: center !important;
  margin: 0em !important;
  line-height: 2.25 !important;
@@ -3243,9 +3243,9 @@ div#maintoolbar {
             /*preferredFont: "TeX",*/
             /*availableFonts: ["TeX", "STIX"],*/
             styles: {
-                scale: 10,
+                scale: 100,
                 ".MathJax_Display": {
-                    "font-size": "10%",
+                    "font-size": "100%",
                 }
             }
         }
