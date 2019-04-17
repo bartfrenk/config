@@ -131,7 +131,41 @@
 
 (use-package gnuplot)
 
+(use-package org-pdfview
+  :config
+  (add-to-list
+   'org-file-apps
+   '("\\.pdf\\'" . (lambda (file link) (progn
+                                         (message link)
+                                         (org-pdfview-open link))))))
+
+
+(message "%s" 'org-file-apps)
+
+
 (use-package org-evil)
+
+;; (message "%s" org-file-apps)
+;; (add-to-list 'org-file-apps
+;;                '("\\.pdf::[0-9]+\\'" . "evince -p 200 %s")
+
+;;                ;; '("\\.pdf\\'" . (lambda (file link)
+;;                ;;                   (org-pdfview-open link))
+;;                )
+
+;; (setq org-file-apps (cdr org-file-apps))
+
+
+
+;; ;; (use-package org-pdfview
+;; ;;   :config
+;;   )
+
+
+;;(setq org-file-apps (delq (assoc "\\.pdf\\'" org-file-apps) org-file-apps))
+
+
+
 
 (use-package ob-ipython
   :pin "melpa"

@@ -38,6 +38,7 @@
                  groovy
                  antlr
                  scala
+                 docview
                  purescript)))
 
   (dolist (module modules)
