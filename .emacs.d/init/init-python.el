@@ -92,9 +92,7 @@ working directory to the project base dir."
                                 (python/setup-dash)
                                 (jedi:setup)
                                 (jedi-mode t)
-                                ;; YAPF mode reformats buffer on save
-                                ;(yapf-mode)
-                                ))
+                                (yapf-mode)))
   (flycheck-add-next-checker 'python-flake8 'python-pylint)
   (when (executable-find "ipython")
     ;; CHECK: Use ipython<5 since later versions are not compatible with
