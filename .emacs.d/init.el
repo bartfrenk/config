@@ -20,7 +20,7 @@
                  elisp
                  javascript
                  org
-                 python-pyenv
+                 python
                  clojure
                  haskell-intero
                  erlang
