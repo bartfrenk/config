@@ -1,0 +1,30 @@
+#!/bin/bash
+
+sudo lsof -FKc |
+  awk '
+   function process() {
+     if (pid || tid) {
+       print n, \
+             tid ? tid " (thread of " pid ": " pname")" : pid, \
+             name
+       n = tid = 0
+     }
+   }
+   {value = substr($0, 2)}
+   /^p/ {
+     process()
+     pid = value
+     next
+   }
+   /^K/ {
+     tid = value
+     next
+   }
+   /^c/ {
+      name = value
+      if (!tid)
+        pname = value
+      next
+   }
+   /^f/ {n++}
+   END {process()}' | sort -rn
