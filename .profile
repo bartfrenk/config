@@ -30,6 +30,12 @@ if [ -d "$HOME/local/bin" ]; then
     PATH="$HOME/local/bin:$PATH"
 fi
 
+if [ -d "/opt/adr-tools-3.0.0/src" ]; then
+    PATH="/opt/adr-tools-3.0.0/src:$PATH"
+fi
+
+
+
 if [ -d "$HOME/.local/bin" ]; then
     PATH="$HOME/.local/bin:$PATH"
 fi
