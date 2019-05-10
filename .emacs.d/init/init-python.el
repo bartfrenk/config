@@ -160,7 +160,7 @@ working directory to the project base dir."
 
 (jedi:setup)
 
-(provide 'init-python-pyenv)
+(provide 'init-python)
 
 ;; Silence warning about assignment to free variable helm-dash-docsets.
 ;; Local Variables:
