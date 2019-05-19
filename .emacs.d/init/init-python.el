@@ -57,7 +57,7 @@ working directory to the project base dir."
 (defun python-format-buffer ()
   "Format a Python buffer. Requires yapf to be available."
   (interactive)
-  (yapfify-buffer)
+;  (yapfify-buffer)
   (py-isort-buffer))
 
 (add-hook 'inferior-python-mode-hook 'python-shell-set-up-project-dirs)
