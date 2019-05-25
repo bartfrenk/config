@@ -36,6 +36,7 @@
                  groovy
                  antlr
                  scala
+                 agda
                  purescript)))
 
   (dolist (module modules)
