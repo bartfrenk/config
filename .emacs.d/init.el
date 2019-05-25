@@ -6,8 +6,6 @@
 
 (add-to-list 'load-path init-dir)
 
-(package-initialize)
-
 (let ((modules '(packages
                  core
                  magit
@@ -50,12 +48,4 @@
 ;; do not fail if 'init-local is not provided
 (require 'init-local nil :no-error)
 
-; GNU TLS gives a fatal error when connecting to marmalade
-; Only an issue when compiled with GNU TLS support
-;; (defun gnutls-available-p ()
-;;   "Function redefined in order not to use built-in GnuTLS support"
-;;   nil)
-
-;(load-file (let ((coding-system-for-read 'utf-8))
-;                (shell-command-to-string "agda-mode locate")))
 
