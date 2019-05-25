@@ -145,13 +145,15 @@ working directory to the project base dir."
   :init
   (add-to-list 'company-backends 'company-jedi))
 
-
 (use-package sphinx-doc
   :diminish sphinx-doc-mode)
 
 (use-package python-docstring
   :pin "melpa"
   :diminish python-docstring-mode)
+
+(use-package blacken
+  :pin melpa)
 
 ;; (use-package flycheck-mypy
 ;;   :config
