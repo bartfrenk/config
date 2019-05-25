@@ -8,8 +8,6 @@
 
 (package-initialize)
 
-; silence 'tramp-read-passwd and 'find-tag-noselect redefinition warnings
-; (setq ad-redefinition-action 'accept)
 (let ((modules '(packages
                  core
                  magit
@@ -53,9 +51,10 @@
 
 ; GNU TLS gives a fatal error when connecting to marmalade
 ; Only an issue when compiled with GNU TLS support
-(defun gnutls-available-p ()
-  "Function redefined in order not to use built-in GnuTLS support"
-  nil)
+;; (defun gnutls-available-p ()
+;;   "Function redefined in order not to use built-in GnuTLS support"
+;;   nil)
 
-(load-file (let ((coding-system-for-read 'utf-8))
-                (shell-command-to-string "agda-mode locate")))
+;(load-file (let ((coding-system-for-read 'utf-8))
+;                (shell-command-to-string "agda-mode locate")))
+
