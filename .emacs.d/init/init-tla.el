@@ -1,4 +1,4 @@
-(load "~/.emacs.d/lisp/tla-mode/tla-mode")
+(load "~/.emacs.d/site/tla-mode/tla-mode")
 
 (defvar tlc-executable "/opt/tla/bin/tlc"
   "The command that runs TLC.")
