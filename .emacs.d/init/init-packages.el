@@ -1,18 +1,13 @@
 (require 'package)
 
-(setq package-enable-at-startup nil)
-
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
                          ("org" . "https://orgmode.org/elpa/")
-                         ("melpa-stable" . "http://stable.melpa.org/packages/")
-                         ("melpa" . "https://melpa.org/packages/")
-                         ("marmalade" . "http://marmalade-repo.org/packages/")))
-
+                         ("melpa-stable" . "https://stable.melpa.org/packages/")
+                         ("melpa" . "https://melpa.org/packages/")))
 
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
-;;  (add-to-list 'package-pinned-packages '(use-package . "melpa-stable") t)
   (package-refresh-contents)
   (package-install 'use-package))
 
