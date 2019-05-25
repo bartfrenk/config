@@ -1,5 +1,5 @@
 [include]
-    path = ~/local/rc/gitconfig
+    path = ~/.local/config/gitconfig
 [push]
     default = simple
 [alias]
