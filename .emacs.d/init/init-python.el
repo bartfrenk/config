@@ -74,7 +74,6 @@ working directory to the project base dir."
 
 (use-package py-isort)
 
-
 (use-package python
   :commands python-shell-send-string
   :bind
@@ -151,12 +150,13 @@ working directory to the project base dir."
   :diminish sphinx-doc-mode)
 
 (use-package python-docstring
+  :pin "melpa"
   :diminish python-docstring-mode)
 
-(use-package flycheck-mypy
-  :config
-  (add-to-list 'flycheck-checkers 'python-mypy t)
-  (flycheck-add-next-checker 'python-pylint 'python-mypy t))
+;; (use-package flycheck-mypy
+;;   :config
+;;   (add-to-list 'flycheck-checkers 'python-mypy t)
+;;   (flycheck-add-next-checker 'python-pylint 'python-mypy t))
 
 (jedi:setup)
 
