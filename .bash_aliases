@@ -18,6 +18,7 @@ alias stack-profile="stack --work-dir .stack-work-profile --profile"
 alias py-clean="find . -name \"*.py[c|o]\" -o -name __pycache__ | xargs rm -rf"
 alias docker-compose-img="docker run --rm -it --name dcv -v $(pwd):/input pmsipilot/docker-compose-viz render -m image"
 alias docker-name="docker ps --format '{{.Names}} : {{.Ports}}'"
+alias yaml2json="python -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), sys.stdout, indent=4)'"
 
 
 if [ "$1" == true ]; then
