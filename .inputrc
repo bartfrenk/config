@@ -1,3 +1,4 @@
 set editing-mode vi
 set keymap vi-command
 "\C-x\C-r": re-read-init-file
+set mark-symlinked-directories on
