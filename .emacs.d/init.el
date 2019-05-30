@@ -30,6 +30,7 @@
                  html
                  coq
                  tla
+                 sh
                  maxima
                  groovy
                  antlr
