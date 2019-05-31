@@ -3,6 +3,8 @@
 (require 'helm-buffers)
 (require 'helm-dash)
 (require 'flycheck)
+;; TODO: Add functionality to automatically read and set virtualenv from
+;; .python-version file.
 
 ;; ==== python-mode utility functions ====
 
