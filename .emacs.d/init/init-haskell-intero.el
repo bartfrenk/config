@@ -1,5 +1,6 @@
 (require 'use-package)
 (require 'hs-hoogle)
+(require 'flycheck)
 
 ;; Useful key bindings:
 ;; C-u C-c C-t Insert type signature for thing at point
@@ -28,6 +29,12 @@
 (use-package company-ghci
   :pin "melpa"
   :config
+  ;; (define-key company-active-map (kbd "C-n") 'company-select-next)
+  ;; (define-key company-active-map (kbd "C-p") 'company-select-previous)
+  ;; (define-key company-search-map (kbd "C-n") 'company-select-next)
+  ;; (define-key company-search-map (kbd "C-p") 'company-select-previous)
+  ;; (define-key company-search-map (kbd "C-n") 'company-select-next)
+
   (add-to-list 'company-backends 'company-ghci))
 
 (intero-global-mode 1)

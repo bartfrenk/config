@@ -5,8 +5,6 @@
   (("M-<tab>" . company-complete)
    :map company-active-map
    ("C-d" . company-show-doc-buffer)
-   ("C-n" . company-select-next)
-   ("C-p" . company-select-previous)
    ("C-h" . delete-backward-char))
   :commands global-company-mode
   :config
