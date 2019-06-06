@@ -16,7 +16,8 @@ path_list=(
   "$HOME/bin"
   "$HOME/.cargo/bin"
   "$HOME/.screenlayout"
-  "/opt/bin")
+  "/opt/bin"
+  "/opt/npm/bin")
 
 if [ -n "$BASH_VERSION" ]; then
     if [ -f "$HOME/.bashrc" ]; then
