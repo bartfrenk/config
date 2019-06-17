@@ -24,7 +24,10 @@
                                  (yas-minor-mode 1)))
   :config
 
+
   (define-clojure-indent
+    (expect-call 2)
+    (context 2)
     (GET 2)
     (POST 2)
     (go-loop 1)))
