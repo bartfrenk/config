@@ -9,7 +9,7 @@
 
 ;;; Adapted from haskell-hoogle to work with stack
 
-(defvar hs-hoogle/command "stack hoogle -- %q --color %f"
+(defvar hs-hoogle/command "stack hoogle -- --color %f %q"
   "The Hoogle command. The placeholder %q is replaced by the
   query term, while the placeholder %f is replaced by flags.")
 
