@@ -3,8 +3,7 @@
 (require 'helm-buffers)
 (require 'helm-dash)
 (require 'flycheck)
-;; TODO: Add functionality to automatically read and set virtualenv from
-;; .python-version file.
+(require 'functions-python)
 
 ;; ==== python-mode utility functions ====
 
@@ -91,6 +90,7 @@ working directory to the project base dir."
                                 (python-docstring-mode)
                                 (sphinx-doc-mode)
                                 (python/setup-dash)
+                                (python/set-dominating-venv)
                                 (jedi:setup)
                                 (jedi-mode t)
                                 (blacken-mode)))
