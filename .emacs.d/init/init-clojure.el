@@ -69,6 +69,7 @@ when `fn` returns or fails."
         nrepl-hide-special-buffers t
         cider-use-overlays t
         cider-repl-display-help-banner nil
+        cider-repl-use-pretty-printing t
         cider-clojure-cli-parameters "-m nrepl.cmdline --middleware '%s'")
 
   (add-to-list 'evil-emacs-state-modes 'cider-stacktrace-mode)
