@@ -10,33 +10,28 @@
 
 (defun haskell-reformat-buffer ()
     (interactive)
-    ;(hindent-reformat-buffer)
+;    (hindent-reformat-buffer)
     (haskell-mode-stylish-buffer))
 
 (with-eval-after-load 'intero
   (flycheck-add-next-checker 'intero '(warning . haskell-hlint)))
 
 (use-package intero
+  :pin melpa
+  :commands (intero-global-mode)
   :bind
   (:map intero-mode-map
         ("M-]" . intero-goto-definition)
         ("M-[" . xref-pop-marker-stack)
         ("C-c C-a" . haskell-reformat-buffer)
         ("C-C C-d" . hs-hoogle/info)
-        ("C-c h" . hs-hoogle/helm))
-  :commands intero-global-mode)
+        ("C-c h" . hs-hoogle/helm)))
 
 (use-package company-ghci
   :pin "melpa"
   :config
-  ;; (define-key company-active-map (kbd "C-n") 'company-select-next)
-  ;; (define-key company-active-map (kbd "C-p") 'company-select-previous)
-  ;; (define-key company-search-map (kbd "C-n") 'company-select-next)
-  ;; (define-key company-search-map (kbd "C-p") 'company-select-previous)
-  ;; (define-key company-search-map (kbd "C-n") 'company-select-next)
-
   (add-to-list 'company-backends 'company-ghci))
 
-(intero-global-mode 1)
+(intero-global-mode)
 
 (provide 'init-haskell-intero)
