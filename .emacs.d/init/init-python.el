@@ -58,7 +58,7 @@ working directory to the project base dir."
 (defun python-format-buffer ()
   "Format a Python buffer. Requires yapf to be available."
   (interactive)
-  (yapfify-buffer)
+  (blacken-buffer)
   (py-isort-buffer))
 
 (add-hook 'inferior-python-mode-hook 'python-shell-set-up-project-dirs)
@@ -95,6 +95,9 @@ working directory to the project base dir."
                                 (jedi-mode t)
                                 (blacken-mode)))
   (flycheck-add-next-checker 'python-flake8 'python-pylint)
+  :config
+  ;; Here we better determine dynamically which version to run, by adding advice
+  ;; to run-python
   (when (executable-find "ipython")
     ;; CHECK: Use ipython<5 since later versions are not compatible with
     ;; inferior. It would be better to distinguish based on the output of
@@ -106,7 +109,6 @@ working directory to the project base dir."
     ;;          python-shell-interpreter-args "--simple-prompt --profile=dev)
     (setq python-shell-interpreter "ipython"
           python-shell-interpreter-args "--profile=dev"))
-  :config
   (setq python-shell-completion-native-enable t))
 
 (use-package pyenv-mode
