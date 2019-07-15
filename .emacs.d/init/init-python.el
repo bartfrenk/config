@@ -96,8 +96,8 @@ working directory to the project base dir."
                                 (blacken-mode)))
   (flycheck-add-next-checker 'python-flake8 'python-pylint)
   :config
-  ;; Here we better determine dynamically which version to run, by adding advice
-  ;; to run-python
+  ;; IMPROVEMENT: Here we better determine dynamically which version to run, by
+  ;; adding advice to run-python
   (when (executable-find "ipython")
     ;; CHECK: Use ipython<5 since later versions are not compatible with
     ;; inferior. It would be better to distinguish based on the output of
