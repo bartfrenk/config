@@ -17,7 +17,8 @@ path_list=(
   "$HOME/.cargo/bin"
   "$HOME/.screenlayout"
   "/opt/bin"
-  "/opt/npm/bin")
+  "/opt/npm/bin"
+  "/opt/adr-tools/src/")
 
 if [ -n "$BASH_VERSION" ]; then
     if [ -f "$HOME/.bashrc" ]; then
