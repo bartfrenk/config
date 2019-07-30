@@ -41,7 +41,7 @@ if os.path.basename(os.getcwd()) in ['src', 'test']:
     os.chdir('..')
 del os
 del sys"
-  "*Python script to run immediately after starting the REPL.")
+  "Python script to run immediately after starting the REPL.")
 
 (defun python-shell-set-up-project-dirs ()
   "Configures the current Python shell to work well with multi-package projects.
@@ -98,18 +98,20 @@ working directory to the project base dir."
   :config
   ;; IMPROVEMENT: Here we better determine dynamically which version to run, by
   ;; adding advice to run-python
-  (when (executable-find "ipython")
-    ;; CHECK: Use ipython<5 since later versions are not compatible with
-    ;; inferior. It would be better to distinguish based on the output of
-    ;; ipython --version.  Later version of ipython require the option
-    ;; --simple-prompt, but this disables autocompletion.
+  (let ((pyenv-ipython (concat (getenv "PYENV_ROOT") "/shims/ipython")))
+    (when (executable-find pyenv-ipython)
+      ;; CHECK: Use ipython<5 since later versions are not compatible with
+      ;; inferior. It would be better to distinguish based on the output of
+      ;; ipython --version.  Later version of ipython require the option
+      ;; --simple-prompt, but this disables autocompletion.
 
-    ;;
-    ;;    (setq python-shell-interpreter "ipython"
-    ;;          python-shell-interpreter-args "--simple-prompt --profile=dev)
-    (setq python-shell-interpreter "ipython"
-          python-shell-interpreter-args "--profile=dev"))
+      ;;
+      ;;    (setq python-shell-interpreter "ipython"
+      ;;          python-shell-interpreter-args "--simple-prompt --profile=dev)
+      (setq python-shell-interpreter pyenv-ipython
+            python-shell-interpreter-args "--profile=dev")))
   (setq python-shell-completion-native-enable t))
+
 
 (use-package pyenv-mode
   :commands pyenv-mode-versions)

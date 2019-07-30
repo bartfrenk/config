@@ -34,26 +34,31 @@
 (global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "C-c C--") 'linum-mode)
 
+(use-package ripgrep)
+
+(use-package helm-rg
+  :pin "melpa"
+  :after ripgrep)
+
+
 (use-package diminish)
 
 ;; Automically reload PDFs when changed on disk
 (add-hook 'doc-view-mode-hook (lambda ()
                            (auto-revert-mode t)))
 
+(use-package evil-collection
+  :pin "melpa"
+  :custom (evil-collection-setup-minibuffer t)
+  :after evil
+  :config (evil-collection-init))
+
+
 (use-package neotree
   :commands (neotree-project-dir)
   :config
   (setq neo-window-width 40
         neo-autorefresh nil)
-  (evil-define-key 'normal neotree-mode-map (kbd "TAB") 'neotree-enter)
-  (evil-define-key 'normal neotree-mode-map (kbd "SPC") 'neotree-quick-look)
-  (evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
-  (evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
-  (evil-define-key 'normal neotree-mode-map (kbd "g") 'neotree-refresh)
-  (evil-define-key 'normal neotree-mode-map (kbd "n") 'neotree-next-line)
-  (evil-define-key 'normal neotree-mode-map (kbd "p") 'neotree-previous-line)
-  (evil-define-key 'normal neotree-mode-map (kbd "A") 'neotree-stretch-toggle)
-  (evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle)
 
   (defun neotree-project-dir ()
     "Open NeoTree using the git root."
@@ -76,7 +81,9 @@
 
 (use-package evil
   :init
-  (setq evil-want-abbrev-expand-on-insert-exit nil)
+  (setq evil-want-abbrev-expand-on-insert-exit nil
+        evil-want-integration t
+        evil-want-keybinding t)
   :config
   (evil-mode t)
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
@@ -86,6 +93,7 @@
   (setq-default evil-move-cursor-back nil))
 
 (use-package evil-surround
+  :after evil
   :commands (global-evil-surround-mode))
 
 (global-evil-surround-mode)

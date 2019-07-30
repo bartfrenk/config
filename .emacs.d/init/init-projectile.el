@@ -12,15 +12,22 @@
               ("C-c p i" . projectile-invalidate-cache))
   :diminish projectile-mode)
 
+
 (use-package helm-projectile
   :commands (helm-projectile-on)
   :pin "melpa"
   :config
-  (setq projectile-switch-project-action 'helm-projectile)
+  (setq projectile-switch-project-action 'projectile-vc)
   :bind (:map projectile-mode-map
               ("C-c p s" . helm-projectile-ag)
               ("C-c p p" . helm-projectile-switch-project)
               ("C-c p f" . helm-projectile-find-file)))
+
+
+(use-package projectile-ripgrep
+  :after (projectile ripgrep)
+  :bind (:map projectile-mode-map
+              ("C-c p r" . helm-projectile-rg)))
 
 
 (projectile-mode)

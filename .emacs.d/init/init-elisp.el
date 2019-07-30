@@ -8,6 +8,4 @@
 (define-key emacs-lisp-mode-map (kbd "M-]") 'xref-find-definitions)
 (define-key emacs-lisp-mode-map (kbd "M-[") 'xref-pop-marker-stack)
 
-(use-package emacs-lisp-mode)
-
 (provide 'init-elisp)
