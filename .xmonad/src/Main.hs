@@ -4,15 +4,14 @@
 
 -- TODO: define layout for Gimp
 import qualified Codec.Binary.UTF8.String       as UTF8
-import           Colors
 import           Data.Foldable                  (forM_)
-import           Data.List                      (isPrefixOf)
 import           Data.Maybe
 import qualified DBus                           as D
 import qualified DBus.Client                    as D
 
 import           XMonad
 import           XMonad.Actions.GroupNavigation
+import           XMonad.Actions.PhysicalScreens
 import           XMonad.Actions.WindowBringer   hiding (menuArgs)
 import           XMonad.Actions.WindowGo        (runOrRaise)
 import           XMonad.Config.Xfce
@@ -20,9 +19,7 @@ import           XMonad.Hooks.DynamicLog
 import           XMonad.Hooks.ManageDocks
 import           XMonad.Hooks.SetWMName
 import           XMonad.Layout.Combo
-import           XMonad.Layout.Fullscreen
 import           XMonad.Layout.NoBorders
-import           XMonad.Layout.PerWorkspace
 import           XMonad.Layout.Tabbed
 import           XMonad.Layout.WindowNavigation
 import           XMonad.Layout.ZoomRow
@@ -33,6 +30,7 @@ import           XMonad.Util.Loggers
 import           XMonad.Util.Run                (safeSpawnProg)
 import           XMonad.Util.WindowProperties   ()
 
+import           Colors
 import qualified Local
 import           RecentCommands
 import qualified Track
@@ -103,6 +101,12 @@ extraKeys track =
       safeSpawnProg "/usr/bin/firefox")
   , ("C-M-t", issueSelectionMenu dmenu track)
   , ("M-S-d", runOrRaise "rocketchat-desktop" isRocketChat)
+  , ("M-S-w", sendToScreen def (P 0))
+  , ("M-S-e", sendToScreen def (P 1))
+  , ("M-S-r", sendToScreen def (P 2))
+  , ("M-w", viewScreen def (P 0))
+  , ("M-e", viewScreen def (P 1))
+  , ("M-r", viewScreen def (P 2))
   ]
   where
     setMasterAudio cmd = spawn $ "amixer -D pulse set Master " ++ cmd
@@ -116,12 +120,8 @@ extraKeys track =
     dmenu = "/usr/bin/dmenu"
     isEmacs = className =? "Emacs"
     isThunar = resource =? "thunar"
-    isSlack = className =? "Slack"
     isTerminal = className =? "Xfce4-terminal"
     isRocketChat = className =? "Rocket.Chat+"
-    isChromium =
-      isPrefixOf "chromium-browser" `fmap` resource <&&> className =?
-      "Chromium-browser"
     isEvolution = className =? "Evolution"
     isFirefox = className =? "Firefox"
 
@@ -145,9 +145,7 @@ issueSelectionMenu :: String -> Track.Handle X -> X ()
 issueSelectionMenu dmenu track = do
   issues <- Track.list track
   issue' <- menuMapArgs dmenu (issueMenuArgs "Activate") issues
-  case issue' of
-    Just issue -> Track.activate track issue
-    Nothing -> return ()
+  forM_ issue' (Track.activate track)
 
 defaultPanes :: Tall a
 defaultPanes = Tall 1 0.03 0.5
@@ -164,10 +162,6 @@ defaultLayouts = avoidStruts defaultLayoutHook
     defaultLayoutHook =
       noBorders (tabbedBottom shrinkText tabTheme) |||
       noBorders Full ||| flexLayout
-
-fullscreenLayouts = lessBorders OnlyFloat $ fullscreenFull Full
-
-layoutRingPerWorkspace = onWorkspace "9" fullscreenLayouts defaultLayouts
 
 main :: IO ()
 main = do
@@ -186,7 +180,7 @@ main = do
     , modMask = mod4Mask
     , clickJustFocuses = False
     , manageHook = managePlacement <+> manageDocks <+> manageHook def
-    , layoutHook = layoutRingPerWorkspace
+    , layoutHook = defaultLayouts
     , startupHook = setWMName "LG3D"
     , logHook = dynamicLogWithPP (prettyPrinter dbus) >> historyHook
     } `additionalKeysP`
@@ -223,8 +217,8 @@ atMostFixedWidthL a str n logger = do
     Just l ->
       case a of
         AlignCenter -> toL (take n $ padhalf l ++ l ++ cs)
-        AlignRight -> toL (reverse (take n $ reverse l ++ cs))
-        _ -> toL (take n $ l ++ cs)
+        AlignRight  -> toL (reverse (take n $ reverse l ++ cs))
+        _           -> toL (take n $ l ++ cs)
     Nothing -> toL ""
   where
     toL = return . Just
@@ -258,8 +252,8 @@ pangoBold = wrap "<b>" "</b>"
 pangoSanitize :: String -> String
 pangoSanitize = foldr sanitize ""
   where
-    sanitize '>' xs = "&gt;" ++ xs
-    sanitize '<' xs = "&lt;" ++ xs
+    sanitize '>' xs  = "&gt;" ++ xs
+    sanitize '<' xs  = "&lt;" ++ xs
     sanitize '\"' xs = "&quot;" ++ xs
-    sanitize '&' xs = "&amp;" ++ xs
-    sanitize x xs = x : xs
+    sanitize '&' xs  = "&amp;" ++ xs
+    sanitize x xs    = x : xs
