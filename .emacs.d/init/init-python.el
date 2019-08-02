@@ -75,6 +75,12 @@ working directory to the project base dir."
 
 (use-package py-isort)
 
+(defun get-pyenv-root ()
+  "Returns the pyenv directory."
+  ;; Need to fall back on the default location, since PYENV_ROOT may be set
+  ;; after starting the Emacs daemon.
+  (or (getenv "PYENV_ROOT") (concat (getenv "HOME") "/.pyenv")))
+
 (use-package python
   :commands python-shell-send-string
   :bind
@@ -98,7 +104,7 @@ working directory to the project base dir."
   :config
   ;; IMPROVEMENT: Here we better determine dynamically which version to run, by
   ;; adding advice to run-python
-  (let ((pyenv-ipython (concat (getenv "PYENV_ROOT") "/shims/ipython")))
+  (let ((pyenv-ipython (concat (get-pyenv-root) "/shims/ipython")))
     (when (executable-find pyenv-ipython)
       ;; CHECK: Use ipython<5 since later versions are not compatible with
       ;; inferior. It would be better to distinguish based on the output of
