@@ -89,6 +89,7 @@
               (flycheck-mode -1)))
   :config
   (setq org-log-done t
+        org-time-stamp-formats '("<%Y-%m-%d>" . "<%Y-%m-%d %H:%M>")
         org-src-fontify-natively t
         org-confirm-babel-evaluate nil
         org-startup-with-inline-images t
