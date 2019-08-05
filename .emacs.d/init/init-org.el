@@ -121,7 +121,6 @@
   (org-babel-do-load-languages 'org-babel-load-languages
                                '((emacs-lisp . t)
                                  (sql . t)
-                                 (ipython . t)
                                  (shell . t)
                                  (http . t)
                                  (maxima . t)
