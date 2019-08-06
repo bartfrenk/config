@@ -83,7 +83,7 @@
   :init
   (setq evil-want-abbrev-expand-on-insert-exit nil
         evil-want-integration t
-        evil-want-keybinding t)
+        evil-want-keybinding nil)
   :config
   (evil-mode t)
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
