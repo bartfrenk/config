@@ -1,1 +1,2 @@
-
+:set prompt "\ESC[34mλ> \ESC[m"
+:set -Wno-type-defaults
