@@ -1,0 +1,3 @@
+#!/bin/bash
+
+xscreensaver & xscreensaver-command -activate
