@@ -13,6 +13,7 @@
         company-tooltip-align-annotations t
         company-echo-delay 0
         company-begin-commands '(self-insert-command))
+  (add-to-list 'company-transformers 'company-sort-prefer-same-case-prefix)
   :diminish company-mode
   :ensure t)
 

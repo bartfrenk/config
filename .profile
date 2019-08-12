@@ -1,11 +1,3 @@
-# ~/.profile: Executed by the command interpreter for login shells.  This file
-# is not read by bash(1), if ~/.bash_profile or ~/.bash_login exists.  See
-# /usr/share/doc/bash/examples/startup-files for examples.  The files are
-# located in the bash-doc package.
-
-# The default umask is set in /etc/profile; for setting the umask for ssh
-# logins, install and configure the libpam-umask package.  umask 022
-
 source_list=(
   "$HOME/local/rc/profile"
   "$HOME/.local/config/profile")
@@ -18,7 +10,8 @@ path_list=(
   "$HOME/.screenlayout"
   "/opt/bin"
   "/opt/npm/bin"
-  "/opt/adr-tools/src/")
+  "/opt/adr-tools/src/"
+  "/opt/forge")
 
 if [ -n "$BASH_VERSION" ]; then
     if [ -f "$HOME/.bashrc" ]; then
@@ -39,3 +32,5 @@ do
     PATH="$PATH:${path}"
   fi
 done
+
+export DOTNET_CLI_TELEMETRY_OPTOUT=1

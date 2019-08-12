@@ -36,6 +36,7 @@
                  antlr
                  scala
                  agda
+                 fsharp
                  purescript)))
 
   (dolist (module modules)
