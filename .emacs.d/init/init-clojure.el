@@ -21,6 +21,7 @@
                                  (paredit-mode 1)
                                  (evil-paredit-mode 1)
                                  (clj-refactor-mode 1)
+                                 (cljr-add-keybindings-with-prefix "C-c C-m")
                                  (yas-minor-mode 1)))
   :config
 
@@ -81,6 +82,11 @@ when `fn` returns or fails."
   :ensure t)
 
 (use-package clj-refactor
-  :diminish clj-refactor-mode)
+  :diminish clj-refactor-mode
+  :config
+  (add-to-list 'cljr-magic-require-namespaces '("log" . "taoensso.timbre"))
+  :after clojure-mode)
+
+
 
 (provide 'init-clojure)
