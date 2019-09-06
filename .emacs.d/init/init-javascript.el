@@ -49,6 +49,8 @@
 ;; Runs the hooks of its parent modes, among which js2-mode
 (use-package rjsx-mode)
 
+(use-package js-auto-format-mode)
+
 (use-package prettier-js
   :pin "melpa"
   :config

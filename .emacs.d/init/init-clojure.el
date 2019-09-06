@@ -85,6 +85,7 @@ when `fn` returns or fails."
   :diminish clj-refactor-mode
   :config
   (add-to-list 'cljr-magic-require-namespaces '("log" . "taoensso.timbre"))
+  (add-to-list 'cljr-magic-require-namespaces '("component" . "com.stuartsierra.component"))
   :after clojure-mode)
 
 

@@ -14,9 +14,9 @@
  {:new {:extra-deps {seancorfield/clj-new {:mvn/version "0.5.5"}}
         :main-opts ["-m" "clj-new.create"]}
   :nrepl {:extra-deps
-          {nrepl {:mvn/version "0.5.3"}
+          {nrepl {:mvn/version "0.6.0"}
            refactor-nrepl {:mvn/version "2.4.0"}
-           cider/cider-nrepl {:mvn/version "0.20.0"}}
+           cider/cider-nrepl {:mvn/version "0.22.0-beta1"}}
           :main-opts ["-m" "nrepl.cmdline" "--middleware"
                       "[refactor-nrepl.middleware/wrap-refactor,cider.nrepl/cider-middleware]"]}}
 
