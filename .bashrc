@@ -70,3 +70,4 @@ export PYTHONPATH=./src:./test
 export EDITOR=vim
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
+export PATH="$PYENV_ROOT/overrides:$PATH"
