@@ -135,7 +135,7 @@
   :config (setq whitespace-style '(face tab-mark lines-tail trailing)
                 whitespace-line-column 100
                 ;; avoid highlighting large tables in org-mode
-                whitespace-global-modes '(not latex-mode org-mode web-mode mhtml-mode)))
+                whitespace-global-modes '(not latex-mode org-mode web-mode mhtml-mode nxml-mode)))
 
 (use-package yasnippet
   :commands yas-global-mode
@@ -200,5 +200,6 @@
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.g4\\'" . antlr-mode))
 (add-to-list 'auto-mode-alist '("\\.yapf\\'" . confmode))
+(add-to-list 'auto-mode-alist '("\\.fsproj\\'" . nxml-mode))
 
 (provide 'init-core)
