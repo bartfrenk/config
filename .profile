@@ -11,6 +11,7 @@ path_list=(
   "/opt/bin"
   "/opt/npm/bin"
   "/opt/adr-tools/src/"
+  "/opt/omnisharp-roslyn/"
   "/opt/forge")
 
 if [ -n "$BASH_VERSION" ]; then
