@@ -28,6 +28,10 @@
 !.ipython/profile_dev/*
 .ipython/*/*.sqlite
 
+!.pyenv/
+!.pyenv/overrides
+!.pyenv/overrides/*
+
 !.vim/
 !.vim/plugin/
 !.vim/plugin/*/
@@ -55,8 +59,8 @@
 !.Rprofile
 !.inputrc
 !.tmux.conf
-!.vimrc
-!.gitignore
+!/.vimrc
+!/.gitignore
 !.pylintrc
 !.profile
 !.gitconfig
