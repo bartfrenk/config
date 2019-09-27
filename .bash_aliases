@@ -20,6 +20,12 @@ alias docker-compose-img="docker run --rm -it --name dcv -v $(pwd):/input pmsipi
 alias docker-name="docker ps --format '{{.Names}} : {{.Ports}}'"
 alias yaml2json="python -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), sys.stdout, indent=4)'"
 
+alias aws-session="/opt/bin/aws-vault exec --session-ttl=8h --assume-role-ttl=1h --server developer --debug --backend=secret-service"
+
+alias aws-exec="AWS_CONFIG_FILE=~/.aws_config aws-vault exec developer -- aws ${*:2}"
+
+
+
 
 if [ "$1" == true ]; then
     alias ls='ls --color=auto --group-directories-first --classify'

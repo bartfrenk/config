@@ -3,7 +3,6 @@ case $- in
     *i*) ;;
     *) return;;
 esac
-
 HISTCONTROL=ignoreboth
 HISTSIZE=10000
 HISTFILESIZE=20000
@@ -71,3 +70,13 @@ export EDITOR=vim
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 export PATH="$PYENV_ROOT/overrides:$PATH"
+
+## Configuration for AWS
+export AWS_CONFIG_FILE=/home/bart/.aws_config
+export AWS_VAULT_BACKEND=secret-service
+export AWS_REGION=eu-west-1
+
+if [ -n "$DESKTOP_SESSION" ];then
+    eval $(gnome-keyring-daemon --start --components=secrets)
+    export SSH_AUTH_SOCK
+fi
