@@ -1,0 +1,8 @@
+[default]
+output = json
+
+[profile developer]
+role_arn = arn:aws:iam::490154013872:role/role-developer
+source_profile = default
+region = eu-west-1
+mfa_serial = arn:aws:iam::259413982521:mfa/bart.frenk

@@ -48,8 +48,11 @@
 !.tmuxinator/
 !.tmuxinator/*
 
-!.aws/
-!.aws/config
+!.aws.vault/
+!.aws.vault/config
+
+!.aws.hidden/
+!.aws.hidden/config
 
 !.bashrc
 !.bash_aliases
