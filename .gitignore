@@ -81,3 +81,4 @@
 !.boot/boot.properties
 !.boot/profile.boot
 
+!.zshrc
