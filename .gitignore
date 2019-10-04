@@ -82,3 +82,4 @@
 !.boot/profile.boot
 
 !.zshrc
+!.aliases.zsh
