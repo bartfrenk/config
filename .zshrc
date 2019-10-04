@@ -48,7 +48,7 @@ ZSH_THEME="custom"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-plugins=(git dotenv zsh-aws-vault docker pyenv kubectl helm)
+plugins=(git dotenv zsh-aws-vault docker pyenv kubectl helm z)
 
 source $ZSH/oh-my-zsh.sh
 
