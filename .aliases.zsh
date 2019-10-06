@@ -36,7 +36,7 @@ py() {
     "clean")
       find . -name "*.py[c|o]" -o -name __pycache__ | xargs rm -rf
       ;;
-    "setup")
+    "init")
       pyenv virtualenv 3.6.8 "$2"
       echo "$PWD/src" > "$HOME/.pyenv/versions/$2/lib/python3.6/site-packages/$2.pth"
       pyenv local "$2"
