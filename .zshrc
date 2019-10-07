@@ -66,6 +66,7 @@ source "$HOME/.pyenv/versions/3.6.8/bin/aws_zsh_completer.sh"
 export AWS_CONFIG_FILE=/home/bart/.aws.vault/config
 export AWS_VAULT_BACKEND=secret-service
 export AWS_REGION=eu-west-1
+export AWS_DEFAULT_REGION=eu-west-1
 
 if [ -n "$DESKTOP_SESSION" ];then
     eval "$(gnome-keyring-daemon --start --components=secrets)"
