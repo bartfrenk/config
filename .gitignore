@@ -29,8 +29,8 @@
 .ipython/*/*.sqlite
 
 !.pyenv/
-!.pyenv/overrides
-!.pyenv/overrides/*
+!.pyenv.overrides
+!.pyenv.overrides/*
 
 !.vim/
 !.vim/plugin/

@@ -7,7 +7,6 @@ ZSH_THEME="custom"
 # Uncomment the following line to use hyphen-insensitive completion.
 # Case-sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
-
 # Uncomment the following line to disable bi-weekly auto-update checks.
 # DISABLE_AUTO_UPDATE="true"
 
@@ -60,7 +59,7 @@ export PYTHONPATH=./src:./test
 export EDITOR=vim
 eval "$(pyenv virtualenv-init -)"
 
-export PATH="$PYENV_ROOT/overrides:$PATH"
+export PATH="$HOME/.pyenv.overrides:$PATH"
 
 source "$HOME/.pyenv/versions/3.6.8/bin/aws_zsh_completer.sh"
 export AWS_CONFIG_FILE=/home/bart/.aws.vault/config
