@@ -11,7 +11,7 @@ aws-session() {
 
 aws() {
   if (( ${+AWS_VAULT} )); then
-    AWS_CONFIG=$HOME/.aws.vault/config /home/bart/.pyenv/overrides/aws ${*:1}
+    AWS_CONFIG=$HOME/.aws.vault/config /home/bart/.pyenv.overrides/aws ${*:1}
   else
     AWS_CONFIG=$HOME/.aws.vault/config /opt/bin/aws-vault exec developer \
               -- aws ${*:1}

@@ -80,3 +80,9 @@ if [ -n "$DESKTOP_SESSION" ];then
     eval $(gnome-keyring-daemon --start --components=secrets)
     export SSH_AUTH_SOCK
 fi
+
+with-aws() {
+  AWS_CONFIG=$HOME/.aws.vault/config /opt/bin/aws-vault exec developer \
+            -- ${*:1}
+}
+

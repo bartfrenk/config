@@ -28,7 +28,6 @@
 !.ipython/profile_dev/*
 .ipython/*/*.sqlite
 
-!.pyenv/
 !.pyenv.overrides
 !.pyenv.overrides/*
 
