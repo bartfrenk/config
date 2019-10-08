@@ -74,5 +74,3 @@ fi
 
 bindkey -v '^?' backward-delete-char
 bindkey -v '^R' history-incremental-search-backward
-
-source $HOME/.aliases.zsh
