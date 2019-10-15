@@ -55,7 +55,6 @@ set -o vi
 
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
-export PYTHONPATH=./src:./test
 export EDITOR=vim
 eval "$(pyenv virtualenv-init -)"
 
