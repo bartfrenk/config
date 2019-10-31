@@ -12,7 +12,7 @@ path_list=(
   "/opt/npm/bin"
   "/opt/adr-tools/src/"
   "/opt/omnisharp-roslyn/"
-  "/opt/helm/linux-amd64/"
+  "/opt/helm"
   "/opt/forge")
 
 if [ -n "$BASH_VERSION" ]; then

@@ -54,7 +54,7 @@ source $ZSH/oh-my-zsh.sh
 set -o vi
 
 export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
+export PATH="$PYENV_ROOT/bin:/opt/protoc/bin:$PATH"
 export EDITOR=vim
 eval "$(pyenv virtualenv-init -)"
 
