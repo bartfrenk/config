@@ -29,6 +29,7 @@
   (define-clojure-indent
     (expect-call 2)
     (context 2)
+    (try+ 1)
     (GET 2)
     (POST 2)
     (go-loop 1)))
