@@ -31,6 +31,7 @@
                  coq
                  tla
                  sh
+                 sql
                  maxima
                  groovy
                  antlr
