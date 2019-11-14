@@ -9,8 +9,10 @@
         projectile-cache-file (expand-file-name "projectile.cache" cache-dir)
         projectile-globally-ignored-file-suffixes '(".png" ".gif" ".pdf"))
   :bind (:map projectile-mode-map
-              ("C-c p i" . projectile-invalidate-cache))
+              ("C-c p i" . projectile-invalidate-cache)
+              ("C-c p o" . projectile-find-file-other-window))
   :diminish projectile-mode)
+
 
 
 (use-package helm-projectile
