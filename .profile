@@ -13,7 +13,9 @@ path_list=(
   "/opt/adr-tools/src/"
   "/opt/omnisharp-roslyn/"
   "/opt/helm"
-  "/opt/forge")
+  "/opt/forge"
+  "/opt/google-cloud-sdk/bin"
+)
 
 if [ -n "$BASH_VERSION" ]; then
     if [ -f "$HOME/.bashrc" ]; then
