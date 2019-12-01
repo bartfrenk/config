@@ -24,13 +24,13 @@
                                  (cljr-add-keybindings-with-prefix "C-c C-m")
                                  (yas-minor-mode 1)))
   :config
-
-
   (define-clojure-indent
     (expect-call 2)
     (context 2)
-    (try+ 1)
+    (try+ 0)
+    (responding 3)
     (GET 2)
+    (PATCH 2)
     (POST 2)
     (go-loop 1)))
 
