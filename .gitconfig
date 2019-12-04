@@ -18,3 +18,5 @@
     excludesfile = /home/bart/.gitignore_global
 [credential]
     helper = store
+[gitlab]
+	user = bartfrenk
