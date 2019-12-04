@@ -6,6 +6,10 @@
   :config
   (magit-org-todos-autoinsert))
 
+(use-package magit-todos
+  :init
+  (add-hook 'magit-mode-hook (lambda () (magit-todos-mode t))))
+
 ;; To get forge working:
 ;; https://www.reddit.com/r/emacs/comments/a7r265/work_with_git_forges_from_the_comfort_of_magit/
 
