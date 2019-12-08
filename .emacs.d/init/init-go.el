@@ -1,5 +1,6 @@
 (require 'use-package)
 (require 'whitespace)
+(require 'company)
 
 (use-package go-mode
   :bind (:map go-mode-map
