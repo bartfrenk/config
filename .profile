@@ -14,6 +14,7 @@ path_list=(
   "/opt/omnisharp-roslyn/"
   "/opt/helm"
   "/opt/forge"
+  "/opt/go/bin"
   "/opt/google-cloud-sdk/bin"
 )
 
