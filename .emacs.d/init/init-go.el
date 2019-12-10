@@ -14,7 +14,6 @@
   (add-hook 'before-save-hook 'gofmt-before-save)
   (add-hook 'go-mode-hook
             (lambda ()
-              (go-eldoc-setup)
               (set (make-local-variable 'whitespace-style)
                    '(face lines-tail trailing))
               (if (not (string-match "go" compile-command))
@@ -22,7 +21,8 @@
                        "go build -v && go test -v && go vet"))
               (setq imenu-generic-expression
                     '(("type" "^[\t]*type *\\([^ \t\n\r\f]*[\t]*\\(struct\\|interface\\)\\)" 1)
-                      ("func" "^func *\\(.*\\)" 1))))))
+                      ("func" "^func *\\(.*\\)" 1)))
+              )))
 
 (use-package go-scratch
   :ensure t)
@@ -34,9 +34,9 @@
 (use-package lsp-mode
   :ensure t
   :commands (lsp lsp-deferred)
+  :config
+  (setq lsp-prefer-flymake nil)
   :hook (go-mode . lsp-deferred))
-
-(add-hook 'go-mode-hook #'lsp)
 
 (defun lsp-go-install-save-hooks ()
   (add-hook 'before-save-hook #'lsp-format-buffer t t)
@@ -46,7 +46,12 @@
 
 (use-package lsp-ui
   :ensure t
-  :commands lsp-ui-mode)
+  :commands lsp-ui-mode
+  :config
+  (setq lsp-ui-sideline-enable nil
+        lsp-ui-peek-enable t
+        lsp-ui-doc-enable t))
+
 
 (use-package company-lsp
   :ensure t
@@ -56,10 +61,5 @@
   ;; not available on melpa-stable
   :pin "melpa"
   :ensure t)
-
-;; (use-package company-go
-;;   :ensure t
-;;   :config
-;;   (add-to-list 'company-backends 'company-go))
 
 (provide 'init-go)
