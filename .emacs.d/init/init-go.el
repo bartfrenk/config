@@ -31,15 +31,35 @@
   :pin "melpa"
   :ensure t)
 
+(use-package lsp-mode
+  :ensure t
+  :commands (lsp lsp-deferred)
+  :hook (go-mode . lsp-deferred))
+
+(add-hook 'go-mode-hook #'lsp)
+
+(defun lsp-go-install-save-hooks ()
+  (add-hook 'before-save-hook #'lsp-format-buffer t t)
+  (add-hook 'before-save-hook #'lsp-organize-imports t t))
+
+(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+
+(use-package lsp-ui
+  :ensure t
+  :commands lsp-ui-mode)
+
+(use-package company-lsp
+  :ensure t
+  :commands company-lsp)
 
 (use-package go-snippets
   ;; not available on melpa-stable
   :pin "melpa"
   :ensure t)
 
-(use-package company-go
-  :ensure t
-  :config
-  (add-to-list 'company-backends 'company-go))
+;; (use-package company-go
+;;   :ensure t
+;;   :config
+;;   (add-to-list 'company-backends 'company-go))
 
 (provide 'init-go)

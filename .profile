@@ -39,3 +39,4 @@ do
 done
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
+export GOPATH=/home/bart/dev/go
