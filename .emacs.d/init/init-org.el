@@ -103,6 +103,7 @@
         org-tags-column 80
         org-use-tag-inheritance nil
         org-startup-indented t
+        org-image-actual-width nil
         org-todo-keywords '((sequence
                              "TODO(t)" "WAIT(w)" "STARTED(s)"
                              "|" "DONE(d)" "POSTPONED(p)" "CANCELED(c)"))
