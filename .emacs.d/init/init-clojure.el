@@ -87,6 +87,7 @@ when `fn` returns or fails."
   :config
   (add-to-list 'cljr-magic-require-namespaces '("log" . "taoensso.timbre"))
   (add-to-list 'cljr-magic-require-namespaces '("component" . "com.stuartsierra.component"))
+  (add-to-list 'cljr-magic-require-namespaces '("pp" . "clojure.pprint"))
   :after clojure-mode)
 
 
