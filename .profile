@@ -16,6 +16,7 @@ path_list=(
   "/opt/forge"
   "/opt/go/bin"
   "/opt/google-cloud-sdk/bin"
+  "/opt/visualvm_144/bin"
 )
 
 if [ -n "$BASH_VERSION" ]; then

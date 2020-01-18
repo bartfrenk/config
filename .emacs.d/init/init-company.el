@@ -9,8 +9,9 @@
   :commands global-company-mode
   :config
   (setq company-tooltip-limit 20
-        company-idle-delay .1
+        company-idle-delay 0
         company-tooltip-align-annotations t
+        company-minimum-prefix-length 1
         company-echo-delay 0
         company-begin-commands '(self-insert-command))
   (add-to-list 'company-transformers 'company-sort-prefer-same-case-prefix)

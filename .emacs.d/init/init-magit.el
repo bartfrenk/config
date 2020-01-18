@@ -1,7 +1,5 @@
 (use-package magit)
 
-
-
 (use-package magit-org-todos
   :config
   (magit-org-todos-autoinsert))

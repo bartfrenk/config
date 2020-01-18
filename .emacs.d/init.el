@@ -46,7 +46,6 @@
       (message name)
       (require (intern (concat prefix name))))))
 
-
 (message "local")
 ;; do not fail if 'init-local is not provided
 (require 'init-local nil :no-error)

@@ -4,14 +4,11 @@
 
 (use-package go-mode
   :bind (:map go-mode-map
-              ("M-]" . godef-jump)
-              ("M-[" . pop-tag-mark)
               ("C-c C-r" . go-remove-unused-imports)
               ("C-c C-g" . go-goto-imports)
               ("C-c C-z" . go-scratch))
   :ensure t
   :config
-  (add-hook 'before-save-hook 'gofmt-before-save)
   (add-hook 'go-mode-hook
             (lambda ()
               (set (make-local-variable 'whitespace-style)
@@ -24,14 +21,12 @@
                       ("func" "^func *\\(.*\\)" 1)))
               )))
 
-(use-package go-scratch
-  :ensure t)
-
-(use-package go-projectile
-  :pin "melpa"
-  :ensure t)
-
 (use-package lsp-mode
+  :bind (:map lsp-mode-map
+              ("C-c C-d" . lsp-ui-doc-show)
+              ("C-C C-q" . lsp-ui-doc-hide)
+              ("M-]" . lsp-find-definition)
+              ("M-[" . pop-tag-mark))
   :ensure t
   :commands (lsp lsp-deferred)
   :config
@@ -52,14 +47,8 @@
         lsp-ui-peek-enable t
         lsp-ui-doc-enable t))
 
-
 (use-package company-lsp
   :ensure t
   :commands company-lsp)
-
-(use-package go-snippets
-  ;; not available on melpa-stable
-  :pin "melpa"
-  :ensure t)
 
 (provide 'init-go)

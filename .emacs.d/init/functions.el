@@ -84,4 +84,10 @@ The return value is the new value of LIST-VAR."
 (defun join (&rest rest)
   (mapconcat 'identity rest " "))
 
+ (defmacro -> (&rest body)
+      (let ((result (pop body)))
+        (dolist (form body result)
+          (setq result (append (list (car form) result)
+                               (cdr form))))))
+
 (provide 'functions)

@@ -12,7 +12,9 @@
       scroll-margin 20
       auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
       browse-url-generic-program "/usr/bin/firefox"
-      browse-url-browser-function 'browse-url-generic)
+      browse-url-browser-function 'browse-url-generic
+      ad-redefinition-action 'accept)
+
 
 (setq-default line-spacing '0.4)
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -135,7 +137,12 @@
   :config (setq whitespace-style '(face tab-mark lines-tail trailing)
                 whitespace-line-column 100
                 ;; avoid highlighting large tables in org-mode
-                whitespace-global-modes '(not latex-mode org-mode web-mode mhtml-mode nxml-mode)))
+                whitespace-global-modes '(not latex-mode
+                                              org-mode
+                                              web-mode
+                                              mhtml-mode
+                                              nxml-mode
+                                              magit-status-mode)))
 
 (use-package yasnippet
   :commands yas-global-mode
