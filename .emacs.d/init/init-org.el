@@ -5,11 +5,11 @@
 ;; to add file to agenda: org-agenda-file-to-front
 
 (defvar journal-dir
-  "~/documents/notes/journal"
+  "~/documents/notes/journals"
   "Directory containing journal files.")
 
 (defvar clock-dir
-  "~/documents/notes/ghg/ai-team/clock")
+  "~/documents/notes/greenhouse/ai-team/clock")
 
 (defun journal-file ()
   (let ((journal-name
@@ -21,10 +21,17 @@
          (concat "clock-" (format-time-string "%Y-%m") ".org")))
     (concat clock-dir "/" clock-name)))
 
+(defvar plan-file
+  "~/documents/notes/greenhouse/ai-team/etc/plan.org")
+
 (defun open-clock-file ()
   "Opens the active journal file."
   (interactive)
   (find-file (clock-file)))
+
+(defun open-plan ()
+  (interactive)
+  (find-file plan-file))
 
 (defun open-journal-file ()
   "Opens the active journal file."

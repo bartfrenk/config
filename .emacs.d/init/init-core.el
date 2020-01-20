@@ -55,13 +55,11 @@
   :after evil
   :config (evil-collection-init))
 
-
 (use-package neotree
   :commands (neotree-project-dir)
   :config
   (setq neo-window-width 40
         neo-autorefresh nil)
-
   (defun neotree-project-dir ()
     "Open NeoTree using the git root."
     (interactive)
@@ -181,6 +179,7 @@
 (use-package magit)
 (use-package evil-magit)
 (use-package material-theme)
+(use-package atom-one-dark-theme)
 (use-package paredit :pin "melpa")
 (use-package evil-paredit :pin "melpa")
 (use-package smooth-scrolling)
@@ -194,8 +193,12 @@
     (add-hook 'after-make-frame-functions
               (lambda (frame)
                 (select-frame frame)
-                (load-theme 'material t)))
-  (load-theme 'material t))
+                (load-theme 'material t)
+                (switch-theme 'atom-one-dark)))
+  (progn
+    (load-theme 'material t)
+    (switch-theme 'atom-one-dark)))
+
 
 (global-git-gutter-mode)
 (yas-global-mode)
