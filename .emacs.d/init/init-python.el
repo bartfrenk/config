@@ -147,7 +147,6 @@ working directory to the project base dir."
 ;; See http://tkf.github.io/emacs-jedi/released/
 (use-package company-jedi
   :commands (jedi:setup)
-  :after python-mode
   :bind
   (:map python-mode-map
         ("M-]" . jedi:goto-definition)
