@@ -8,6 +8,8 @@
   "~/documents/notes/journals"
   "Directory containing journal files.")
 
+
+
 (defvar clock-dir
   "~/documents/notes/greenhouse/ai-team/clock")
 
@@ -24,6 +26,15 @@
 (defvar plan-file
   "~/documents/notes/greenhouse/ai-team/etc/plan.org")
 
+(defvar scratch-file
+  "~/documents/notes/learning/etc/scratch.org")
+
+(defvar habits-file
+  "~/documents/notes/learning/etc/habits.org")
+
+(defvar backlog-file
+  "~/documents/notes/greenhouse/ai-team/etc/backlog.org")
+
 (defun open-clock-file ()
   "Opens the active journal file."
   (interactive)
@@ -33,10 +44,23 @@
   (interactive)
   (find-file plan-file))
 
-(defun open-journal-file ()
+(defun open-habits ()
+  (interactive)
+  (find-file habits-file))
+
+(defun open-scratch ()
+  (interactive)
+  (find-file scratch-file))
+
+(defun open-journal ()
   "Opens the active journal file."
   (interactive)
   (find-file (journal-file)))
+
+(defun open-backlog ()
+  "Opens the active journal file."
+  (interactive)
+  (find-file backlog-file))
 
 (defvar inbox-file
   "~/documents/notes/inbox.org"
