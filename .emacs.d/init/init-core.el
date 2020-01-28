@@ -187,7 +187,9 @@
   :commands (helm-dash)
   :config
   (setq helm-dash-common-docsets '("Bash")))
-
+(use-package buffer-move
+  :bind (("C-x [" . buf-move-left)
+         ("C-x ]" . buf-move-right)))
 
 (if (daemonp)
     (add-hook 'after-make-frame-functions
