@@ -45,7 +45,7 @@
                               ;; has been noticed,
                               ;; see:https://github.com/racer-rust/emacs-racer/issues/86.
                               ;; Use Alt-Tab to complete.
-                              (setq-local company-idle-delay 0.5)))
+                              (setq-local company-idle-delay nil)))
   :config
   (setq rust-format-on-save t
         rust-rustfmt-bin "rustfmt")
