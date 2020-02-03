@@ -26,6 +26,7 @@
   :config
   (define-clojure-indent
     (expect-call 2)
+    (xml/element 2)
     (context 2)
     (try+ 0)
     (responding 3)
