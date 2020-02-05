@@ -90,4 +90,8 @@ The return value is the new value of LIST-VAR."
           (setq result (append (list (car form) result)
                                (cdr form))))))
 
+
+(defun random-hex ()
+  (format  (concat "%0" (number-to-string 10) "x" ) (random (1- (expt 16 10)))))
+
 (provide 'functions)
