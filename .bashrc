@@ -86,3 +86,5 @@ with-aws() {
             -- ${*:1}
 }
 
+
+source /home/bart/.config/broot/launcher/bash/br

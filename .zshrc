@@ -73,3 +73,5 @@ fi
 
 bindkey -v '^?' backward-delete-char
 bindkey -v '^R' history-incremental-search-backward
+
+source /home/bart/.config/broot/launcher/bash/br
