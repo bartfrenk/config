@@ -100,7 +100,7 @@ working directory to the project base dir."
                                 (jedi:setup)
                                 (jedi-mode t)
                                 (blacken-mode)))
-  (flycheck-add-next-checker 'python-flake8 'python-pylint)
+  
   :config
   ;; IMPROVEMENT: Here we better determine dynamically which version to run, by
   ;; adding advice to run-python
@@ -167,10 +167,12 @@ working directory to the project base dir."
 (use-package blacken
   :pin melpa)
 
-;; (use-package flycheck-mypy
-;;   :config
-;;   (add-to-list 'flycheck-checkers 'python-mypy t)
-;;   (flycheck-add-next-checker 'python-pylint 'python-mypy t))
+(use-package flycheck-mypy
+  :config
+  (add-to-list 'flycheck-checkers 'python-mypy t)
+  (flycheck-add-next-checker 'python-flake8 'python-mypy t)
+  (flycheck-add-next-checker 'python-mypy 'python-pylint))
+
 
 (jedi:setup)
 
