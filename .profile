@@ -18,6 +18,7 @@ path_list=(
   "/opt/google-cloud-sdk/bin"
   "/opt/visualvm_144/bin"
   "/opt/gephi-0.9.2/bin"
+  "/home/bart/dev/go/bin"
 )
 
 if [ -n "$BASH_VERSION" ]; then

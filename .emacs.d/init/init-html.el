@@ -13,8 +13,4 @@
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
 
-;; Seems to be unavailable (2018-080-27)
-;; (use-package tidy
-;;   :pin "melpa")
-
 (provide 'init-html)

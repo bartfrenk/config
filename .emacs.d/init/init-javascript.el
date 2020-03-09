@@ -51,14 +51,17 @@
 
 (use-package js-auto-format-mode)
 
+
+
 (use-package prettier-js
   :pin "melpa"
   :config
-  (setq-default js-indent-level 2
-                js2-indent-level 2
-                jsx-indent-level 2
-                sgml-basic-offset 2
-                js2-basic-offset 2))
+  (let ((indent-level 4))
+    (setq-default js-indent-level indent-level
+                  js2-indent-level indent-level
+                  jsx-indent-level indent-level
+                  sgml-basic-offset indent-level
+                  js2-basic-offset indent-level)))
 
 (use-package add-node-modules-path
   :config

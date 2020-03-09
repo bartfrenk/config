@@ -2,5 +2,4 @@
 
 (use-package ess)
 
-
 (provide 'init-ess)

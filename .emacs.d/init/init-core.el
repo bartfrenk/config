@@ -30,7 +30,6 @@
 (global-set-key (kbd "C-x M-s") 'save-some-buffers)
 (global-set-key (kbd "C-x C-o") nil)
 (global-set-key (kbd "C-x M-o") 'delete-blank-lines)
-
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
 (global-set-key (kbd "RET") 'newline-and-indent)
@@ -180,6 +179,7 @@
 (use-package evil-magit)
 (use-package material-theme)
 (use-package atom-one-dark-theme)
+(use-package smart-mode-line-atom-one-dark-theme)
 (use-package paredit :pin "melpa")
 (use-package evil-paredit :pin "melpa")
 (use-package smooth-scrolling)
@@ -199,7 +199,9 @@
                 (switch-theme 'atom-one-dark)))
   (progn
     (load-theme 'material t)
-    (switch-theme 'atom-one-dark)))
+    (switch-theme 'atom-one-dark)
+    (load-theme 'smart-mode-line-atom-one-dark)
+    ))
 
 
 (global-git-gutter-mode)
