@@ -211,7 +211,7 @@
 (sml/setup)
 
 (add-to-list 'auto-mode-alist '("\\.raml\\'" . yaml-mode))
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
 (add-to-list 'auto-mode-alist '("\\.g4\\'" . antlr-mode))
 (add-to-list 'auto-mode-alist '("\\.yapf\\'" . confmode))
 (add-to-list 'auto-mode-alist '("\\.fsproj\\'" . nxml-mode))

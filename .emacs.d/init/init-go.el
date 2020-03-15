@@ -18,6 +18,9 @@
               ("C-c h" . godoc-at-point)
               ("M-]" . godef-jump)
               ("M-[" . xref-pop-marker-stack))
+  :init
+  (add-hook 'go-mode-hook (lambda ()
+                            (setq-local company-idle-delay nil)))
   :hook
   (go-mode . (lambda ()
                (set (make-local-variable 'company-backends) '(company-go))
@@ -26,6 +29,7 @@
                (if (not (string-match "go" compile-command))
                    (set (make-local-variable 'compile-command)
                         "go build -v && go test -v && go vet"))
+               
                (setq imenu-generic-expression
                      '(("type" "^[\t]*type *\\([^ \t\n\r\f]*[\t]*\\(struct\\|interface\\)\\)" 1)
                        ("func" "^func *\\(.*\\)" 1)))))
