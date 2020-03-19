@@ -57,7 +57,7 @@
 (use-package prettier-js
   :pin "melpa"
   :config
-  (let ((indent-level 4))
+  (let ((indent-level 2))
     (setq-default js-indent-level indent-level
                   js2-indent-level indent-level
                   jsx-indent-level indent-level
