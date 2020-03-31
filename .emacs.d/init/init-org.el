@@ -8,7 +8,9 @@
   "~/documents/notes/journals"
   "Directory containing journal files.")
 
-
+(defvar tasks-dir
+  "/home/bart/documents/notes/greenhouse/ai-team/tasks"
+  "Directory containing task files.")
 
 (defvar clock-dir
   "~/documents/notes/greenhouse/ai-team/clock")
@@ -18,31 +20,29 @@
          (concat "journal-" (format-time-string "%Y") ".org")))
     (concat journal-dir "/" journal-name)))
 
+(defun tasks-file ()
+  (let ((file-name
+         (concat "tasks-" (format-time-string "%Y-%m") ".org")))
+    (concat tasks-dir "/" file-name)))
+
 (defun clock-file ()
   (let ((clock-name
          (concat "clock-" (format-time-string "%Y-%m") ".org")))
     (concat clock-dir "/" clock-name)))
 
-(defvar plan-file
-  "~/documents/notes/greenhouse/ai-team/etc/plan.org")
-
 (defvar scratch-file
   "~/documents/notes/learning/etc/scratch.org")
 
-(defvar habits-file
-  "~/documents/notes/learning/etc/habits.org")
-
 (defvar backlog-file
   "~/documents/notes/greenhouse/ai-team/etc/backlog.org")
+
+(defvar habits-file
+  "~/documents/notes/learning/etc/habits.org")
 
 (defun open-clock-file ()
   "Opens the active journal file."
   (interactive)
   (find-file (clock-file)))
-
-(defun open-plan ()
-  (interactive)
-  (find-file plan-file))
 
 (defun open-habits ()
   (interactive)
@@ -62,14 +62,10 @@
   (interactive)
   (find-file backlog-file))
 
-(defvar inbox-file
-  "~/documents/notes/inbox.org"
-  "Location for the inbox file, containing unsorted notes.")
-
-(defun open-inbox-file ()
-  "Opens the inbox file, set in `inbox-file'."
+(defun open-tasks-file ()
+  "Opens the active tasks file'."
   (interactive)
-  (find-file inbox-file))
+  (find-file (tasks-file)))
 
 (use-package org
 
@@ -124,9 +120,11 @@
         org-src-fontify-natively t
         org-confirm-babel-evaluate nil
         org-startup-with-inline-images t
+        org-agenda-files (list tasks-dir)
         org-edit-src-content-indentation 0
         org-list-description-max-indent 2
         org-babel-python-command "python3"
+        org-agenda-show-all-dates t
         org-startup-folded 'content
         org-outline-path-complete-in-steps nil
         org-default-notes-file inbox-file
@@ -135,6 +133,7 @@
         org-use-tag-inheritance nil
         org-startup-indented t
         org-image-actual-width nil
+        org-agenda-start-on-weekday nil
         org-todo-keywords '((sequence
                              "TODO(t)" "WAIT(w)" "STARTED(s)"
                              "|" "DONE(d)" "POSTPONED(p)" "CANCELED(c)"))
@@ -142,8 +141,8 @@
         org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar"
         org-capture-templates
         `(("t" "Task" entry
-           (file+headline inbox-file "Tasks")
-           "* TODO %^{Task}\nFile: %F\n%?")
+           (file+headline tasks-file "Tasks")
+           "* TODO %^{Task}\nDate: %U\n\n%?")
           ("n" "Quick note" entry
            (file+headline inbox-file "Notes")
            "* %^{Note}")
@@ -151,6 +150,7 @@
            (file+headline ,(journal-file) "Entries")
            "* %^{Title}\nDate: %U\n\n%?"
            :unnarrowed t)))
+
   (org-babel-do-load-languages 'org-babel-load-languages
                                '((emacs-lisp . t)
                                  (sql . t)
