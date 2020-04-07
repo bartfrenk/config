@@ -100,7 +100,6 @@ working directory to the project base dir."
                                 (jedi:setup)
                                 (jedi-mode t)
                                 (blacken-mode)))
-  
   :config
   ;; IMPROVEMENT: Here we better determine dynamically which version to run, by
   ;; adding advice to run-python

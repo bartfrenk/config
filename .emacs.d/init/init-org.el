@@ -67,8 +67,9 @@
   (interactive)
   (find-file (tasks-file)))
 
-(use-package org
 
+
+(use-package org
   :bind
   (("C-c l" . org-store-link)
    ("C-c a" . org-agenda)
@@ -76,6 +77,31 @@
    ("C-c j" . open-journal-file)
    ("C-c M-p" . org-latex-export-to-pdf))
 
+  :ensure t
+
+  :pin melpa-stable
+
+  :functions
+  (org-fill-paragraph--latex-environment
+   org-element-type
+   org-element-context)
+
+  :init
+  (advice-add 'org-fill-paragraph :before-while
+              #'org-fill-paragraph--latex-environment)
+  (setq org-agenda-files (list tasks-dir)
+        org-agenda-start-on-weekday nil
+        org-agenda-todo-ignore-scheduled 'all)
+  ;; allow emphasis to extend over two lines
+  (setcar (nthcdr 4 org-emphasis-regexp-components) 2)
+  (add-hook 'org-babel-after-execute-hook
+            'org-display-inline-images 'append)
+  (add-hook 'org-src-mode-hook
+            'disable-checkers-in-org-src-block)
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (linum-mode -1)
+              (flycheck-mode -1)))
   :config
   (defun insert-time-stamp ()
     "Inserts an inactive timestamp of the current time."
@@ -92,48 +118,22 @@
                                              python-pylint
                                              python-pycompile)))
 
-  :ensure t
-
-  :pin melpa-stable
-
-  :functions
-  (org-fill-paragraph--latex-environment
-   org-element-type
-   org-element-context)
-
-  :init
-  (advice-add 'org-fill-paragraph :before-while
-              #'org-fill-paragraph--latex-environment)
-  ;; allow emphasis to extend over two lines
-  (setcar (nthcdr 4 org-emphasis-regexp-components) 2)
-  (add-hook 'org-babel-after-execute-hook
-            'org-display-inline-images 'append)
-  (add-hook 'org-src-mode-hook
-            'disable-checkers-in-org-src-block)
-  (add-hook 'org-mode-hook
-            (lambda ()
-              (linum-mode -1)
-              (flycheck-mode -1)))
-  :config
   (setq org-log-done t
         org-time-stamp-formats '("<%Y-%m-%d>" . "<%Y-%m-%d %H:%M>")
         org-src-fontify-natively t
         org-confirm-babel-evaluate nil
         org-startup-with-inline-images t
-        org-agenda-files (list tasks-dir)
         org-edit-src-content-indentation 0
         org-list-description-max-indent 2
         org-babel-python-command "python3"
         org-agenda-show-all-dates t
         org-startup-folded 'content
         org-outline-path-complete-in-steps nil
-        org-default-notes-file inbox-file
         org-hide-leading-stars t
         org-tags-column 80
         org-use-tag-inheritance nil
         org-startup-indented t
         org-image-actual-width nil
-        org-agenda-start-on-weekday nil
         org-todo-keywords '((sequence
                              "TODO(t)" "WAIT(w)" "STARTED(s)"
                              "|" "DONE(d)" "POSTPONED(p)" "CANCELED(c)"))
@@ -163,7 +163,8 @@
 
 (use-package gnuplot)
 
-(use-package org-evil)
+(use-package org-evil
+  :after org)
 
 (use-package ob-http)
 

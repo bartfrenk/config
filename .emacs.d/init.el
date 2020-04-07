@@ -16,7 +16,8 @@
     company))
 
 (defvar core/languages
-  '(python
+  '(org
+    python
     clojure
     elisp
     go
@@ -27,8 +28,7 @@
     rst
     sql
     html
-    sh
-    org))
+    sh))
 
 (dolist (module core/modules)
     (let ((name (symbol-name module))
