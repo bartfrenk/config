@@ -90,7 +90,7 @@
   (advice-add 'org-fill-paragraph :before-while
               #'org-fill-paragraph--latex-environment)
   (setq org-agenda-files (list tasks-dir)
-        org-agenda-start-on-weekday nil
+        org-agenda-start-on-weekday 1
         org-agenda-todo-ignore-scheduled 'all)
   ;; allow emphasis to extend over two lines
   (setcar (nthcdr 4 org-emphasis-regexp-components) 2)
