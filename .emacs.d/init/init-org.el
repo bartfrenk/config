@@ -141,7 +141,7 @@
         org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar"
         org-capture-templates
         `(("t" "Task" entry
-           (file+headline tasks-file "Tasks")
+           (file tasks-file)
            "* TODO %^{Task}\nDate: %U\n\n%?")
           ("n" "Quick note" entry
            (file+headline inbox-file "Notes")
