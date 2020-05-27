@@ -48,7 +48,7 @@
                               (setq-local company-idle-delay nil)))
   :config
   (setq rust-format-on-save t
-        rust-rustfmt-bin "rustfmt")
+        rust-rustfmt-bin "rustfmt_2018")
   :ensure t)
 
 
