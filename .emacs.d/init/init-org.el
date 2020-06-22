@@ -91,7 +91,8 @@
               #'org-fill-paragraph--latex-environment)
   (setq org-agenda-files (list tasks-dir)
         org-agenda-start-on-weekday 1
-        org-agenda-todo-ignore-scheduled 'all)
+        org-agenda-todo-ignore-scheduled 'all
+        org-agenda-span 14)
   ;; allow emphasis to extend over two lines
   (setcar (nthcdr 4 org-emphasis-regexp-components) 2)
   (add-hook 'org-babel-after-execute-hook
@@ -147,7 +148,7 @@
            (file+headline inbox-file "Notes")
            "* %^{Note}")
           ("j" "Journal entry" entry
-           (file+headline ,(journal-file) "Entries")
+           (file journal-file)
            "* %^{Title}\nDate: %U\n\n%?"
            :unnarrowed t)))
 
