@@ -59,6 +59,8 @@
   :config
   (setq neo-window-width 40
         neo-autorefresh nil)
+  (add-to-list 'neo-hidden-regexp-list "\\.o$")
+  (add-to-list 'neo-hidden-regexp-list "\\.so$")
   (defun neotree-project-dir ()
     "Open NeoTree using the git root."
     (interactive)
