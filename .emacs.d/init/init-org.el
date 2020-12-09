@@ -94,7 +94,8 @@
         org-agenda-todo-ignore-scheduled 'all
         org-agenda-span 14)
   ;; allow emphasis to extend over two lines
-  (setcar (nthcdr 4 org-emphasis-regexp-components) 2)
+  (setcar (nthcdr 4 org-emphasis-regexp-components) 4)
+  (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components)
   (add-hook 'org-babel-after-execute-hook
             'org-display-inline-images 'append)
   (add-hook 'org-src-mode-hook
