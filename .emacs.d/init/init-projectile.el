@@ -19,7 +19,7 @@
   :commands (helm-projectile-on)
   :pin "melpa"
   :config
-  (setq projectile-switch-project-action 'projectile-find-file-other-window)
+  (setq projectile-switch-project-action 'projectile-find-file)
   :bind (:map projectile-mode-map
               ("C-c p s" . helm-projectile-ag)
               ("C-c p p" . helm-projectile-switch-project)
