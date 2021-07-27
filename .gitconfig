@@ -19,4 +19,4 @@
 [credential]
     helper = store
 [gitlab]
-	user = bartfrenk
+    user = bartfrenk
