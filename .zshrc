@@ -58,7 +58,7 @@ export PATH="$PYENV_ROOT/bin:/opt/protoc/bin:$PATH"
 export EDITOR=vim
 eval "$(pyenv virtualenv-init -)"
 
-export PATH="$HOME/.pyenv.overrides:$PATH"
+export PATH="$HOME/.pyenv.overrides:$HOME/.pyenv/shims:$PATH"
 
 source "$HOME/.pyenv/versions/3.6.8/bin/aws_zsh_completer.sh"
 export AWS_CONFIG_FILE=/home/bart/.aws.vault/config
