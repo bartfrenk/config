@@ -139,6 +139,7 @@
                 whitespace-global-modes '(not latex-mode
                                               org-mode
                                               web-mode
+                                              dockerfile-mode
                                               mhtml-mode
                                               nxml-mode
                                               magit-status-mode)))
