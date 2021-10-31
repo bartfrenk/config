@@ -56,7 +56,7 @@ working directory to the project base dir."
     (python-shell-send-string python-shell-set-up-project-dirs-snippet process)))
 
 (defun python-format-buffer ()
-  "Format a Python buffer. Requires yapf to be available."
+  "Format a Python buffer"
   (interactive)
   (blacken-buffer)
   (py-isort-buffer))
@@ -87,14 +87,12 @@ working directory to the project base dir."
   (:map python-mode-map
         ("C-c C-a" . python-format-buffer)
         ("C-c M-j" . run-python)
-        ("C-c C-k" . python-shell-import-package)
-        ("C-c h" . helm-dash-at-point))
+        ("C-c C-k" . python-shell-import-package))
   :init
   (add-hook 'python-mode-hook (lambda ()
                                 (when (fboundp 'auto-complete-mode)
                                   (auto-complete-mode -1))
                                 (python-docstring-mode)
-                                (sphinx-doc-mode)
                                 (python/setup-dash)
                                 (python/set-dominating-venv)
                                 (jedi:setup)
@@ -130,12 +128,12 @@ working directory to the project base dir."
 
 (add-hook 'projectile-switch-project-hook 'projectile-pyenv-mode-set)
 
-(use-package virtualenvwrapper
-  :config
-  (setq venv-location "/home/bart/.pyenv/versions")
-  ;; Seems not to be required for JEDI
-  ; (advice-add 'venv-workon :after 'jedi:set-virtualenv)
-  )
+;; (use-package virtualenvwrapper
+;;   :config
+;;   (setq venv-location "/home/bart/.pyenv/versions")
+;;   ;; Seems not to be required for JEDI
+;;   ; (advice-add 'venv-workon :after 'jedi:set-virtualenv)
+;;   )
 
 
 (use-package yapfify
@@ -156,17 +154,16 @@ working directory to the project base dir."
   :init
   (add-to-list 'company-backends 'company-jedi))
 
-(use-package sphinx-doc
-  :diminish sphinx-doc-mode)
 
 (use-package python-docstring
-  :pin "melpa"
+  :pin melpa
   :diminish python-docstring-mode)
 
 (use-package blacken
   :pin melpa)
 
 (use-package flycheck-mypy
+  :pin melpa
   :config
   (add-to-list 'flycheck-checkers 'python-mypy t)
   (flycheck-add-next-checker 'python-flake8 'python-mypy t)

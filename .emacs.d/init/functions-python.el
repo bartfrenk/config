@@ -1,4 +1,5 @@
 (require 'subr-x)
+(require 'virtualenvwrapper)
 
 (defun python--read-file (file)
   (with-temp-buffer
@@ -22,3 +23,4 @@
     (message "No dominating venv found")))
 
 (provide 'functions-python)
+

@@ -4,7 +4,9 @@
 
 (setq-default tab-width 4
               indent-tabs-mode nil
-              fill-column 80)
+              fill-column 80
+              line-spacing '0.4
+        )
 (setq inhibit-startup-message t
       backup-directory-alist '(("." . "~/.emacs.d/backup"))
       initial-scratch-message nil scroll-preserve-screen-position nil
@@ -16,7 +18,6 @@
       ad-redefinition-action 'accept)
 
 
-(setq-default line-spacing '0.4)
 (fset 'yes-or-no-p 'y-or-n-p)
 (column-number-mode t)
 (blink-cursor-mode 0)
@@ -41,7 +42,6 @@
   :pin "melpa"
   :after ripgrep)
 
-
 (use-package diminish)
 
 ;; Automically reload PDFs when changed on disk
@@ -49,9 +49,9 @@
                            (auto-revert-mode t)))
 
 (use-package evil-collection
-  :pin "melpa"
-  :custom (evil-collection-setup-minibuffer t)
   :after evil
+  :pin melpa
+  :custom (evil-collection-setup-minibuffer t)
   :config (evil-collection-init))
 
 (use-package neotree
@@ -176,13 +176,11 @@
 (use-package markdown-mode)
 (use-package edit-indirect)
 (use-package eldoc :diminish eldoc-mode)
-(use-package undo-tree :diminish undo-tree-mode)
+; (use-package undo-tree :diminish undo-tree-mode :pin "melpa")
 (use-package dockerfile-mode)
-(use-package magit)
-(use-package evil-magit)
 (use-package material-theme)
 (use-package atom-one-dark-theme)
-(use-package smart-mode-line-atom-one-dark-theme)
+(use-package smart-mode-line-atom-one-dark-theme :pin "melpa")
 (use-package paredit :pin "melpa")
 (use-package evil-paredit :pin "melpa")
 (use-package smooth-scrolling)
@@ -203,8 +201,7 @@
   (progn
     (load-theme 'material t)
     (switch-theme 'atom-one-dark)
-    (load-theme 'smart-mode-line-atom-one-dark)
-    ))
+    (load-theme 'smart-mode-line-atom-one-dark)))
 
 
 (global-git-gutter-mode)

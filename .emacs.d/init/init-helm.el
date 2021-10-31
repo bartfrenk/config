@@ -7,7 +7,6 @@
 (require 'helm-files)
 (require 'helm-command)
 (require 'helm-locate)
-(require 'helm-org)
 
 (use-package helm
   :diminish helm-mode

@@ -9,35 +9,37 @@
 (defvar core/modules
   '(packages
     core
-    magit
     projectile
     helm
+    company
     flycheck
-    company))
+    magit))
 
 (defvar core/languages
   '(org
     python
-    clojure
     elisp
-    go
-    haskell
-    javascript
-    rust
     jinja2
-    rst
     sql
     html
     sh))
 
-(dolist (module core/modules)
-    (let ((name (symbol-name module))
-          (prefix "init-"))
-      (message name)
-      (require (intern (concat prefix name)))))
+(defvar archived/languages
+  '(rust
+    go
+    clojure
+    haskell
+    rst
+    javascript))
 
- (dolist (module core/languages)
-     (let ((name (symbol-name module))
-           (prefix "init-"))
-       (message name)
-       (require (intern (concat prefix name)))))
+(dolist (module core/modules)
+  (let ((name (symbol-name module))
+        (prefix "init-"))
+    (message name)
+    (require (intern (concat prefix name)))))
+
+(dolist (module core/languages)
+  (let ((name (symbol-name module))
+        (prefix "init-"))
+    (message name)
+    (require (intern (concat prefix name)))))

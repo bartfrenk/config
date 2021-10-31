@@ -1,6 +1,5 @@
 (require 'use-package)
 (require 'flycheck)
-(require 'ob-python)
 
 ;; to add file to agenda: org-agenda-file-to-front
 
@@ -67,7 +66,7 @@
   (interactive)
   (find-file (tasks-file)))
 
-
+(use-package ob-http)
 
 (use-package org
   :bind
@@ -168,6 +167,29 @@
 (use-package org-evil
   :after org)
 
-(use-package ob-http)
+(use-package org-roam
+  :init
+  (setq org-roam-v2-ack t))
+
+;; :after org
+;; :bind
+;; (("C-c r r" . org-roam-buffer-toggle)
+;;  ("C-c r b" . org-roam-buffer))
+
+
+;; :init
+;; (org-roam-setup)
+;; :config
+;; (setq org-roam-directory (file-truename "~/psys/roam/"))
+
+
+
+;;; Define key bindings for Org-roam
+;; (global-set-key (kbd "C-c r r") #'org-roam-buffer-toggle)
+;; (global-set-key (kbd "C-c r b") #'org-roam-buffer)
+;; (global-set-key (kbd "C-c r i") #'org-roam-node-insert)
+;; (global-set-key (kbd "C-c r c") #'org-roam-capture)
+;; (global-set-key (kbd "C-c r /") #'org-roam-node-find)
+
 
 (provide 'init-org)
