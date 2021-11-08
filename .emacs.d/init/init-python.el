@@ -115,6 +115,7 @@ working directory to the project base dir."
             python-shell-interpreter-args "--profile=dev")))
   (setq python-shell-completion-native-enable t))
 
+(use-package virtualenv)
 
 (use-package pyenv-mode
   :commands pyenv-mode-versions)
@@ -128,12 +129,13 @@ working directory to the project base dir."
 
 (add-hook 'projectile-switch-project-hook 'projectile-pyenv-mode-set)
 
-;; (use-package virtualenvwrapper
-;;   :config
-;;   (setq venv-location "/home/bart/.pyenv/versions")
-;;   ;; Seems not to be required for JEDI
-;;   ; (advice-add 'venv-workon :after 'jedi:set-virtualenv)
-;;   )
+(use-package virtualenvwrapper
+  :after virtualenv
+  :config
+  (setq venv-location "/home/bart/.pyenv/versions")
+  ;; Seems not to be required for JEDI
+  ; (advice-add 'venv-workon :after 'jedi:set-virtualenv)
+  )
 
 
 (use-package yapfify
