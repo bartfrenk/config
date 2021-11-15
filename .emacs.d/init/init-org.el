@@ -169,27 +169,18 @@
 
 (use-package org-roam
   :init
-  (setq org-roam-v2-ack t))
-
-;; :after org
-;; :bind
-;; (("C-c r r" . org-roam-buffer-toggle)
-;;  ("C-c r b" . org-roam-buffer))
-
-
-;; :init
-;; (org-roam-setup)
-;; :config
-;; (setq org-roam-directory (file-truename "~/psys/roam/"))
-
-
-
-;;; Define key bindings for Org-roam
-;; (global-set-key (kbd "C-c r r") #'org-roam-buffer-toggle)
-;; (global-set-key (kbd "C-c r b") #'org-roam-buffer)
-;; (global-set-key (kbd "C-c r i") #'org-roam-node-insert)
-;; (global-set-key (kbd "C-c r c") #'org-roam-capture)
-;; (global-set-key (kbd "C-c r /") #'org-roam-node-find)
-
+  (setq org-roam-directory (file-truename "~/documents/notes/personal/roam"))
+  (org-roam-db-autosync-enable)
+  (setq org-roam-v2-ack t)
+  :after org
+  :bind
+  (("C-c r r" . org-roam-buffer-toggle)
+   ("C-c r b" . org-roam-buffer-display-dedicated)
+   ("C-c r i" . org-roam-node-insert)
+   ("C-c r c" . org-roam-capture)
+   ("C-c r /" . org-roam-node-find))
+  (:map org-mode-map
+        ("M-[" . org-mark-ring-goto)
+        ("M-]" . org-open-at-point)))
 
 (provide 'init-org)

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# key: <q
+# name: quotation
+# --
+#+BEGIN_QUOTE
+$0
+#+END_QUOTE
