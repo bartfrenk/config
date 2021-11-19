@@ -7,8 +7,8 @@
   "~/documents/notes/journals"
   "Directory containing journal files.")
 
-(defvar tasks-dir
-  "/home/bart/documents/notes/greenhouse/ai-team/tasks"
+(defvar tasks-inbox
+  "/home/bart/documents/notes/work/greenhouse/ai/tasks/inbox.org"
   "Directory containing task files.")
 
 (defvar clock-dir
@@ -19,10 +19,10 @@
          (concat "journal-" (format-time-string "%Y") ".org")))
     (concat journal-dir "/" journal-name)))
 
-(defun tasks-file ()
-  (let ((file-name
-         (concat "tasks-" (format-time-string "%Y-%m") ".org")))
-    (concat tasks-dir "/" file-name)))
+;; (defun tasks-file ()
+;;   (let ((file-name
+;;          (concat "tasks-" (format-time-string "%Y-%m") ".org")))
+;;     (concat tasks-dir "/" file-name)))
 
 (defun clock-file ()
   (let ((clock-name
@@ -61,10 +61,10 @@
   (interactive)
   (find-file backlog-file))
 
-(defun open-tasks-file ()
+(defun open-tasks-inbox ()
   "Opens the active tasks file'."
   (interactive)
-  (find-file (tasks-file)))
+  (find-file tasks-inbox))
 
 (use-package ob-http)
 
@@ -142,7 +142,7 @@
         org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar"
         org-capture-templates
         `(("t" "Task" entry
-           (file tasks-file)
+           (file tasks-inbox)
            "* TODO %^{Task}\nDate: %U\n\n%?")
           ("n" "Quick note" entry
            (file+headline inbox-file "Notes")
