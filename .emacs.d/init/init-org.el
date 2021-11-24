@@ -4,67 +4,30 @@
 ;; to add file to agenda: org-agenda-file-to-front
 
 (defvar journal-dir
-  "~/documents/notes/journals"
-  "Directory containing journal files.")
+  "~/documents/notes/journals")
 
-(defvar tasks-inbox
-  "/home/bart/documents/notes/work/greenhouse/ai/tasks/inbox.org"
-  "Directory containing task files.")
-
-(defvar clock-dir
-  "~/documents/notes/greenhouse/ai-team/clock")
+(defvar tasks-dir
+  "/home/bart/documents/notes/work/greenhouse/ai/tasks")
 
 (defun journal-file ()
   (let ((journal-name
          (concat "journal-" (format-time-string "%Y") ".org")))
     (concat journal-dir "/" journal-name)))
 
-;; (defun tasks-file ()
-;;   (let ((file-name
-;;          (concat "tasks-" (format-time-string "%Y-%m") ".org")))
-;;     (concat tasks-dir "/" file-name)))
-
-(defun clock-file ()
-  (let ((clock-name
-         (concat "clock-" (format-time-string "%Y-%m") ".org")))
-    (concat clock-dir "/" clock-name)))
-
-(defvar scratch-file
-  "~/documents/notes/learning/etc/scratch.org")
-
-(defvar backlog-file
-  "~/documents/notes/greenhouse/ai-team/etc/backlog.org")
-
-(defvar habits-file
-  "~/documents/notes/learning/etc/habits.org")
-
-(defun open-clock-file ()
-  "Opens the active journal file."
-  (interactive)
-  (find-file (clock-file)))
-
-(defun open-habits ()
-  (interactive)
-  (find-file habits-file))
-
-(defun open-scratch ()
-  (interactive)
-  (find-file scratch-file))
-
 (defun open-journal ()
   "Opens the active journal file."
   (interactive)
   (find-file (journal-file)))
 
-(defun open-backlog ()
-  "Opens the active journal file."
+(defun tasks/inbox ()
+  "Opens the tasks inbox'."
   (interactive)
-  (find-file backlog-file))
+  (find-file (concat tasks-dir "/inbox.org")))
 
-(defun open-tasks-inbox ()
-  "Opens the active tasks file'."
+(defun tasks/next-steps ()
+  "Opens the tasks inbox'."
   (interactive)
-  (find-file tasks-inbox))
+  (find-file (concat tasks-dir "/next-steps.org")))
 
 (use-package ob-http)
 
@@ -88,10 +51,19 @@
   :init
   (advice-add 'org-fill-paragraph :before-while
               #'org-fill-paragraph--latex-environment)
-  (setq org-agenda-files (list tasks-dir)
-        org-agenda-start-on-weekday 1
+  (setq org-agenda-start-on-weekday 1
         org-agenda-todo-ignore-scheduled 'all
         org-agenda-span 14)
+  (let ((default-directory tasks-dir))
+    (setq org-agenda-files `(,(expand-file-name "inbox.org")
+                             ,(expand-file-name "projects.org")
+                             ,(expand-file-name "tickler.org")
+                             ,(expand-file-name "calendar.org"))
+          org-refile-targets `((,(expand-file-name "projects.org") :maxlevel . 1)
+                               (,(expand-file-name "tickler.org") :maxlevel . 1)
+                               (,(expand-file-name "calendar.org") :maxlevel . 1)
+                               (,(expand-file-name "next-steps.org") :maxlevel . 1)
+                               (,(expand-file-name "someday.org") :maxlevel . 1))))
   ;; allow emphasis to extend over two lines
   (setcar (nthcdr 4 org-emphasis-regexp-components) 4)
   (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components)
@@ -138,11 +110,10 @@
         org-todo-keywords '((sequence
                              "TODO(t)" "WAIT(w)" "STARTED(s)"
                              "|" "DONE(d)" "POSTPONED(p)" "CANCELED(c)"))
-        org-refile-targets '((org-agenda-files . (:maxlevel . 3)))
         org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar"
         org-capture-templates
         `(("t" "Task" entry
-           (file tasks-inbox)
+           (file+headline ,(concat tasks-dir "/inbox.org") "Inbox")
            "* TODO %^{Task}\nDate: %U\n\n%?")
           ("n" "Quick note" entry
            (file+headline inbox-file "Notes")
