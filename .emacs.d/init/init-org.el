@@ -63,6 +63,7 @@
                                (,(expand-file-name "tickler.org") :maxlevel . 1)
                                (,(expand-file-name "calendar.org") :maxlevel . 1)
                                (,(expand-file-name "next-steps.org") :maxlevel . 1)
+                               (,(expand-file-name "done.org") :maxlevel . 1)
                                (,(expand-file-name "someday.org") :maxlevel . 1))))
   ;; allow emphasis to extend over two lines
   (setcar (nthcdr 4 org-emphasis-regexp-components) 4)
