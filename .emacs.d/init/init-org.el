@@ -4,7 +4,7 @@
 ;; to add file to agenda: org-agenda-file-to-front
 
 (defvar journal-dir
-  "~/documents/notes/journals")
+  "~/documents/notes/personal/journals")
 
 (defvar tasks-dir
   "/home/bart/documents/notes/work/greenhouse/ai/tasks")
@@ -14,7 +14,7 @@
          (concat "journal-" (format-time-string "%Y") ".org")))
     (concat journal-dir "/" journal-name)))
 
-(defun open-journal ()
+(defun journal ()
   "Opens the active journal file."
   (interactive)
   (find-file (journal-file)))
@@ -28,6 +28,16 @@
   "Opens the tasks inbox'."
   (interactive)
   (find-file (concat tasks-dir "/next-steps.org")))
+
+(defun tasks/short-term-memory ()
+  "Opens the tasks inbox'."
+  (interactive)
+  (find-file (concat tasks-dir "/short-term-memory.org")))
+
+(defun tasks/projects ()
+  "Opens the tasks inbox'."
+  (interactive)
+  (find-file (concat tasks-dir "/projects.org")))
 
 (use-package ob-http)
 
@@ -62,6 +72,7 @@
           org-refile-targets `((,(expand-file-name "projects.org") :maxlevel . 1)
                                (,(expand-file-name "tickler.org") :maxlevel . 1)
                                (,(expand-file-name "calendar.org") :maxlevel . 1)
+                               (,(expand-file-name "short-term-memory.org") :maxlevel . 1)
                                (,(expand-file-name "next-steps.org") :maxlevel . 1)
                                (,(expand-file-name "done.org") :maxlevel . 1)
                                (,(expand-file-name "someday.org") :maxlevel . 1))))
