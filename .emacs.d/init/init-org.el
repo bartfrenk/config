@@ -47,7 +47,10 @@
    ("C-c a" . org-agenda)
    ("C-c c" . org-capture)
    ("C-c j" . open-journal-file)
-   ("C-c M-p" . org-latex-export-to-pdf))
+   ("C-c M-p" . org-latex-export-to-pdf)
+   ("C-c t i" . tasks/inbox)
+   ("C-c t n" . tasks/next-steps)
+   ("C-c t p" . tasks/projects))
 
   :ensure t
 
@@ -73,6 +76,7 @@
                                (,(expand-file-name "tickler.org") :maxlevel . 1)
                                (,(expand-file-name "calendar.org") :maxlevel . 1)
                                (,(expand-file-name "short-term-memory.org") :maxlevel . 1)
+                               (,(expand-file-name "waiting.org") :maxlevel . 1)
                                (,(expand-file-name "next-steps.org") :maxlevel . 1)
                                (,(expand-file-name "done.org") :maxlevel . 1)
                                (,(expand-file-name "someday.org") :maxlevel . 1))))

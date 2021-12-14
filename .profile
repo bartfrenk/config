@@ -37,7 +37,7 @@ done
 for path in "${path_list[@]}"
 do
   if [ -d "${path}" ]; then
-    PATH="$PATH:${path}"
+    PATH="${path}:$PATH"
   fi
 done
 
