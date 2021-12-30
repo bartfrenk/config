@@ -24,12 +24,11 @@
 
 (defun pipenv/replace-versions ()
   (interactive)
-                                        ;  (re-search-forward "[0-9]")
   (save-excursion
     (goto-char (point-min))
-    (while (re-search-forward ">=\\([0-9]+\.[0-9]+\\).[0-9]+" nil t)
-      (replace-match "~=\\1" t)))
-  )
+    (while (re-search-forward "[>=~]=\\([0-9]+\.[0-9]+\\).[0-9]+" nil t)
+      (replace-match "~=\\1" t))))
+
 
 (provide 'functions-python)
 
