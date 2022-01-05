@@ -154,11 +154,13 @@
 (use-package org-evil
   :after org)
 
+
+
 (use-package org-roam
   :init
+  (setq org-roam-v2-ack t)
   (setq org-roam-directory (file-truename "~/documents/notes/personal/roam"))
   (org-roam-db-autosync-enable)
-  (setq org-roam-v2-ack t)
   :after org
   :bind
   (("C-c r r" . org-roam-buffer-toggle)

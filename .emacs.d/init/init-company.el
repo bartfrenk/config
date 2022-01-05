@@ -2,7 +2,7 @@
 
 (use-package company
   :bind
-  (("M-<tab>" . company-complete)
+  (("<M-tab>" . company-complete)
    :map company-active-map
    ("C-d" . company-show-doc-buffer)
    ("C-h" . delete-backward-char))

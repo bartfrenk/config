@@ -15,7 +15,9 @@
 
 (use-package forge
   :pin melpa
-  :after magit)
+  :after magit
+  :init
+  (setq forge-add-default-bindings nil))
 
 (use-package ghub
   :pin melpa)

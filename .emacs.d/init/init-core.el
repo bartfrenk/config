@@ -5,8 +5,7 @@
 (setq-default tab-width 4
               indent-tabs-mode nil
               fill-column 80
-              line-spacing '0.4
-        )
+              line-spacing '0.4)
 (setq inhibit-startup-message t
       backup-directory-alist '(("." . "~/.emacs.d/backup"))
       initial-scratch-message nil scroll-preserve-screen-position nil

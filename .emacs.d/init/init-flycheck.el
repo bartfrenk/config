@@ -2,6 +2,7 @@
 
 (use-package flycheck
   :commands global-flycheck-mode
+  :pin melpa
   :ensure t
   :bind
   (:map flycheck-mode-map
