@@ -2,7 +2,6 @@
 
 (use-package flycheck
   :commands global-flycheck-mode
-  :pin melpa
   :ensure t
   :bind
   (:map flycheck-mode-map
@@ -13,7 +12,7 @@
                 flycheck-check-syntax-automatically '(save mode-enabled)
                 flycheck-standard-error-navigation nil
                 flycheck-checker-error-threshold nil ;; no limit to errors
-                flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+                flycheck-disabled-checkers '(emacs-lisp-checkdoc flycheck-flake8))
   (setq flycheck-global-modes '(not org-mode)))
 
 (global-flycheck-mode)
