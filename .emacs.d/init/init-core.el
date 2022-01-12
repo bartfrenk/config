@@ -214,5 +214,7 @@
 (add-to-list 'auto-mode-alist '("\\.g4\\'" . antlr-mode))
 (add-to-list 'auto-mode-alist '("\\.yapf\\'" . confmode))
 (add-to-list 'auto-mode-alist '("\\.fsproj\\'" . nxml-mode))
+(add-to-list 'auto-mode-alist '("\\Pipfile\\'" . conf-toml-mode))
+
 
 (provide 'init-core)
