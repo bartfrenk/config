@@ -1,9 +1,0 @@
-# key: js
-# name: javascript block
-# --
-#+BEGIN_SRC js :results format pp handling replace
-$0
-#+END_SRC
-
-
-

@@ -1,7 +1,0 @@
-# key: sh
-# name: shell block
-# --
-#+BEGIN_SRC sh
-$0
-#+END_SRC
-

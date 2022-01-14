@@ -1,14 +1,4 @@
 *
-!.emacs.d/
-!.emacs.d/init.el
-!.emacs.d/init/
-!.emacs.d/init/*.el
-.emacs.d/init/init-local.el
-.emacs.d/init/custom.el
-!.emacs.d/snippets/
-!.emacs.d/snippets/*/
-!.emacs.d/snippets/*/*
-
 !.clojure/
 !.clojure/deps.edn
 

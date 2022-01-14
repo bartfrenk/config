@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# name: pdb
-# key: pdb
-# expand-env:
-# --
-import pdb; pdb.set_trace()

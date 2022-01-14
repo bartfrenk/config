@@ -1,7 +1,0 @@
-# key: gnuplot
-# name: gnuplot block
-# --
-#+BEGIN_SRC gnuplot :file ${1:`(random-hex)`.png}
-$0
-#+END_SRC
-

@@ -1,4 +1,0 @@
-# key: wildcard
-# name: disable-wildcard-import-warning
-# --
-pylint: disable=wildcard-import, unused-wildcard-import

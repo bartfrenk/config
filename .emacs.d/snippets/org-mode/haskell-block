@@ -1,6 +1,0 @@
-# key: hs
-# name: Haskell block
-# --
-#+BEGIN_SRC haskell
-$0
-#+END_SRC

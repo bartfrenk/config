@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: yaml block
-# key: yaml
-# --
-#+BEGIN_SRC yaml
-$0
-#+END_SRC

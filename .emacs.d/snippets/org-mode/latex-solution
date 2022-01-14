@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# key: solution
-# name: latex solution
-# --
-#+BEGIN_solution
-$1
-#+END_solution
