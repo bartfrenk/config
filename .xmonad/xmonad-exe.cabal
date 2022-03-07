@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.31.1.
+-- This file has been generated from package.yaml by hpack version 0.34.4.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 513486ff86d0f1934f863e6ae2f8de863712aa434016ee95d2fe33984548b740
+-- hash: df13b5700b51e1dda6de67905c26588803e762d7b1afcebcde11eb2742f28d0f
 
 name:           xmonad-exe
 version:        0.1.0.0
@@ -31,7 +31,8 @@ executable xmonad-exe
       Paths_xmonad_exe
   hs-source-dirs:
       src
-  default-extensions: RecordWildCards
+  default-extensions:
+      RecordWildCards
   ghc-options: -threaded -rtsopts -with-rtsopts=-N -Wall
   build-depends:
       HaXml
