@@ -1,7 +1,0 @@
-resolver: lts-13.29
-packages: [.]
-extra-deps:
-  - HaXml-1.25.5@sha256:8f18057ffbf20e71af67a1338bde2f0c4f8e1e326230ada57cf7e967953a46c7
-  - haskell-src-exts-1.21.0@sha256:02421cacaa48c055551b8e5796efc543301b7ea9527a38e1385403d2b85512fb
-flags: {}
-extra-package-dbs: []
