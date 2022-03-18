@@ -19,6 +19,7 @@ path_list=(
   "/opt/visualvm_144/bin"
   "/opt/gephi-0.9.2/bin"
   "/home/bart/dev/go/bin"
+  "/opt/haskell-language-server"
 )
 
 if [ -n "$BASH_VERSION" ]; then
@@ -40,6 +41,10 @@ do
     PATH="${path}:$PATH"
   fi
 done
+
+if [ -f "/home/bart/.ghcup/env" ]; then
+  source "/home/bart/.ghcup/env" # ghcup-env
+fi
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export GOPATH=/home/bart/dev/go
