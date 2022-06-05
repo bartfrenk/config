@@ -1,25 +1,14 @@
 source_list=(
   "$HOME/local/rc/profile"
-  "$HOME/.local/config/profile")
+  "$HOME/.local/config/profile"
+)
 
 path_list=(
   "$HOME/local/bin"
   "$HOME/.local/bin"
   "$HOME/bin"
-  "$HOME/.cargo/bin"
   "$HOME/.screenlayout"
   "/opt/bin"
-  "/opt/npm/bin"
-  "/opt/adr-tools/src/"
-  "/opt/omnisharp-roslyn/"
-  "/opt/helm"
-  "/opt/forge"
-  "/opt/go/bin"
-  "/opt/google-cloud-sdk/bin"
-  "/opt/visualvm_144/bin"
-  "/opt/gephi-0.9.2/bin"
-  "/home/bart/dev/go/bin"
-  "/opt/haskell-language-server"
 )
 
 if [ -n "$BASH_VERSION" ]; then
@@ -45,6 +34,12 @@ done
 if [ -f "/home/bart/.ghcup/env" ]; then
   source "/home/bart/.ghcup/env" # ghcup-env
 fi
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:/opt/protoc/bin:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv virtualenv-init -)"
+export PATH="$HOME/.pyenv.overrides:$HOME/.pyenv/shims:$PATH"
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export GOPATH=/home/bart/dev/go

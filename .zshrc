@@ -47,7 +47,7 @@ ZSH_THEME="custom"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-plugins=(git dotenv zsh-aws-vault docker pyenv kubectl helm z)
+plugins=(git dotenv docker pyenv kubectl helm z)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -55,12 +55,12 @@ set -o vi
 
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:/opt/protoc/bin:$PATH"
-export EDITOR=vim
+eval "$(pyenv init --path)"
 eval "$(pyenv virtualenv-init -)"
-
 export PATH="$HOME/.pyenv.overrides:$HOME/.pyenv/shims:$PATH"
 
-source "$HOME/.pyenv/versions/3.6.8/bin/aws_zsh_completer.sh"
+export EDITOR=vim
+
 export AWS_CONFIG_FILE=/home/bart/.aws.vault/config
 export AWS_VAULT_BACKEND=secret-service
 export AWS_REGION=eu-west-1
@@ -73,9 +73,3 @@ fi
 
 bindkey -v '^?' backward-delete-char
 bindkey -v '^R' history-incremental-search-backward
-
-source /home/bart/.config/broot/launcher/bash/br
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

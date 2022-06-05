@@ -5,7 +5,7 @@
 
 emacsclient -n -e "(if (> (length (frame-list)) 1) 't)" | grep t
 if [ "$?" = "1" ]; then
-    emacsclient27 -c -n -a "" "$@"
+    emacsclient -c -n -a "" "$@"
 else
-    emacsclient27 -n -a "" "$@"
+    emacsclient -n -a "" "$@"
 fi
