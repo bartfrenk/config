@@ -20,3 +20,5 @@
     helper = store
 [gitlab]
     user = bartfrenk
+[init]
+	defaultBranch = master
