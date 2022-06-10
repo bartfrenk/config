@@ -41,7 +41,4 @@ eval "$(pyenv init --path)"
 eval "$(pyenv virtualenv-init -)"
 export PATH="$HOME/.pyenv.overrides:$HOME/.pyenv/shims:$PATH"
 
-export DOTNET_CLI_TELEMETRY_OPTOUT=1
-export GOPATH=/home/bart/dev/go
-
 /usr/bin/xmodmap ~/.Xmodmap
