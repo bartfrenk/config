@@ -73,3 +73,5 @@ fi
 
 bindkey -v '^?' backward-delete-char
 bindkey -v '^R' history-incremental-search-backward
+
+if [ -e /home/bart/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bart/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

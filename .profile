@@ -42,3 +42,5 @@ eval "$(pyenv virtualenv-init -)"
 export PATH="$HOME/.pyenv.overrides:$HOME/.pyenv/shims:$PATH"
 
 /usr/bin/xmodmap ~/.Xmodmap
+
+if [ -e /home/bart/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bart/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
