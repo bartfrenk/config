@@ -20,3 +20,4 @@
 .tern-port
 .python-version
 .nix-shell-cabal.project
+hie.yaml
