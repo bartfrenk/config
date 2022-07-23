@@ -85,6 +85,3 @@ with-aws() {
   AWS_CONFIG=$HOME/.aws.vault/config /opt/bin/aws-vault exec developer \
             -- ${*:1}
 }
-
-
-source /home/bart/.config/broot/launcher/bash/br
