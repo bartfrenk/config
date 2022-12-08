@@ -40,7 +40,11 @@ export PATH="$PYENV_ROOT/bin:/opt/protoc/bin:$PATH"
 eval "$(pyenv init --path)"
 eval "$(pyenv virtualenv-init -)"
 export PATH="$HOME/.pyenv.overrides:$HOME/.pyenv/shims:$PATH"
+export LC_ALL=C.UTF-8
 
 /usr/bin/xmodmap ~/.Xmodmap
 
-if [ -e /home/bart/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bart/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+## Added by Nix installer
+if [ -e /home/bart/.nix-profile/etc/profile.d/nix.sh ]; then
+  . /home/bart/.nix-profile/etc/profile.d/nix.sh;
+fi
