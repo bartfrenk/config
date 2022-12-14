@@ -21,3 +21,6 @@
 .python-version
 .nix-shell-cabal.project
 hie.yaml
+
+# haskell
+dist-newstyle
