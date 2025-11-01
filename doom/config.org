@@ -1,0 +1,27 @@
+;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+
+* PERSONAL INFO
+#+begin_src emacs-lisp :tangle yes
+(setq user-full-name "Bart Frenk"
+      user-mail-address "bart.frenk@gmail.com")
+#+end_src
+
+* THEMES
+#+begin_src emacs-lisp :tangle yes
+(setq doom-theme 'doom-vibrant)
+(setq doom-modeline-height 25)
+#+end_src
+
+* EDITOR & FONTS
+
+#+begin_src emacs-lisp :tangle yes
+(setq doom-font (font-spec :family "SauceCodePro NerdFont" :size 12))
+(setq display-line-numbers-type t)
+(setq line-spacing 5)
+#+end_src
+
+
+* ORG MODE
+#+begin_src emacs-lisp :tangle yes
+(setq org-directory "~/documents/org/")
+#+end_src
