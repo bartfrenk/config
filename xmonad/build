@@ -1,0 +1,5 @@
+#!/bin/sh
+
+echo "$1"
+cd "$HOME/.config/xmonad" && cabal new-build --ghc-options="-fforce-recomp"
+ln -sfT "$(cabal list-bin xmonad)" "$1"
