@@ -35,3 +35,11 @@ for a response.
 #+begin_src emacs-lisp :tangle yes
 (setq org-directory "~/documents/org/")
 #+end_src
+
+* Python
+#+begin_src emacs-lisp :tangle yes
+(after! python
+  (set-eglot-client! '(python-mode python-ts-mode)
+                     '("pyright-langserver" "--stdio")
+                     '("ruff" "server")))
+#+end_src
