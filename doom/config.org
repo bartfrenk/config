@@ -42,4 +42,24 @@ for a response.
   (set-eglot-client! '(python-mode python-ts-mode)
                      '("pyright-langserver" "--stdio")
                      '("ruff" "server")))
+
+(defun activate-venv ()
+  (interactive)
+  (if-let ((root-dir (projectile-project-root)))
+      (let ((venv-dir (concat (file-name-as-directory root-dir) ".venv")))
+        (pyvenv-activate venv-dir)
+        (eglot)
+        (message "Activated virtualenv at %s" venv-dir))
+    (message "Could not find virtualenv")))
 #+end_src
+
+- [ ] Automatically restart eglot when switching virtualenv
+- [ ] Automatically reset virtualenv (and restart eglot) when switching project
+
+* Lisp
+#+begin_src emacs-lisp :tangle yes
+(after! parinfer
+  (setq parinfer-rust-preferred-mode "paren"))
+#+end_src
+
+- [ ] Use paredit instead of parinfer
