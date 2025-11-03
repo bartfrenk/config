@@ -1,2 +1,2 @@
-packages: .
+packages: . lib/xmonad lib/xmonad-contrib
 with-compiler: ghc-9.6.7
