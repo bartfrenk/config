@@ -1,7 +1,6 @@
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE NoMonomorphismRestriction #-}
 
-
 import XMonad
   ( Default (def),
     Full (Full),
@@ -23,15 +22,15 @@ import XMonad
     (|||),
   )
 import XMonad.Actions.GroupNavigation
-  ( Direction (History),
+  ( Direction (..),
     nextMatchOrDo,
+    historyHook
   )
 import XMonad.Actions.PhysicalScreens
   ( PhysicalScreen (P),
     sendToScreen,
     viewScreen,
   )
-import XMonad.Actions.WindowGo (runOrRaise)
 import XMonad.Config.Xfce (xfceConfig)
 import XMonad.Hooks.ManageDocks
   ( Direction2D (D, L, R, U),
@@ -54,11 +53,11 @@ import XMonad.Layout.WindowNavigation
   )
 import XMonad.Layout.ZoomRow (ZoomMessage (Zoom))
 import XMonad.Util.EZConfig (additionalKeysP)
-import XMonad.Util.Run (safeSpawn)
 import XMonad.Util.WindowProperties ()
 
 import qualified Colors as C
 import qualified Actions as A
+import Utils (cycleOrRaise)
 
 
 customKeys :: [(String, X ())]
@@ -89,14 +88,14 @@ customKeys =
   , ("M-p"   , A.selectCommand)
   , ("M-g"   , A.selectGotoWindow)
   , ("M-b"   , A.selectBringWindow)
-  , ("M-S-m" , nextMatchOrDo History isEmacs (safeSpawn "/home/bart/bin/em" []))
-  , ("M-S-n" , nextMatchOrDo History isTerminal (safeSpawn "xfce4-terminal" ["-e", "tmux"]))
-  , ("M-S-b" , nextMatchOrDo History isFirefox (safeSpawn "/usr/bin/firefox" []))
-  , ("M-S-f" , runOrRaise "thunar" isThunar)
+  , ("M-S-m" , cycleOrRaise "/home/bart/.local/bin/em" isEmacs)
+  , ("M-S-n" , cycleOrRaise "xfce4-terminal -e tmux" isTerminal)
+  , ("M-S-b" , cycleOrRaise "firefox" isFirefox)
+  , ("M-S-f" , cycleOrRaise "thunar" isThunar)
   ]
   where
     isEmacs = className =? "Emacs"
-    isThunar = resource =? "thunar"
+    isThunar = resource =? "Thunar"
     isTerminal = className =? "Xfce4-terminal"
     isFirefox = className =? "firefox"
 
@@ -112,6 +111,7 @@ main = xmonad $ docks config
       , focusFollowsMouse = False
       , workspaces = map show (take 9 [(1 :: Integer) ..])
       , modMask = mod4Mask
+      , logHook = historyHook
       , clickJustFocuses = False
       , manageHook = managePlacement <+> manageDocks <+> manageHook def
       , layoutHook = layouts

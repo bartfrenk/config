@@ -21,6 +21,7 @@ executable xmonad
     , Actions
     , RecentCommands
     , Track
+    , Utils
     , Paths_xmonadrc
   hs-source-dirs:
       src
