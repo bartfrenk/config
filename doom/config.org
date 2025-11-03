@@ -6,6 +6,16 @@
       user-mail-address "bart.frenk@gmail.com")
 #+end_src
 
+* Core
+The command =save-buffer= is bound to =C-x C-s=, while =save-some-buffers= is
+bound to =C-x s=. These keybindings are easy to mix up while typing; that is
+annoying since the latter command steals focus to the minibuffer while waiting
+for a response.
+
+#+begin_src emacs-lisp :tangle yes
+(global-unset-key (kbd "C-x s"))
+#+end_src
+
 * THEMES
 #+begin_src emacs-lisp :tangle yes
 (setq doom-theme 'doom-vibrant)
