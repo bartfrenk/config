@@ -1,5 +1,6 @@
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE NoMonomorphismRestriction #-}
+{-# LANGUAGE TypeApplications #-}
 
 import XMonad
   ( Default (def),
@@ -109,7 +110,7 @@ main = xmonad $ docks config
       , focusedBorderColor = C.red
       , terminal = "/usr/bin/xfce4-terminal"
       , focusFollowsMouse = False
-      , workspaces = map show (take 9 [(1 :: Integer) ..])
+      , workspaces = map (show @Integer) [1 .. 9]
       , modMask = mod4Mask
       , logHook = historyHook
       , clickJustFocuses = False
