@@ -48,9 +48,12 @@ for a response.
   (if-let ((root-dir (projectile-project-root)))
       (let ((venv-dir (concat (file-name-as-directory root-dir) ".venv")))
         (pyvenv-activate venv-dir)
-        (eglot)
         (message "Activated virtualenv at %s" venv-dir))
     (message "Could not find virtualenv")))
+
+(after! python
+  (use-package! python-black)
+  (add-hook! 'python-mode-hook #'python-black-on-save-mode))
 #+end_src
 
 - [ ] Automatically restart eglot when switching virtualenv
