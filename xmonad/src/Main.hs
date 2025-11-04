@@ -127,7 +127,7 @@ main = xmonad $ docks config
     defaultPanes = Tall 1 0.03 0.5
 
     tabTheme = def
-      { fontName = "xft:inconsolata:size=9:antialias=true:hinting=true"
+      { fontName = "xft:inconsolata:size=12:antialias=true:hinting=true"
       , decoHeight = 28
       , activeTextColor = C.red
       , activeColor = C.base03
