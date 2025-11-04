@@ -1,0 +1,29 @@
+#/bin/bash
+
+# Return the version of the active Python distribution
+get_python_version() {
+  local COMMMAND=$(uv python find ${1:-python})
+  local VERSION=$($COMMAND -V | cut -d' ' -f 2 | cut -d . -f 1-2)
+  echo "$VERSION"
+
+}
+
+# Return the existing virtual env location or a default one.
+get_virtual_env() {
+  if [[ -n "${VIRTUAL_ENV:-}" ]]; then
+      local REPLY
+      realpath.absolute "$VIRTUAL_ENV"
+      echo "$REPLY"
+  else
+      echo "$(pwd)/.venv"
+  fi
+}
+
+layout_uv() {
+  VIRTUAL_ENV=$(get_virtual_env)
+  if [[ ! -d "$VIRTUAL_ENV" ]]; then
+      uv venv "$@" "$VIRTUAL_ENV"
+  fi
+  export VIRTUAL_ENV
+  source "$VIRTUAL_ENV/bin/activate"
+}
