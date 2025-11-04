@@ -54,3 +54,5 @@
 ;; (unpin! t)
 
 (package! python-black)
+(package! paredit)
+(package! enhanced-evil-paredit)

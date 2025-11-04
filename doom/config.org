@@ -24,9 +24,10 @@ for a response.
 #+end_src
 
 #+begin_src emacs-lisp :tangle yes
-(setq doom-font (font-spec :family "SauceCodePro NerdFont" :size 12))
-(setq display-line-numbers-type t)
-(setq line-spacing 5)
+(after! doom
+  (setq doom-font (font-spec :family "Hack Nerd Font" :size 11)
+        display-line-numbers-type t)
+  (setq-default line-spacing 4))
 #+end_src
 
 * Languages
@@ -63,8 +64,17 @@ for a response.
 
 ** Lisp
 #+begin_src emacs-lisp :tangle yes
-(after! parinfer
-  (setq parinfer-rust-preferred-mode "paren"))
+(use-package! paredit
+  :defer t
+  :commands paredit-mode
+  :hook
+  (emacs-lisp-mode . paredit-mode))
+
+(use-package! enhanced-evil-paredit
+  :defer t
+  :commands enhanced-evil-paredit-mode
+  :hook
+  (paredit-mode . enhanced-evil-paredit-mode))
 #+end_src
 
 - [ ] Use paredit instead of parinfer
