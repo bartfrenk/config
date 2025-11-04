@@ -1,12 +1,13 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-* PERSONAL INFO
+* Generic
+** Personal Info
 #+begin_src emacs-lisp :tangle yes
 (setq user-full-name "Bart Frenk"
       user-mail-address "bart.frenk@gmail.com")
 #+end_src
 
-* Core
+** Core
 The command =save-buffer= is bound to =C-x C-s=, while =save-some-buffers= is
 bound to =C-x s=. These keybindings are easy to mix up while typing; that is
 annoying since the latter command steals focus to the minibuffer while waiting
@@ -16,13 +17,11 @@ for a response.
 (global-unset-key (kbd "C-x s"))
 #+end_src
 
-* THEMES
+** Appearance
 #+begin_src emacs-lisp :tangle yes
 (setq doom-theme 'doom-vibrant)
 (setq doom-modeline-height 25)
 #+end_src
-
-* EDITOR & FONTS
 
 #+begin_src emacs-lisp :tangle yes
 (setq doom-font (font-spec :family "SauceCodePro NerdFont" :size 12))
@@ -30,13 +29,13 @@ for a response.
 (setq line-spacing 5)
 #+end_src
 
-
-* ORG MODE
+* Languages
+** Org
 #+begin_src emacs-lisp :tangle yes
 (setq org-directory "~/documents/org/")
 #+end_src
 
-* Python
+** Python
 #+begin_src emacs-lisp :tangle yes
 (after! python
   (set-eglot-client! '(python-mode python-ts-mode)
@@ -52,17 +51,25 @@ for a response.
     (message "Could not find virtualenv")))
 
 (after! python
-  (use-package! python-black)
-  (add-hook! 'python-mode-hook #'python-black-on-save-mode))
+  (use-package! python-black
+    :demand t
+    :after python)
+(add-hook! 'python-mode-hook #'python-black-on-save-mode))
+
 #+end_src
 
 - [ ] Automatically restart eglot when switching virtualenv
 - [ ] Automatically reset virtualenv (and restart eglot) when switching project
 
-* Lisp
+** Lisp
 #+begin_src emacs-lisp :tangle yes
 (after! parinfer
   (setq parinfer-rust-preferred-mode "paren"))
 #+end_src
 
 - [ ] Use paredit instead of parinfer
+
+** Shell Scripts
+#+begin_src emacs-lisp :tangle yes
+(add-to-list 'auto-mode-alist '("\\.zsh-theme\\'" . bash-ts-mode))
+#+end_src
