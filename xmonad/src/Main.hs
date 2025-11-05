@@ -2,6 +2,17 @@
 {-# LANGUAGE NoMonomorphismRestriction #-}
 {-# LANGUAGE TypeApplications #-}
 
+-- When opening this buffer eglot may not be able to find the import (which are
+-- vendored in the lib directoy). The workaround seems to be:
+--
+-- 1. projectile-invalidate-cache (Space p i)
+-- 2. projectile-find-file (Space p f)
+-- 3. eglot
+--
+-- The value of `projectile-project-root` is set to ~/.config/xmonad as a
+-- dir-local variable, but the value does not seem to picked up by eglot or
+-- projectile.
+
 import XMonad
   ( Default (def),
     Full (Full),
@@ -127,7 +138,7 @@ main = xmonad $ docks config
     defaultPanes = Tall 1 0.03 0.5
 
     tabTheme = def
-      { fontName = "xft:inconsolata:size=12:antialias=true:hinting=true"
+      { fontName = "xft:inconsolata:size=10:antialias=true:hinting=true"
       , decoHeight = 28
       , activeTextColor = C.red
       , activeColor = C.base03
