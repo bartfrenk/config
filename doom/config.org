@@ -61,7 +61,14 @@ for a response.
     :demand t
     :after python)
 (add-hook! 'python-mode-hook #'python-black-on-save-mode))
+#+end_src
 
+Do not display Python generated files in treemacs
+#+begin_src emacs-lisp :tangle yes
+(after! treemacs
+  (defun treemacs-ignore-pycache (file _)
+    (string= file "__pycache__"))
+  (push #'treemacs-ignore-pycache treemacs-ignored-file-predicates))
 #+end_src
 
 - [ ] Automatically restart eglot when switching virtualenv
