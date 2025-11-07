@@ -33,8 +33,13 @@ for a response.
 * Languages
 ** Org
 #+begin_src emacs-lisp :tangle yes
-(setq org-directory "~/documents/org/")
+(setq org-directory "~/documents/org/"
+      org-noter-notes-search-path "~/documents/notes/"
+      org-roam-directory "~/documents/roam")
 #+end_src
+
+#+RESULTS:
+: ~/documents/roam
 
 ** Python
 #+begin_src emacs-lisp :tangle yes
