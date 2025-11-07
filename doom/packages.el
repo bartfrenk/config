@@ -56,3 +56,11 @@
 (package! python-black)
 (package! paredit)
 (package! enhanced-evil-paredit)
+(package! pdf-tools)
+(package! dash)
+(package! lsp-mode)
+(package! magit-section)
+(package! lean4-mode
+  :recipe (:host github
+           :repo "leanprover-community/lean4-mode"
+           :files ("*.el" "data")))
