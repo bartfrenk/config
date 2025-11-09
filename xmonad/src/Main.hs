@@ -33,11 +33,7 @@ import XMonad
     (=?),
     (|||),
   )
-import XMonad.Actions.GroupNavigation
-  ( Direction (..),
-    nextMatchOrDo,
-    historyHook
-  )
+import XMonad.Actions.GroupNavigation (historyHook)
 import XMonad.Actions.PhysicalScreens
   ( PhysicalScreen (P),
     sendToScreen,
@@ -54,6 +50,7 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.SetWMName (setWMName)
 import XMonad.Layout.Combo (combineTwo)
 import XMonad.Layout.NoBorders (noBorders)
+import XMonad.Hooks.DynamicLog (dynamicLogWithPP)
 import XMonad.Layout.Tabbed
   ( Theme (..),
     shrinkText,
@@ -69,6 +66,7 @@ import XMonad.Util.WindowProperties ()
 
 import qualified Colors as C
 import qualified Actions as A
+import DBusConfig (mkDbusPP)
 import Utils (cycleOrRaise)
 
 
@@ -113,9 +111,11 @@ customKeys =
 
 
 main :: IO ()
-main = xmonad $ docks config
+main = do
+  dbusPP <- mkDbusPP
+  xmonad $ docks (config dbusPP)
   where
-    config = xfceConfig
+    config dbusPP = xfceConfig
       { borderWidth = 3
       , normalBorderColor = C.base02
       , focusedBorderColor = C.red
@@ -123,7 +123,9 @@ main = xmonad $ docks config
       , focusFollowsMouse = False
       , workspaces = map (show @Integer) [1 .. 9]
       , modMask = mod4Mask
-      , logHook = historyHook
+        -- Need to check whether combining log hooks in this way works. I don't
+        -- see why it shouldn't, as we are just sequencing X actions.
+      , logHook = historyHook >> dynamicLogWithPP dbusPP
       , clickJustFocuses = False
       , manageHook = managePlacement <+> manageDocks <+> manageHook def
       , layoutHook = layouts
