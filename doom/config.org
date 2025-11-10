@@ -27,8 +27,12 @@ for a response.
 (after! doom
   (setq doom-font (font-spec :family "Hack Nerd Font" :size 11)
         display-line-numbers-type t)
-  (setq-default line-spacing 4))
+  (setq-default line-spacing 4)
+  (setq doom-font-increment 1))
 #+end_src
+
+#+RESULTS:
+: 1
 
 * Languages
 ** Org
