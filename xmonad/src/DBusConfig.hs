@@ -39,7 +39,7 @@ body s = [D.toVariant ("<b>" ++ UTF8.decodeString s ++ "</b>")]
 baseSignal :: D.Signal
 baseSignal = D.signal objectPath interfaceName memberName
   where
-    objectPath = fromJust (D.parseObjectPath "org/xmonad/Log")
+    objectPath = fromJust (D.parseObjectPath "/org/xmonad/Log")
     interfaceName = fromJust (D.parseInterfaceName busName)
     memberName = fromJust $ D.parseMemberName "Update"
 
