@@ -1,2 +1,2 @@
 alias apr=apparatus
-alias xc=xclip -selection clipboard
+alias xc='xclip -selection clipboard'
