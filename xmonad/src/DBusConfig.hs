@@ -68,8 +68,10 @@ formatWindowSet toPhysicalScreen (StackSet { current, visible, hidden }) =
     extract isCurrent (Screen { workspace, screen }) =
       (tag workspace, Map.lookup screen toPhysicalScreen, isCurrent)
     key (_, y, _) = y
+
     formatScreen (workspaceId, _, True) = pangoColor "red" $ wrap "[" "]" workspaceId
     formatScreen (workspaceId, _, False) = pangoColor "white" $ wrap "[" "]" workspaceId
+
     hiddenWorkspaces = sort $ tag <$> filter (isJust . stack) hidden
     formatWorkspace workspaceId = pangoColor "#AAAAAA" $ wrap "[" "]" workspaceId
 
