@@ -31,7 +31,7 @@ requestName dbus = void $ D.requestName dbus (D.busName_ busName) flags
   where flags = [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
 
 createLogHook :: D.Client -> X ()
-createLogHook dbus = getScreenMapping >>= hook dbus
+createLogHook dbus = getScreenMapping >>= hook
   where
     hook screenMapping = do
       statusLine <- gets (formatWindowSet screenMapping . windowset)
