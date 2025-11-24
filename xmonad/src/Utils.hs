@@ -17,4 +17,4 @@ cycleOrRaise command query =
   let (prog', args) = splitCommand command
   in case prog' of
     Nothing -> pure ()
-    Just prog -> nextMatchOrDo History query $ safeSpawn prog args
+    Just prog -> nextMatchOrDo Backward query $ safeSpawn prog args
