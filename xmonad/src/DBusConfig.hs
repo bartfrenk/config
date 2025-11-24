@@ -1,59 +1,77 @@
-module DBusConfig (mkDbusPP) where
+{-# LANGUAGE NamedFieldPuns #-}
+{-# LANGUAGE FlexibleContexts #-}
+module DBusConfig (connectDBus, createLogHook) where
 
 import qualified DBus as D
 import qualified DBus.Client as D
 import qualified Codec.Binary.UTF8.String as UTF8
-import XMonad.Hooks.DynamicLog (def, PP(..), wrap)
-import Data.Maybe (fromJust)
-
-mkDbusPP :: IO PP
-mkDbusPP = do
-  dbus <- D.connectSession
-  getWellKnownName dbus
-  pure $ prettyPrinter dbus
-
-prettyPrinter :: D.Client -> PP
-prettyPrinter dbus = def
-    { ppOutput   = dbusOutput dbus
-    , ppTitle    = pangoSanitize
-    , ppCurrent  = pangoColor "green" . wrap "[" "]" . pangoSanitize
-    , ppVisible  = pangoColor "yellow" . wrap "(" ")" . pangoSanitize
-    , ppHidden   = const ""
-    , ppUrgent   = pangoColor "red"
-    , ppLayout   = const ""
-    , ppSep      = " "
-    }
+import XMonad.Hooks.DynamicLog (def, wrap)
+import Data.Maybe (fromJust, isJust)
+import Control.Monad (void)
+import Control.Monad.State
+import XMonad.Core
+import XMonad.StackSet (StackSet (..), Screen (..), Workspace (..))
+import Data.Map (Map)
+import qualified Data.Map as Map
+import XMonad.Actions.PhysicalScreens
+import Data.List (sort)
+import Utils (sortWithKey)
 
 busName :: String
 busName = "org.xmonad.Log"
 
-getWellKnownName :: D.Client -> IO ()
-getWellKnownName dbus = do
-  _ <- D.requestName dbus (D.busName_ busName)
-                [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
-  return ()
+connectDBus :: IO D.Client
+connectDBus = do
+  dbus <- D.connectSession
+  requestName dbus
+  pure dbus
 
-body :: String -> [D.Variant]
-body s = [D.toVariant ("<b>" ++ UTF8.decodeString s ++ "</b>")]
+requestName :: D.Client -> IO ()
+requestName dbus = void $ D.requestName dbus (D.busName_ busName) flags
+  where flags = [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
 
-baseSignal :: D.Signal
-baseSignal = D.signal objectPath interfaceName memberName
+createLogHook :: D.Client -> X ()
+createLogHook dbus = getScreenMapping >>= hook dbus
   where
+    hook screenMapping = do
+      statusLine <- gets (formatWindowSet screenMapping . windowset)
+      liftIO $ dbusOutput dbus statusLine
+
+dbusOutput :: D.Client -> String -> IO ()
+dbusOutput dbus = D.emit dbus . signalWithBody
+  where
+    signalWithBody s = baseSignal { D.signalBody = body s }
+
+    baseSignal = D.signal objectPath interfaceName memberName
     objectPath = fromJust (D.parseObjectPath "/org/xmonad/Log")
     interfaceName = fromJust (D.parseInterfaceName busName)
     memberName = fromJust $ D.parseMemberName "Update"
 
-signalWithBody :: String -> D.Signal
-signalWithBody s = baseSignal { D.signalBody = body s }
+    body s = [D.toVariant ("<b>" ++ UTF8.decodeString s ++ "</b>")]
 
-dbusOutput :: D.Client -> String -> IO ()
-dbusOutput dbus s = D.emit dbus $ signalWithBody s
-
-pangoColor :: String -> String -> String
-pangoColor fg = wrap left right
+getScreenMapping :: X (Map ScreenId PhysicalScreen)
+getScreenMapping = Map.fromList <$> recur [] 0
   where
-    left  = "<span foreground=\"" ++ fg ++ "\">"
-    right = "</span>"
+    recur :: [(ScreenId, PhysicalScreen)] -> Int -> X [(ScreenId, PhysicalScreen)]
+    recur acc i = do
+      let physicalScreen = P i
+      sid' <- getScreen def physicalScreen
+      case sid' of
+        Nothing -> pure acc
+        Just sid -> recur ((sid, physicalScreen) : acc) (i + 1)
+
+formatWindowSet :: Map ScreenId PhysicalScreen -> WindowSet -> String
+formatWindowSet toPhysicalScreen (StackSet { current, visible, hidden }) =
+     unwords (fmap formatScreen visibleScreens <> fmap formatWorkspace hiddenWorkspaces)
+  where
+    visibleScreens = sortWithKey key  (extract True current : fmap (extract False) visible)
+    extract isCurrent (Screen { workspace, screen }) =
+      (tag workspace, Map.lookup screen toPhysicalScreen, isCurrent)
+    key (_, y, _) = y
+    formatScreen (workspaceId, _, True) = pangoColor "red" $ wrap "[" "]" workspaceId
+    formatScreen (workspaceId, _, False) = pangoColor "white" $ wrap "[" "]" workspaceId
+    hiddenWorkspaces = sort $ tag <$> filter (isJust . stack) hidden
+    formatWorkspace workspaceId = pangoColor "#AAAAAA" $ wrap "[" "]" workspaceId
 
 pangoSanitize :: String -> String
 pangoSanitize = foldr sanitize ""
@@ -63,3 +81,9 @@ pangoSanitize = foldr sanitize ""
     sanitize '\"' xs = "&quot;" ++ xs
     sanitize '&'  xs = "&amp;" ++ xs
     sanitize x    xs = x:xs
+
+pangoColor :: String -> String -> String
+pangoColor fg = wrap left right
+  where
+    left  = "<span foreground=\"" ++ fg ++ "\"" ++ " size=\"large\">"
+    right = "</span>"
