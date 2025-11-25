@@ -49,7 +49,6 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.SetWMName (setWMName)
 import XMonad.Layout.Combo (combineTwo)
 import XMonad.Layout.NoBorders (noBorders)
-import XMonad.Hooks.DynamicLog (dynamicLogWithPP)
 import XMonad.Layout.Tabbed
   ( Theme (..),
     shrinkText,
@@ -65,7 +64,7 @@ import XMonad.Util.WindowProperties ()
 
 import qualified Colors as C
 import qualified Actions as A
-import DBusConfig (mkDbusPP, createHook, connectDBus)
+import DBusConfig (createLogHook, connectDBus)
 import Utils (cycleOrRaise)
 
 
@@ -111,7 +110,6 @@ customKeys =
 
 main :: IO ()
 main = do
-  dbusPP <- mkDbusPP
   dbus <- connectDBus
   xmonad $ docks (config dbus)
   where
@@ -123,7 +121,7 @@ main = do
       , focusFollowsMouse = False
       , workspaces = map (show @Integer) [1 .. 9]
       , modMask = mod4Mask
-      , logHook = createHook dbus
+      , logHook = createLogHook dbus
       , clickJustFocuses = False
       , manageHook = managePlacement <+> manageDocks <+> manageHook def
       , layoutHook = layouts

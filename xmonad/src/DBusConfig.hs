@@ -1,20 +1,23 @@
 {-# LANGUAGE NamedFieldPuns #-}
+{-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE FlexibleContexts #-}
 module DBusConfig (connectDBus, createLogHook) where
 
+import qualified Codec.Binary.UTF8.String as UTF8
+import Control.Monad (void)
+import Control.Monad.State (gets, liftIO)
 import qualified DBus as D
 import qualified DBus.Client as D
-import qualified Codec.Binary.UTF8.String as UTF8
-import XMonad.Hooks.DynamicLog (def, wrap)
-import Data.Maybe (fromJust, isJust)
-import Control.Monad (void)
-import Control.Monad.State
-import XMonad.Core
-import XMonad.StackSet (StackSet (..), Screen (..), Workspace (..))
+import Data.List (sort)
 import Data.Map (Map)
 import qualified Data.Map as Map
-import XMonad.Actions.PhysicalScreens
-import Data.List (sort)
+import Data.Maybe (fromJust, isJust)
+
+import XMonad (X, ScreenId, WindowSet, runQuery, appName, XState (..), Window)
+import XMonad.Actions.PhysicalScreens (PhysicalScreen (..), getScreen)
+import XMonad.Hooks.DynamicLog (def, wrap)
+import XMonad.StackSet (StackSet (..), Screen (..), Workspace (..), Stack (..))
+
 import Utils (sortWithKey)
 
 busName :: String
@@ -30,12 +33,21 @@ requestName :: D.Client -> IO ()
 requestName dbus = void $ D.requestName dbus (D.busName_ busName) flags
   where flags = [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
 
+currentWindow :: WindowSet -> Maybe Window
+currentWindow StackSet { current } = focus <$> stack (workspace current)
+
 createLogHook :: D.Client -> X ()
 createLogHook dbus = getScreenMapping >>= hook
   where
     hook screenMapping = do
-      statusLine <- gets (formatWindowSet screenMapping . windowset)
-      liftIO $ dbusOutput dbus statusLine
+      ws <- gets windowset
+      let statusLine = formatWindowSet screenMapping ws
+      case currentWindow ws of
+        Nothing -> liftIO $ dbusOutput dbus $ statusLine
+        Just window -> do
+          name <- runQuery appName window
+          liftIO $ dbusOutput dbus $ statusLine <> " " <> name
+
 
 dbusOutput :: D.Client -> String -> IO ()
 dbusOutput dbus = D.emit dbus . signalWithBody
@@ -55,8 +67,7 @@ getScreenMapping = Map.fromList <$> recur [] 0
     recur :: [(ScreenId, PhysicalScreen)] -> Int -> X [(ScreenId, PhysicalScreen)]
     recur acc i = do
       let physicalScreen = P i
-      sid' <- getScreen def physicalScreen
-      case sid' of
+      getScreen def physicalScreen >>= \case
         Nothing -> pure acc
         Just sid -> recur ((sid, physicalScreen) : acc) (i + 1)
 
@@ -75,6 +86,7 @@ formatWindowSet toPhysicalScreen (StackSet { current, visible, hidden }) =
     hiddenWorkspaces = sort $ tag <$> filter (isJust . stack) hidden
     formatWorkspace workspaceId = pangoColor "#AAAAAA" $ wrap "[" "]" workspaceId
 
+-- WIP: Need this for the TODO on line 36
 pangoSanitize :: String -> String
 pangoSanitize = foldr sanitize ""
   where
