@@ -46,7 +46,7 @@ createLogHook dbus = getScreenMapping >>= hook
         Nothing -> liftIO $ dbusOutput dbus statusLine
         Just window -> do
           name <- runQuery appName window
-          liftIO $ dbusOutput dbus $ statusLine <> "  " <> pangoColor "white" name
+          liftIO $ dbusOutput dbus $ statusLine <> "  " <> pangoColor "#AAAAAA" name
 
 dbusOutput :: D.Client -> String -> IO ()
 dbusOutput dbus = D.emit dbus . signalWithBody
