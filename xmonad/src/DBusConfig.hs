@@ -14,7 +14,7 @@ import Data.Map (Map)
 import qualified Data.Map as Map
 import Data.Maybe (fromJust, isJust)
 import Utils (sortWithKey)
-import XMonad (ScreenId, Window, WindowSet, X, XState (..), appName, runQuery)
+import XMonad (ScreenId, Window, WindowSet, X, XState (..), runQuery, className)
 import XMonad.Actions.PhysicalScreens (PhysicalScreen (..), getScreen)
 import XMonad.Hooks.DynamicLog (def, wrap)
 import XMonad.StackSet (Screen (..), Stack (..), StackSet (..), Workspace (..))
@@ -45,7 +45,7 @@ createLogHook dbus = getScreenMapping >>= hook
       case currentWindow ws of
         Nothing -> liftIO $ dbusOutput dbus statusLine
         Just window -> do
-          name <- runQuery appName window
+          name <- runQuery className window
           liftIO $ dbusOutput dbus $ statusLine <> "  " <> pangoColor "#AAAAAA" name
 
 dbusOutput :: D.Client -> String -> IO ()
