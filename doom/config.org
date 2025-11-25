@@ -34,6 +34,20 @@ for a response.
 #+RESULTS:
 : 1
 
+* Global keybindings
+
+#+begin_src emacs-lisp :tangle yes
+(map! :leader
+      :desc "Jump to next warning"
+      "c n" #'flycheck-next-error)
+(map! :leader
+      :desc "Jump to previous warning"
+      "c p" #'flycheck-previous-error)
+#+end_src
+
+#+RESULTS:
+: flycheck-next-error
+
 * Languages
 ** Chordpro
 #+begin_src emacs-lisp :tangle yes
