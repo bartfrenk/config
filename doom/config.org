@@ -35,6 +35,13 @@ for a response.
 : 1
 
 * Languages
+** Chordpro
+#+begin_src emacs-lisp :tangle yes
+(add-hook 'chordpro-mode
+          (lambda ()
+            (visual-fill-column-mode 1)))
+#+end_src
+
 ** Org
 #+begin_src emacs-lisp :tangle yes
 (setq org-directory "~/documents/org/"

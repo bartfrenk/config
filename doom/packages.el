@@ -61,6 +61,7 @@
 (package! lsp-mode)
 (package! magit-section)
 (package! meson-mode)
+(package! visual-fill-column)
 (package! lean4-mode
   :recipe (:host github
            :repo "leanprover-community/lean4-mode"
