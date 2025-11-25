@@ -1,6 +1,7 @@
-{-# LANGUAGE NamedFieldPuns #-}
-{-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE NamedFieldPuns #-}
+
 module DBusConfig (connectDBus, createLogHook) where
 
 import qualified Codec.Binary.UTF8.String as UTF8
@@ -12,13 +13,11 @@ import Data.List (sort)
 import Data.Map (Map)
 import qualified Data.Map as Map
 import Data.Maybe (fromJust, isJust)
-
-import XMonad (X, ScreenId, WindowSet, runQuery, appName, XState (..), Window)
+import Utils (sortWithKey)
+import XMonad (ScreenId, Window, WindowSet, X, XState (..), appName, runQuery)
 import XMonad.Actions.PhysicalScreens (PhysicalScreen (..), getScreen)
 import XMonad.Hooks.DynamicLog (def, wrap)
-import XMonad.StackSet (StackSet (..), Screen (..), Workspace (..), Stack (..))
-
-import Utils (sortWithKey)
+import XMonad.StackSet (Screen (..), Stack (..), StackSet (..), Workspace (..))
 
 busName :: String
 busName = "org.xmonad.Log"
@@ -31,10 +30,11 @@ connectDBus = do
 
 requestName :: D.Client -> IO ()
 requestName dbus = void $ D.requestName dbus (D.busName_ busName) flags
-  where flags = [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
+  where
+    flags = [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
 
 currentWindow :: WindowSet -> Maybe Window
-currentWindow StackSet { current } = focus <$> stack (workspace current)
+currentWindow StackSet {current} = focus <$> stack (workspace current)
 
 createLogHook :: D.Client -> X ()
 createLogHook dbus = getScreenMapping >>= hook
@@ -43,16 +43,15 @@ createLogHook dbus = getScreenMapping >>= hook
       ws <- gets windowset
       let statusLine = formatWindowSet screenMapping ws
       case currentWindow ws of
-        Nothing -> liftIO $ dbusOutput dbus $ statusLine
+        Nothing -> liftIO $ dbusOutput dbus statusLine
         Just window -> do
           name <- runQuery appName window
-          liftIO $ dbusOutput dbus $ statusLine <> " " <> name
-
+          liftIO $ dbusOutput dbus $ statusLine <> "  " <> pangoColor "white" name
 
 dbusOutput :: D.Client -> String -> IO ()
 dbusOutput dbus = D.emit dbus . signalWithBody
   where
-    signalWithBody s = baseSignal { D.signalBody = body s }
+    signalWithBody s = baseSignal {D.signalBody = body s}
 
     baseSignal = D.signal objectPath interfaceName memberName
     objectPath = fromJust (D.parseObjectPath "/org/xmonad/Log")
@@ -72,11 +71,11 @@ getScreenMapping = Map.fromList <$> recur [] 0
         Just sid -> recur ((sid, physicalScreen) : acc) (i + 1)
 
 formatWindowSet :: Map ScreenId PhysicalScreen -> WindowSet -> String
-formatWindowSet toPhysicalScreen (StackSet { current, visible, hidden }) =
-     unwords (fmap formatScreen visibleScreens <> fmap formatWorkspace hiddenWorkspaces)
+formatWindowSet toPhysicalScreen (StackSet {current, visible, hidden}) =
+  unwords (fmap formatScreen visibleScreens <> fmap formatWorkspace hiddenWorkspaces)
   where
-    visibleScreens = sortWithKey key  (extract True current : fmap (extract False) visible)
-    extract isCurrent (Screen { workspace, screen }) =
+    visibleScreens = sortWithKey key (extract True current : fmap (extract False) visible)
+    extract isCurrent (Screen {workspace, screen}) =
       (tag workspace, Map.lookup screen toPhysicalScreen, isCurrent)
     key (_, y, _) = y
 
@@ -90,14 +89,14 @@ formatWindowSet toPhysicalScreen (StackSet { current, visible, hidden }) =
 pangoSanitize :: String -> String
 pangoSanitize = foldr sanitize ""
   where
-    sanitize '>'  xs = "&gt;" ++ xs
-    sanitize '<'  xs = "&lt;" ++ xs
+    sanitize '>' xs = "&gt;" ++ xs
+    sanitize '<' xs = "&lt;" ++ xs
     sanitize '\"' xs = "&quot;" ++ xs
-    sanitize '&'  xs = "&amp;" ++ xs
-    sanitize x    xs = x:xs
+    sanitize '&' xs = "&amp;" ++ xs
+    sanitize x xs = x : xs
 
 pangoColor :: String -> String -> String
 pangoColor fg = wrap left right
   where
-    left  = "<span foreground=\"" ++ fg ++ "\"" ++ " size=\"large\">"
+    left = "<span foreground=\"" ++ fg ++ "\"" ++ " size=\"large\">"
     right = "</span>"
