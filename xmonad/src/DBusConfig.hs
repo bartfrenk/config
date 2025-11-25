@@ -85,16 +85,6 @@ formatWindowSet toPhysicalScreen (StackSet {current, visible, hidden}) =
     hiddenWorkspaces = sort $ tag <$> filter (isJust . stack) hidden
     formatWorkspace workspaceId = pangoColor "#AAAAAA" $ wrap "[" "]" workspaceId
 
--- WIP: Need this for the TODO on line 36
-pangoSanitize :: String -> String
-pangoSanitize = foldr sanitize ""
-  where
-    sanitize '>' xs = "&gt;" ++ xs
-    sanitize '<' xs = "&lt;" ++ xs
-    sanitize '\"' xs = "&quot;" ++ xs
-    sanitize '&' xs = "&amp;" ++ xs
-    sanitize x xs = x : xs
-
 pangoColor :: String -> String -> String
 pangoColor fg = wrap left right
   where
