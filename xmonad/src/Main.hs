@@ -4,7 +4,7 @@
 
 -- When opening this buffer eglot may not be able to find the import (which are
 -- vendored in the lib directoy). The workaround seems to be:
---
+--https://github.com/groupm-global/grmn-ai-qreach-plans/pull/57
 -- 1. projectile-invalidate-cache (Space p i)
 -- 2. projectile-find-file (Space p f)
 -- 3. eglot
@@ -100,12 +100,14 @@ customKeys =
   , ("M-S-n" , cycleOrRaise "xfce4-terminal -e tmux" isTerminal)
   , ("M-S-b" , cycleOrRaise "firefox" isFirefox)
   , ("M-S-f" , cycleOrRaise "thunar" isThunar)
+  , ("M-S-s" , cycleOrRaise "spotify" isSpotify)
   ]
   where
     isEmacs = className =? "Emacs"
     isThunar = resource =? "Thunar"
     isTerminal = className =? "Xfce4-terminal"
     isFirefox = className =? "firefox"
+    isSpotify = className =? "Spotify"
 
 
 main :: IO ()
