@@ -33,6 +33,8 @@ import XMonad
     (=?),
     (|||),
   )
+import XMonad.ManageHook (doF)
+import XMonad.StackSet (focusDown)
 import XMonad.Actions.PhysicalScreens
   ( PhysicalScreen (P),
     sendToScreen,
@@ -151,4 +153,5 @@ main = do
     managePlacement = composeAll
       [ title =? "Save As" --> doFloat
       , title =? "Whisker Menu" --> doFloat
+      , className =? "Xfce4-notifyd" --> doF focusDown
       ]
