@@ -192,3 +192,12 @@ directory that contains one of these Lake files.
     (add-to-list 'projectile-project-root-files-top-down-recurring f)
     (add-to-list 'projectile-project-root-files f)))
 #+end_src
+
+** Haskell
+#+begin_src emacs-lisp :tangle yes
+(after! projectile
+  (dolist (f '("cabal.project" "*.cabal"))
+    (add-to-list 'projectile-project-root-files-bottom-up f)
+    (add-to-list 'projectile-project-root-files-top-down-recurring f)
+    (add-to-list 'projectile-project-root-files f)))
+#+end_src
