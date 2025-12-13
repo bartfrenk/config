@@ -66,4 +66,7 @@
   :recipe (:host github
            :repo "leanprover-community/lean4-mode"
            :files ("*.el" "data")))
+(package! pylsp-rope
+  :recipe (:host github
+           :repo "sonofhypnos/pylsp-rope.el"))
 (package! chordpro-mode)

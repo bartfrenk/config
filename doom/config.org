@@ -1,4 +1,5 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+#+STARTUP: overview
 
 * Generic
 ** Personal Info
@@ -31,22 +32,50 @@ for a response.
   (setq doom-font-increment 1))
 #+end_src
 
-#+RESULTS:
-: 1
+** Eglot
+Inlay hints do not work as well always; there is info on this [[https://www.reddit.com/r/emacs/comments/1n7y3jp/eglot_inlay_hints_only_show_after_editing_the/][here]].
 
+#+begin_src emacs-lisp :tangle yes
+(add-hook 'eglot-managed-mode-hook (lambda () (eglot-inlay-hints-mode -1)))
+#+end_src
 * Global keybindings
 
 #+begin_src emacs-lisp :tangle yes
+(defun consult-flymake-project ()
+  (interactive)
+  (consult-flymake 1))
+
+(defun toggle-inlay-hints-mode ()
+  (interactive)
+  (eglot-inlay-hints-mode 'toggle)
+  (message "%s" eglot-inlay-hints-mode))
+
 (map! :leader
-      :desc "Jump to next warning"
-      "c n" #'flycheck-next-error)
+      :desc "Jump to next diagnoses"
+      "c n" #'flymake-goto-next-error)
 (map! :leader
-      :desc "Jump to previous warning"
-      "c p" #'flycheck-previous-error)
+      :desc "Jump to previous diagnoses"
+      "c p" #'flymake-goto-prev-error)
+(map! :leader
+      :desc "Show project diagnostics"
+      "c X" #'consult-flymake-project)
+;; (map! :leader
+;;       :desc "Toggle inlay hints mode"
+;;       "t i" #'toggle-inlay-hints-mode)
 #+end_src
 
-#+RESULTS:
-: flycheck-next-error
+#+begin_src emacs-lisp :tangle yes
+(defun toggle-treemacs ()
+  "Toggle focus between Treemacs and current buffer."
+  (interactive)
+  (if (treemacs-is-treemacs-window-selected?)
+      (other-window 1)
+    (treemacs-select-window)))
+
+(map! :leader
+      :desc "Switch between treemacs and open buffer"
+      "-" #'toggle-treemacs)
+#+end_src
 
 * Languages
 ** Chordpro
@@ -63,14 +92,11 @@ for a response.
       org-roam-directory "~/documents/roam")
 #+end_src
 
-#+RESULTS:
-: ~/documents/roam
-
 ** Python
 #+begin_src emacs-lisp :tangle yes
 (after! python
   (set-eglot-client! '(python-mode python-ts-mode)
-                     '("pyright-langserver" "--stdio")
+                     '("basedpyright-langserver" "--stdio")
                      '("ruff" "server")))
 
 (defun activate-venv ()
@@ -119,4 +145,50 @@ Do not display Python generated files in treemacs
 ** Shell Scripts
 #+begin_src emacs-lisp :tangle yes
 (add-to-list 'auto-mode-alist '("\\.zsh-theme\\'" . bash-ts-mode))
+#+end_src
+
+** Rust
+See https://lists.gnu.org/archive/html/bug-gnu-emacs/2025-06/msg01274.html.
+
+I am having issues with eglot not refreshing the errors. A work-around is to run
+=eglot-reconnect= when I suspect this has happened, but it kills the speedy
+feedback cycle. Hope the following helps. It it doesn't, it might be useful to
+understand the above thread better.
+#+begin_src emacs-lisp :tangle yes
+(with-eval-after-load 'eglot
+  (add-hook 'eglot-managed-mode-hook (lambda ()
+                                       (flymake-mode -1)
+                                       (flymake-mode 1))))
+#+end_src
+
+** Lean
+
+This replaces =lsp-mode= by =eglot=, however, eglot seems to have a preference for
+starting the language server in the project root, which is not always
+appropriate for every project. Ecamples are my xmonad configuration (which lives
+with the repository with =~/.config= as it's root dir). A lean4 example is the
+=blockchain-lean= project. For now do not include this in my config.
+
+#+begin_src emacs-lisp :tangle yes
+(with-eval-after-load 'lsp-mode
+  (setq lsp-disabled-clients '(lsp-lean))   ;; if defined in your setup
+  (remove-hook 'lean4-mode-hook #'lsp-deferred))
+
+(with-eval-after-load 'eglot
+  ;; Lean 4: start LSP via lake so it picks up the project toolchain.
+  (add-to-list 'eglot-server-programs
+               '(lean4-mode . ("lake" "serve"))))
+
+(add-hook 'lean4-mode-hook 'eglot-ensure)
+
+#+end_src
+
+Have =eglot= start the language server in the correct root by ensuring it is the
+directory that contains one of these Lake files.
+#+begin_src emacs-lisp :tangle yes
+(after! projectile
+  (dolist (f '("lakefile.lean" "lakefile.toml"))
+    (add-to-list 'projectile-project-root-files-bottom-up f)
+    (add-to-list 'projectile-project-root-files-top-down-recurring f)
+    (add-to-list 'projectile-project-root-files f)))
 #+end_src
