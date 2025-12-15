@@ -32,12 +32,69 @@ for a response.
   (setq doom-font-increment 1))
 #+end_src
 
+#+RESULTS:
+: 1
+
 ** Eglot
 Inlay hints do not work as well always; there is info on this [[https://www.reddit.com/r/emacs/comments/1n7y3jp/eglot_inlay_hints_only_show_after_editing_the/][here]].
 
 #+begin_src emacs-lisp :tangle yes
 (add-hook 'eglot-managed-mode-hook (lambda () (eglot-inlay-hints-mode -1)))
 #+end_src
+** Flymake
+
+Do not print diagnostic information in the minibuffer.
+#+begin_src emacs-lisp :tangle yes
+(after! flymake
+  (add-to-list 'flymake-diagnostic-format-alist '(:eldoc-echo nil)))
+#+end_src
+
+Print full diagnostic information in the popon frame, instead of only the first
+line.
+#+begin_src emacs-lisp :tangle yes
+(after! flymake
+  (defun custom-flymake-popon-format-diagnostic (diagnostic)
+    "Format DIAGNOSTIC to text."
+    (with-temp-buffer
+      (insert
+       "* "
+       (propertize
+        (string-join (split-string (flymake-diagnostic-text diagnostic '(message)) "[\n\r]") ": ")
+        'face (flymake--lookup-type-property
+               (flymake-diagnostic-type diagnostic) 'mode-line-face)))
+
+      ;; Break long lines.
+      (goto-char (point-min))
+      (let ((last-whitespace nil)
+            (last-char-whitespace-p nil))
+        (while (not (eobp))
+          (if (not (member (buffer-substring-no-properties
+                            (point) (1+ (point)))
+                           '(" " "\t")))
+              (setq last-char-whitespace-p nil)
+            (unless last-char-whitespace-p
+              (setq last-whitespace (point))
+              (setq last-char-whitespace-p t)))
+          (when (>= (current-column) flymake-popon-width)
+            (save-excursion
+              (when last-whitespace
+                (goto-char last-whitespace))
+              (insert "\n  ")
+              (while (member (buffer-substring-no-properties
+                              (point) (1+ (point)))
+                             '(" " "\t"))
+                (delete-char 1))))
+          (right-char)))
+      (buffer-string))))
+
+(setq flymake-popon-diagnostic-formatter #'custom-flymake-popon-format-diagnostic)
+
+
+#+end_src
+
+#+RESULTS:
+: custom-flymake-popon-format-diagnostic
+
 * Global keybindings
 
 #+begin_src emacs-lisp :tangle yes
@@ -59,9 +116,6 @@ Inlay hints do not work as well always; there is info on this [[https://www.redd
 (map! :leader
       :desc "Show project diagnostics"
       "c X" #'consult-flymake-project)
-;; (map! :leader
-;;       :desc "Toggle inlay hints mode"
-;;       "t i" #'toggle-inlay-hints-mode)
 #+end_src
 
 #+begin_src emacs-lisp :tangle yes
