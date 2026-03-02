@@ -32,8 +32,8 @@ for a response.
   (setq doom-font-increment 1))
 #+end_src
 
+
 #+RESULTS:
-: 1
 
 ** Eglot
 Inlay hints do not work as well always; there is info on this [[https://www.reddit.com/r/emacs/comments/1n7y3jp/eglot_inlay_hints_only_show_after_editing_the/][here]].
@@ -46,7 +46,8 @@ Inlay hints do not work as well always; there is info on this [[https://www.redd
 Do not print diagnostic information in the minibuffer.
 #+begin_src emacs-lisp :tangle yes
 (after! flymake
-  (add-to-list 'flymake-diagnostic-format-alist '(:eldoc-echo nil)))
+  (add-to-list 'flymake-diagnostic-format-alist '(:eldoc-echo nil))
+  (setq flymake-popon-width 80))
 #+end_src
 
 Print full diagnostic information in the popon frame, instead of only the first
@@ -59,7 +60,7 @@ line.
       (insert
        "* "
        (propertize
-        (string-join (split-string (flymake-diagnostic-text diagnostic '(message)) "[\n\r]") ": ")
+        (string-trim (string-join (split-string (flymake-diagnostic-text diagnostic '(message)) "[\n\r]") ": "))
         'face (flymake--lookup-type-property
                (flymake-diagnostic-type diagnostic) 'mode-line-face)))
 
