@@ -1,6 +1,8 @@
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE NoMonomorphismRestriction #-}
 {-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
 
 -- When opening this buffer eglot may not be able to find the import (which are
 -- vendored in the lib directoy). The workaround seems to be:
@@ -19,6 +21,7 @@ import XMonad
     Resize (Expand, Shrink),
     Tall (Tall),
     X,
+    LayoutClass (..),
     XConfig (..),
     className,
     composeAll,
@@ -49,6 +52,8 @@ import XMonad.Hooks.ManageDocks
     manageDocks,
   )
 import XMonad.Hooks.SetWMName (setWMName)
+import XMonad.Layout (Mirror (..))
+import XMonad.Layout.ResizableTile (ResizableTall (..), MirrorResize (..))
 import XMonad.Layout.Combo (combineTwo)
 import XMonad.Layout.NoBorders (noBorders)
 import XMonad.Layout.Tabbed
@@ -56,6 +61,7 @@ import XMonad.Layout.Tabbed
     shrinkText,
     tabbedBottom,
   )
+import XMonad.Layout.Columns (ColumnsLayout (..))
 import XMonad.Layout.WindowNavigation
   ( Navigate (Go, Move),
     windowNavigation,
@@ -81,6 +87,8 @@ customKeys =
   , ("C-M--" , sendMessage $ Zoom (4 / 5))
   , ("C-M-h" , sendMessage Shrink)
   , ("C-M-l" , sendMessage Expand)
+  , ("C-M-j" , sendMessage MirrorShrink)
+  , ("C-M-k" , sendMessage MirrorExpand)
   , ("M-l"   , sendMessage $ Go R)
   , ("M-h"   , sendMessage $ Go L)
   , ("M-j"   , sendMessage $ Go D)
@@ -112,6 +120,13 @@ customKeys =
     isSpotify = className =? "Spotify"
 
 
+newtype CustomColumns a = CustomColumns (ColumnsLayout a)
+
+instance LayoutClass CustomColumns a where
+  runLayout (CustomColumns l) = runLayout l
+  handleMessage (CustomColumns l) = handleMessage l
+  description (CustomColumns l) = "CustomColumns"
+
 main :: IO ()
 main = do
   dbus <- connectDBus
@@ -133,11 +148,14 @@ main = do
       } `additionalKeysP` customKeys
 
     layouts = avoidStruts $
-        noBorders tabbedWindow ||| noBorders Full ||| flexLayout
+        noBorders tabbedWindow ||| noBorders Full ||| flexLayout ||| manyWindows
     flexLayout = windowNavigation $
         combineTwo defaultPanes tabbedWindow tabbedWindow
+    manyWindows = windowNavigation $ combineTwo resDefaultPanes Full someRows
     tabbedWindow = tabbedBottom shrinkText tabTheme
     defaultPanes = Tall 1 0.03 0.5
+    someRows = Mirror $ ResizableTall 1 0.03 0.05 [1, 1]
+    resDefaultPanes = ResizableTall 1 0.03 0.5 [1]
 
     tabTheme = def
       { fontName = "xft:inconsolata:size=10:antialias=true:hinting=true"
