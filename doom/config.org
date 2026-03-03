@@ -256,3 +256,14 @@ directory that contains one of these Lake files.
     (add-to-list 'projectile-project-root-files-top-down-recurring f)
     (add-to-list 'projectile-project-root-files f)))
 #+end_src
+
+** Journal
+#+begin_src emacs-lisp :tangle yes
+(setq journal/dir "~/documents/journal")
+(map! :leader
+      :desc "Open journal"
+      "n j" #'journal/open)
+#+end_src
+
+#+RESULTS:
+: ~/documents/journal
