@@ -4,4 +4,4 @@ export EDITOR=vim
 export DIRENV_LOG_FORMAT=""
 bindkey -v
 bindkey '^R' history-incremental-search-backward
-
+bindkey -M vicmd v edit-command-line
