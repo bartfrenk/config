@@ -132,6 +132,7 @@ line.
       "-" #'toggle-treemacs)
 #+end_src
 
+
 * Languages
 ** Chordpro
 #+begin_src emacs-lisp :tangle yes
@@ -142,10 +143,23 @@ line.
 
 ** Org
 #+begin_src emacs-lisp :tangle yes
+(setq org-default-notes-file "~/documents/orgs/gtd/inbox.org")
+
 (setq org-directory "~/documents/org/"
       org-noter-notes-search-path "~/documents/notes/"
-      org-roam-directory "~/documents/roam")
+      org-roam-directory "~/documents/org/roam/wiki")
+(setq org-agenda-files '("~/documents/org/gtp/actions.org"))
+
+(setq journal/dir "~/documents/org/journal")
+(map! :leader
+      :desc "Open journal"
+      "n j" #'journal/open)
 #+end_src
+
+
+#+RESULTS:
+| ~/documents/org/gtp/actions.org |
+
 
 ** Python
 #+begin_src emacs-lisp :tangle yes
@@ -176,6 +190,40 @@ Do not display Python generated files in treemacs
     (string= file "__pycache__"))
   (push #'treemacs-ignore-pycache treemacs-ignored-file-predicates))
 #+end_src
+
+
+#+begin_src emacs-lisp :tangle yes
+(after! projectile
+  (dolist (f '("pyproject.toml" "uv.lock"))
+    (add-to-list 'projectile-project-root-files-bottom-up f)
+    (add-to-list 'projectile-project-root-files-top-down-recurring f)
+    (add-to-list 'projectile-project-root-files f)))
+#+end_src
+
+
+#+begin_src emacs-lisp :tangle yes
+(after! apheleia
+  (setf (alist-get 'python-mode apheleia-mode-alist) '(isort black)))
+#+end_src
+
+#+RESULTS:
+| isort | black |
+
+#+begin_src emacs-lisp :tangle yes
+(after! treemacs
+  (defun my-treemacs-ignore-p (name _path)
+    (member name '(".pytest_cache"
+                   ".venv"
+                   ".ropeproject"
+                   ".mypy_cache")))
+
+  (add-to-list 'treemacs-ignored-file-predicates
+               #'my-treemacs-ignore-p))
+#+end_src
+
+#+RESULTS:
+| my-treemacs-ignore-p | treemacs-ignore-pycache | treemacs--std-ignore-file-predicate |
+
 
 - [ ] Automatically restart eglot when switching virtualenv
 - [ ] Automatically reset virtualenv (and restart eglot) when switching project
@@ -257,13 +305,10 @@ directory that contains one of these Lake files.
     (add-to-list 'projectile-project-root-files f)))
 #+end_src
 
-** Journal
+** JavaScript and TypeScript
 #+begin_src emacs-lisp :tangle yes
-(setq journal/dir "~/documents/journal")
-(map! :leader
-      :desc "Open journal"
-      "n j" #'journal/open)
+(after! js
+  (setq js-indent-level 4))
+(after! typescript-mode
+  (setq typescript-indent-level 2))
 #+end_src
-
-#+RESULTS:
-: ~/documents/journal
