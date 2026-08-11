@@ -96,8 +96,6 @@ line.
 #+RESULTS:
 : custom-flymake-popon-format-diagnostic
 
-* Global keybindings
-
 #+begin_src emacs-lisp :tangle yes
 (defun consult-flymake-project ()
   (interactive)
@@ -119,6 +117,7 @@ line.
       "c X" #'consult-flymake-project)
 #+end_src
 
+** Treemacs
 #+begin_src emacs-lisp :tangle yes
 (defun toggle-treemacs ()
   "Toggle focus between Treemacs and current buffer."
@@ -131,8 +130,6 @@ line.
       :desc "Switch between treemacs and open buffer"
       "-" #'toggle-treemacs)
 #+end_src
-
-
 * Languages
 ** Chordpro
 #+begin_src emacs-lisp :tangle yes
@@ -148,18 +145,19 @@ line.
 (setq org-directory "~/documents/org/"
       org-noter-notes-search-path "~/documents/notes/"
       org-roam-directory "~/documents/org/roam/wiki")
-(setq org-agenda-files '("~/documents/org/gtp/actions.org"))
+#+end_src
 
+#+begin_src emacs-lisp :tangle yes
 (setq journal/dir "~/documents/org/journal")
 (map! :leader
       :desc "Open journal"
       "n j" #'journal/open)
 #+end_src
 
-
-#+RESULTS:
-| ~/documents/org/gtp/actions.org |
-
+#+begin_src emacs-lisp :tangle yes
+(after! org
+  (gtd/init "~/documents/org/gtd"))
+#+end_src
 
 ** Python
 #+begin_src emacs-lisp :tangle yes
