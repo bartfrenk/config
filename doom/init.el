@@ -196,6 +196,7 @@
 
        :local
        journal
+       gtd
 
        :config
        literate
