@@ -58,21 +58,55 @@
         org-refile-allow-creating-parent-nodes 'confirm
         org-agenda-files (list (gtd--path "actions.org") (gtd--path "projects.org"))))
 
-(defun gtd--org-agenda-top-parent ()
+(defun gtd--org-agenda-project ()
   (save-excursion
     (org-back-to-heading t)
     (let ((label (if (org-up-heading-safe)
                      (progn
                        (while (org-up-heading-safe))
                        (org-get-heading t t t t)))))
-      (format "%-20s" (or label "")))))
+      (format %-15s (or label "")))))
+
+(defun gtd--org-agenda-scheduled-date ()
+  (let ((scheduled (org-entry-get nil "SCHEDULED")))
+    (if scheduled
+        (format "%-11s"
+                (format-time-string
+                 "%Y-%m-%d"
+                 (org-time-string-to-time scheduled)))
+      (format "%-11s" ""))))
+
+(setq org-agenda-todo-keyword-format "%-1s")
 
 (defun gtd--set-agenda-format ()
   (setq org-agenda-prefix-format
         '((agenda . " %i %-12:c %?-12t %b ")
-          (todo   . " %(gtd--org-agenda-top-parent)")
+          (todo   . " %(gtd--org-agenda-project) %(gtd--org-agenda-scheduled-date)")
           (tags   . " %i %-12:c %b ")
-          (search . " %(gtd--org-agenda-top-parent)"))))
+          (search . " %(gtd--org-agenda-project)"))))
+
+(gtd--set-agenda-format)
+
+(defvar gtd--org-agenda-hide-waiting t)
+
+(defun gtd--org-agenda-skip-waiting ()
+  (when gtd--org-agenda-hide-waiting
+    (org-agenda-skip-entry-if 'todo '("WAITING"))))
+
+(setq org-agenda-skip-function-global #'gtd--org-agenda-skip-waiting)
+
+(defun gtd--org-agenda-toggle-waiting ()
+  (interactive)
+  (setq gtd--org-agenda-hide-waiting
+        (not gtd--org-agenda-hide-waiting))
+  (org-agenda-redo)
+  (let ((status (if gtd--org-agenda-hide-waiting "hidden" "shown")))
+    (message "WAITING items %s" status)))
+
+(with-eval-after-load 'org-agenda
+  (evil-define-key 'motion org-agenda-mode-map
+    (kbd "w") #'gtd--org-agenda-toggle-waiting))
+
 
 (defun gtd--set-keybindings ()
   (map! :leader
@@ -88,10 +122,13 @@
         :desc "Open actions"
         "n g a" #'gtd/actions))
 
-(defun gtd/init (dir)
-  (setq gtd/dir dir)
+(defun gtd/init (&optional dir)
+  (if dir (setq gtd/dir dir))
   (gtd--set-capture-templates)
   (gtd--set-org-todo-keyword-faces)
   (gtd--register-files)
   (gtd--set-agenda-format)
   (gtd--set-keybindings))
+
+
+(gtd/init)
