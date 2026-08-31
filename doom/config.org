@@ -130,6 +130,20 @@ line.
       :desc "Switch between treemacs and open buffer"
       "-" #'toggle-treemacs)
 #+end_src
+** Commands
+#+begin_src emacs-lisp :tangle yes
+(defun fill-whole-buffer ()
+  (interactive)
+  (fill-region (point-min) (point-max)))
+
+(map! :leader
+      :desc "Fill whole buffer"
+      "b f" #'fill-whole-buffer)
+#+end_src
+
+#+RESULTS:
+: fill-whole-buffer
+
 * Languages
 ** Chordpro
 #+begin_src emacs-lisp :tangle yes

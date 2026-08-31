@@ -70,3 +70,4 @@
   :recipe (:host github
            :repo "sonofhypnos/pylsp-rope.el"))
 (package! chordpro-mode)
+(package! agent-shell)

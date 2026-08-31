@@ -49,23 +49,30 @@
                  (file ,(gtd--path "inbox.org"))
                  "* TODO %?\n %U\n\n")))
 
+
+(defun gtd--refile-target-no-todo-p ()
+  (not (org-get-todo-state)))
+
 (defun gtd--register-files ()
   (setq org-refile-targets
         `((,(gtd--path "projects.org") :maxlevel . 3)
-          (,(gtd--path "actions.org")  :maxlevel . 2))
+          (,(gtd--path "actions.org")  :level . 0))
         org-refile-use-outline-path 'file
         org-outline-path-complete-in-steps nil
         org-refile-allow-creating-parent-nodes 'confirm
-        org-agenda-files (list (gtd--path "actions.org") (gtd--path "projects.org"))))
+        org-agenda-files (list (gtd--path "actions.org") (gtd--path "projects.org"))
+        org-refile-target-verify-function #'gtd--refile-target-no-todo-p))
 
 (defun gtd--org-agenda-project ()
   (save-excursion
     (org-back-to-heading t)
-    (let ((label (if (org-up-heading-safe)
-                     (progn
-                       (while (org-up-heading-safe))
-                       (org-get-heading t t t t)))))
-      (format %-15s (or label "")))))
+    (let ((headings nil)
+          (levels 0))
+      (while (and (< levels 2)
+                  (org-up-heading-safe))
+        (push (org-get-heading t t t t) headings)
+        (setq levels (1+ levels)))
+      (format "%-20s" (string-join headings "-")))))
 
 (defun gtd--org-agenda-scheduled-date ()
   (let ((scheduled (org-entry-get nil "SCHEDULED")))
@@ -129,6 +136,5 @@
   (gtd--register-files)
   (gtd--set-agenda-format)
   (gtd--set-keybindings))
-
 
 (gtd/init)
