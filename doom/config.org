@@ -144,6 +144,28 @@ line.
 #+RESULTS:
 : fill-whole-buffer
 
+** Git
+#+begin_src emacs-lisp :tangle yes
+(use-package! gptel-magit
+  :hook (magit-mode . gptel-magit-install))
+#+end_src
+** LLM
+#+begin_src emacs-lisp :tangle yes
+(after! gptel
+  (setq gptel-backend
+        (gptel-make-anthropic "Claude"
+          :stream t
+          :key (lambda ()
+                 (auth-source-pick-first-password
+                  :host "api.anthropic.com"))
+          :models '(claude-sonnet-4-6)))
+
+  (setq gptel-model 'claude-sonnet-4-6))
+#+end_src
+
+#+RESULTS:
+: claude-sonnet-4-6
+
 * Languages
 ** Chordpro
 #+begin_src emacs-lisp :tangle yes
@@ -170,6 +192,7 @@ line.
 
 #+begin_src emacs-lisp :tangle yes
 (after! org
+  (setq gtd/dir "~/documents/org/gtd")
   (gtd/init "~/documents/org/gtd"))
 #+end_src
 

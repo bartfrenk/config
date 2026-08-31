@@ -54,7 +54,9 @@
 ;; (unpin! t)
 
 (package! python-black)
-(package! paredit)
+(package! paredit
+  :recipe (:host github
+           :repo "emacsmirror/paredit"))
 (package! enhanced-evil-paredit)
 (package! pdf-tools)
 (package! dash)
@@ -71,3 +73,4 @@
            :repo "sonofhypnos/pylsp-rope.el"))
 (package! chordpro-mode)
 (package! agent-shell)
+(package! gptel-magit)

@@ -1,6 +1,6 @@
 (require 'org-capture)
 
-(defvar gtd/dir)
+(defvar gtd/dir "")
 
 (defun gtd--path (file)
   (concat gtd/dir "/" file))
@@ -92,8 +92,6 @@
           (tags   . " %i %-12:c %b ")
           (search . " %(gtd--org-agenda-project)"))))
 
-(gtd--set-agenda-format)
-
 (defvar gtd--org-agenda-hide-waiting t)
 
 (defun gtd--org-agenda-skip-waiting ()
@@ -133,7 +131,7 @@
   (if dir (setq gtd/dir dir))
   (gtd--set-capture-templates)
   (gtd--set-org-todo-keyword-faces)
-  (gtd--register-files)
+ (gtd--register-files)
   (gtd--set-agenda-format)
   (gtd--set-keybindings))
 
