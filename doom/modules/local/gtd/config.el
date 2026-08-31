@@ -72,7 +72,7 @@
                   (org-up-heading-safe))
         (push (org-get-heading t t t t) headings)
         (setq levels (1+ levels)))
-      (format "%-20s" (string-join headings "-")))))
+      (format "%-25s" (string-join headings "-")))))
 
 (defun gtd--org-agenda-scheduled-date ()
   (let ((scheduled (org-entry-get nil "SCHEDULED")))
@@ -131,7 +131,7 @@
   (if dir (setq gtd/dir dir))
   (gtd--set-capture-templates)
   (gtd--set-org-todo-keyword-faces)
- (gtd--register-files)
+  (gtd--register-files)
   (gtd--set-agenda-format)
   (gtd--set-keybindings))
 
