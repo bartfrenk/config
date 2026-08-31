@@ -148,6 +148,9 @@ line.
 #+begin_src emacs-lisp :tangle yes
 (use-package! gptel-magit
   :hook (magit-mode . gptel-magit-install))
+
+(after! git-commit
+  (setq git-commit-summary-max-length 80))
 #+end_src
 ** LLM
 #+begin_src emacs-lisp :tangle yes
