@@ -73,4 +73,8 @@
            :repo "sonofhypnos/pylsp-rope.el"))
 (package! chordpro-mode)
 (package! agent-shell)
+(package! agent-shell-hq
+  :recipe (:host github
+           :repo "SreenivasVRao/agent-shell-hq"
+           :files ("*.el")))
 (package! gptel-magit)
