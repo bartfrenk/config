@@ -169,6 +169,13 @@ line.
 #+RESULTS:
 : claude-sonnet-4-6
 
+** Agent Shell
+#+begin_src emacs-lisp :tangle yes
+(use-package! agent-shell-workspace
+  :after agent-shell
+  :bind (:map agent-shell-command-map ("w" . agent-shell-workspace-toggle)))
+#+end_src
+
 * Languages
 ** Chordpro
 #+begin_src emacs-lisp :tangle yes
