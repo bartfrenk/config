@@ -202,10 +202,17 @@ line.
 
 #+begin_src emacs-lisp :tangle yes
 (add-to-list 'evil-buffer-regexps '("\\` \\*agent-shell-hq-" . emacs))
+(map! :leader
+      :desc "Agent Shell HQ"
+      "o s" #'agent-shell-hq-toggle)
+
+(map! :leader
+      :desc "Agent Shell HQ"
+      "o S" #'agent-shell-hq-peek)
 #+end_src
 
 #+RESULTS:
-: ((\` \*agent-shell-hq- . emacs) (^ \*load\*))
+: (Agent Shell HQ . agent-shell-hq-toggle)
 
 * Languages
 ** Chordpro
