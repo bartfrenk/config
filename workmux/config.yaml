@@ -1,0 +1,7 @@
+nerdfont: false
+worktree_dir: ~/{project}/.workmux
+post_create:
+  - direnv allow
+files:
+  copy:
+    - .envrc
