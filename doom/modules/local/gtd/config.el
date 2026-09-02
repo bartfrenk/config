@@ -32,6 +32,7 @@
      ("NEXT"      . (:inherit font-lock-keyword-face :weight bold :underline t))
      ("URGENT"    . (:inherit error :weight bold :underline t))
      ("WAITING"   . (:inherit warning :weight bold :underline t))
+     ("ACTIVE"    . (:inherit warning :weight bold :underline t))
      ("DONE"      . (:inherit shadow :weight bold :underline t))
      ("CANCELLED" . (:inherit shadow :weight bold :underline t)))))
 
