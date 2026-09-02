@@ -171,6 +171,15 @@ line.
 
 ** Agent Shell
 #+begin_src emacs-lisp :tangle yes
+(use-package! agent-shell
+  :defer t
+  :custom
+  (agent-shell-header-style 'text))
+#+end_src
+
+#+RESULTS:
+
+#+begin_src emacs-lisp :tangle yes
 (use-package! agent-shell-hq
   :commands (agent-shell-hq-toggle agent-shell-hq-peek agent-shell-hq-label)
   :custom
@@ -196,23 +205,26 @@ line.
   (add-to-list 'evil-buffer-regexps '("\\` \\*agent-shell-hq-" . emacs)))
 #+end_src
 
-
 #+RESULTS:
 : agent-shell-hq-peek
 
 #+begin_src emacs-lisp :tangle yes
 (add-to-list 'evil-buffer-regexps '("\\` \\*agent-shell-hq-" . emacs))
 (map! :leader
-      :desc "Agent Shell HQ"
-      "o s" #'agent-shell-hq-toggle)
+      :prefix ("o s" . "agent")
 
-(map! :leader
       :desc "Agent Shell HQ"
-      "o S" #'agent-shell-hq-peek)
+      "h" #'agent-shell-hq-toggle
+
+      :desc "Peek Agent Shell HQ"
+      "p" #'agent-shell-hq-peek
+
+      :desc "Agent Shell"
+      "s" #'agent-shell)
 #+end_src
 
 #+RESULTS:
-: (Agent Shell HQ . agent-shell-hq-toggle)
+: (Agent Shell . agent-shell-hq-peek)
 
 * Languages
 ** Chordpro
