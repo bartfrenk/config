@@ -1,0 +1,14 @@
+*
+!xmonad
+!xmonad/**/*
+!doom
+!doom/**/*
+doom/config.el
+!tmux
+!tmux/**/*
+!oh-my-zsh
+!oh-my-zsh/**/*
+!direnv
+!direnv/**/*
+!workmux
+!workmux/**/*
