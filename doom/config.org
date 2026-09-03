@@ -1,5 +1,5 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
-#+STARTUP: overview
+#+STARTUP: content indent
 
 * Generic
 ** Personal Info
@@ -152,6 +152,46 @@ line.
 (after! git-commit
   (setq git-commit-summary-max-length 80))
 #+end_src
+
+#+begin_src emacs-lisp :tangle yes
+(defun my/magit-worktree ()
+  "Open Magit's worktree menu."
+  (interactive)
+  (require 'magit)
+  (magit-worktree))
+
+
+(map! :leader
+      :desc "Worktrees"
+      "g w" #'my/magit-worktree)
+#+end_src
+
+#+RESULTS:
+: (Worktrees . my/magit-worktree)
+
+#+begin_src emacs-lisp :tangle yes
+(defun my/projectile-switch-git-worktree ()
+  "Switch Projectile to a Git worktree of the current repository."
+  (interactive)
+  (let* ((default-directory (projectile-project-root))
+         (worktrees
+          (process-lines
+           "git" "worktree" "list" "--porcelain"))
+         (dirs
+          (delq nil
+                (mapcar
+                 (lambda (line)
+                   (when (string-prefix-p "worktree " line)
+                     (substring line (length "worktree "))))
+                 worktrees)))
+         (choice (completing-read "Worktree: " dirs nil t)))
+    (projectile-switch-project-by-name choice)))
+
+(map! :leader
+      :desc "Worktrees"
+      "p w" #'my/projectile-switch-git-worktree)
+#+end_src
+
 ** LLM
 #+begin_src emacs-lisp :tangle yes
 (after! gptel
@@ -203,12 +243,7 @@ line.
   ("C-c a p" . agent-shell-hq-peek)
   :config
   (add-to-list 'evil-buffer-regexps '("\\` \\*agent-shell-hq-" . emacs)))
-#+end_src
 
-#+RESULTS:
-: agent-shell-hq-peek
-
-#+begin_src emacs-lisp :tangle yes
 (add-to-list 'evil-buffer-regexps '("\\` \\*agent-shell-hq-" . emacs))
 (map! :leader
       :prefix ("o s" . "agent")
@@ -222,9 +257,6 @@ line.
       :desc "Agent Shell"
       "s" #'agent-shell)
 #+end_src
-
-#+RESULTS:
-: (Agent Shell . agent-shell-hq-peek)
 
 * Languages
 ** Chordpro
