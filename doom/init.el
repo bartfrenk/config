@@ -197,6 +197,7 @@
        :local
        journal
        gtd
+       gtd-aven
 
        :config
        literate
