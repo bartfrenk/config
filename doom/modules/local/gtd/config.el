@@ -37,12 +37,10 @@
     (redisplay t)))
 
 (defun gtd--set-org-todo-keywords ()
-  "Single source of truth for GTD TODO keywords, their faces, and
-the fast-selection shortcuts used by `org-todo' (bound to SPC m t)."
   (setq
    org-modern-todo nil
    org-todo-keywords
-   '((sequence "TODO" "URGENT" "WAITING" "ACTIVE" "|" "DONE" "CANCELLED"))
+   '((sequence "TODO(t)" "URGENT(u)" "WAITING(w)" "ACTIVE(a)" "|" "DONE(d)" "CANCELLED(c)"))
    org-todo-keyword-faces
    '(("TODO"      . (:inherit success :weight bold :underline t))
      ("URGENT"    . (:inherit error :weight bold :underline t))
