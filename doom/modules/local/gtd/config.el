@@ -36,12 +36,15 @@
     (font-lock-ensure)
     (redisplay t)))
 
-(defun gtd--set-org-todo-keyword-faces ()
+(defun gtd--set-org-todo-keywords ()
+  "Single source of truth for GTD TODO keywords, their faces, and
+the fast-selection shortcuts used by `org-todo' (bound to SPC m t)."
   (setq
    org-modern-todo nil
+   org-todo-keywords
+   '((sequence "TODO" "URGENT" "WAITING" "ACTIVE" "|" "DONE" "CANCELLED"))
    org-todo-keyword-faces
    '(("TODO"      . (:inherit success :weight bold :underline t))
-     ("NEXT"      . (:inherit font-lock-keyword-face :weight bold :underline t))
      ("URGENT"    . (:inherit error :weight bold :underline t))
      ("WAITING"   . (:inherit warning :weight bold :underline t))
      ("ACTIVE"    . (:inherit warning :weight bold :underline t))
@@ -236,7 +239,7 @@ from the current buffer, along with their subtrees."
 (defun gtd/init (&optional dir)
   (if dir (setq gtd/dir dir))
   (gtd--set-capture-templates)
-  (gtd--set-org-todo-keyword-faces)
+  (gtd--set-org-todo-keywords)
   (gtd--register-files)
   (gtd--set-agenda-format)
   (gtd--set-keybindings))
