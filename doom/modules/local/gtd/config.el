@@ -3,11 +3,22 @@
 
 (defvar gtd/dir "")
 
+(defvar gtd--gtd-executable "~/.local/bin/gtd")
+
 (defun gtd--path (file)
   (concat gtd/dir "/" file))
 
+(defun gtd/sync ()
+  "Run `gtd sync' to synchronize local GTD files."
+  (interactive)
+  (let ((exit-code (call-process (expand-file-name gtd--gtd-executable) nil nil nil "sync")))
+    (if (zerop exit-code)
+        (message "gtd: synced")
+      (message "gtd: sync failed (exit %s)" exit-code))))
+
 (defun gtd/inbox ()
   (interactive)
+  (gtd/sync)
   (find-file (gtd--path "inbox.org")))
 
 (defun gtd/projects ()
