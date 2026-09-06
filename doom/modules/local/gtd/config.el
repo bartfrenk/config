@@ -143,6 +143,20 @@ are untouched. Headings with no matching project are reported, not removed."
       (save-buffer))
     (message "aven: .aven.org synced with %d project(s)" (length keys))))
 
+(defun gtd/prune-completed ()
+  "Remove all completed headlines (TODO state DONE or CANCELLED)
+from the current buffer, along with their subtrees."
+  (interactive)
+  (let ((markers (org-map-entries
+                   (lambda () (point-marker))
+                   "TODO=\"DONE\"|TODO=\"CANCELLED\""
+                   'file)))
+    (dolist (marker (reverse markers))
+      (org-with-point-at marker
+        (delete-region (point) (org-end-of-subtree t t))))
+    (save-buffer)
+    (message "gtd: pruned %d completed headline(s)" (length markers))))
+
 (defun gtd--register-files ()
   (setq org-refile-targets
         `((,(gtd--path "projects.org") :maxlevel . 3)
