@@ -54,15 +54,61 @@
 (defun gtd--refile-target-no-todo-p ()
   (not (org-get-todo-state)))
 
+(defvar gtd--aven-executable "aven")
+
+(defun gtd--aven-entry-body ()
+  "Body text of the entry at point: planning line, property drawer,
+and logbook excluded; child subtrees excluded."
+  (org-back-to-heading t)
+  (let ((subtree-end (save-excursion (org-end-of-subtree t t))))
+    (org-end-of-meta-data t)
+    (let ((body-end (or (save-excursion
+                           (when (re-search-forward org-outline-regexp-bol subtree-end t)
+                             (match-beginning 0)))
+                         subtree-end)))
+      (string-trim (org-remove-indentation (buffer-substring-no-properties (point) body-end))))))
+
+(defun gtd--aven-project-name ()
+  "Top-level ancestor heading of the entry at point, i.e. its Aven project."
+  (or (car (org-get-outline-path))
+      (org-get-heading t t t t)))
+
+(defun gtd--push-refiled-entry-to-aven ()
+  "After a refile lands in aven.org, create the equivalent Aven task
+under the target project and remove the entry from the file. If the
+CLI call fails, the entry is left in place for a retry."
+  (when (and (buffer-file-name)
+             (file-equal-p (buffer-file-name) (gtd--path "aven.org")))
+    (org-back-to-heading t)
+    (let* ((title (org-get-heading t t t t))
+           (project (gtd--aven-project-name))
+           (body (gtd--aven-entry-body))
+           (exit-code (with-temp-buffer
+                        (insert body)
+                        (call-process-region (point-min) (point-max)
+                                              gtd--aven-executable nil t nil
+                                              "add" title
+                                              "--project" project
+                                              "--description-stdin"))))
+      (if (zerop exit-code)
+          (progn
+            (org-back-to-heading t)
+            (delete-region (point) (org-end-of-subtree t t))
+            (save-buffer)
+            (message "aven: added %S to project %S" title project))
+        (message "aven: failed to add %S (exit %s); left in aven.org" title exit-code)))))
+
 (defun gtd--register-files ()
   (setq org-refile-targets
         `((,(gtd--path "projects.org") :maxlevel . 3)
-          (,(gtd--path "actions.org")  :level . 0))
+          (,(gtd--path "actions.org")  :level . 0)
+          (,(gtd--path "aven.org")     :level . 1))
         org-refile-use-outline-path 'file
         org-outline-path-complete-in-steps nil
         org-refile-allow-creating-parent-nodes 'confirm
         org-agenda-files (list (gtd--path "actions.org") (gtd--path "projects.org"))
-        org-refile-target-verify-function #'gtd--refile-target-no-todo-p))
+        org-refile-target-verify-function #'gtd--refile-target-no-todo-p)
+  (add-hook 'org-after-refile-insert-hook #'gtd--push-refiled-entry-to-aven))
 
 (defun gtd--org-agenda-project ()
   (save-excursion
