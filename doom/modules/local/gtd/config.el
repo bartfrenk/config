@@ -160,6 +160,15 @@ from the current buffer, along with their subtrees."
     (save-buffer)
     (message "gtd: pruned %d completed headline(s)" (length markers))))
 
+(defun gtd/prune-completed-all ()
+  "Run `gtd/prune-completed' on every .org file in `gtd/dir'."
+  (interactive)
+  (let ((files (directory-files gtd/dir t "\\.org\\'")))
+    (dolist (file files)
+      (with-current-buffer (find-file-noselect file)
+        (gtd/prune-completed)))
+    (message "gtd: pruned completed headlines in %d file(s)" (length files))))
+
 (defun gtd--register-files ()
   (setq org-refile-targets
         `((,(gtd--path "projects.org") :maxlevel . 3)
