@@ -344,19 +344,12 @@ silently overwritten."
         (insert (propertize (format " due %s" due) 'face 'warning)))
       (insert "\n"))))
 
-(defun aven--insert-task-section (heading seen &rest list-args)
+(defun aven--insert-task-section (heading hide &rest list-args)
   "Insert a section titled HEADING listing tasks matched by LIST-ARGS.
-Tasks whose ref is already in the SEEN hash table are skipped, so a
-task already shown in an earlier, higher-priority section is not
-repeated; refs of tasks that are inserted are added to it."
-  (let ((tasks (seq-remove
-                (lambda (task)
-                  (let ((ref (plist-get task :ref)))
-                    (prog1 (gethash ref seen)
-                      (puthash ref t seen))))
-                (apply #'aven--list-json list-args))))
+When HIDE is non-nil, the section starts folded."
+  (let ((tasks (apply #'aven--list-json list-args)))
     (when tasks
-      (magit-insert-section (aven-tasks heading)
+      (magit-insert-section (aven-tasks heading hide)
         (magit-insert-heading (format "%s (%d)" heading (length tasks)))
         (mapc #'aven--insert-task-line tasks)
         (insert "\n")))))
@@ -377,19 +370,17 @@ repeated; refs of tasks that are inserted are added to it."
 (defun aven-status-refresh ()
   "Rebuild the Aven status buffer."
   (interactive)
-  (let ((buf (get-buffer-create aven-status-buffer-name))
-        (seen (make-hash-table :test 'equal)))
+  (let ((buf (get-buffer-create aven-status-buffer-name)))
     (with-current-buffer buf
       (unless (derived-mode-p 'aven-status-mode)
         (aven-status-mode))
       (let ((inhibit-read-only t))
         (erase-buffer)
         (magit-insert-section (aven-status)
-          (aven--insert-task-section "Active"   seen "--status=active")
-          (aven--insert-task-section "Overdue"  seen "--overdue")
-          (aven--insert-task-section "Blocked"  seen "--blocked")
-          (aven--insert-task-section "Ready"    seen "--ready")
-          (aven--insert-task-section "Upcoming" seen "--upcoming"))
+          (aven--insert-task-section "Active"  nil "--status=active")
+          (aven--insert-task-section "Todo"    nil "--status=todo")
+          (aven--insert-task-section "Backlog" nil "--status=backlog")
+          (aven--insert-task-section "Inbox"   nil "--status=inbox"))
         (when (eq (point-min) (point-max))
           (insert (propertize "No tasks.\n" 'face 'shadow))))
       (goto-char (point-min)))
