@@ -180,6 +180,88 @@
   (let ((ref (aven--read-ref "Edit task: ")))
     (apply #'aven--run "edit" (append args (list ref)))))
 
+(defun aven--parse-sha256 (output)
+  "First sha256=HASH field in OUTPUT, or nil."
+  (when (string-match "sha256=\\([0-9a-f]+\\)" output)
+    (match-string 1 output)))
+
+(defvar-local aven-description--ref nil
+  "Task ref this buffer's description belongs to.")
+
+(defvar-local aven-description--field nil
+  "Long text field this buffer edits, currently always \"description\".")
+
+(defvar-local aven-description--sha256 nil
+  "SHA-256 of the field's value as last read from or written to Aven.")
+
+(defun aven-description--cleanup ()
+  "Delete the scratch file backing an `aven-description-edit-mode' buffer."
+  (when (and buffer-file-name (file-exists-p buffer-file-name))
+    (ignore-errors (delete-file buffer-file-name))))
+
+(defun aven-description--after-save ()
+  "Push this buffer's saved contents to Aven via `aven text set'."
+  (let* ((ref aven-description--ref)
+         (field aven-description--field)
+         (file buffer-file-name)
+         (sha aven-description--sha256)
+         (result (with-temp-buffer
+                   (let ((exit-code (call-process aven--executable nil t nil
+                                                   "text" "set" ref field
+                                                   "--file" file
+                                                   "--if-sha256" sha)))
+                     (cons exit-code (buffer-string))))))
+    (if (zerop (car result))
+        (progn
+          (setq aven-description--sha256
+                (or (aven--parse-sha256 (cdr result)) aven-description--sha256))
+          (message "aven: saved %s for %s" field ref))
+      (set-buffer-modified-p t)
+      (message "aven: %s" (string-trim (cdr result))))))
+
+(defvar aven-description-edit-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "C-c C-c") #'save-buffer)
+    (define-key map (kbd "C-c C-k") #'kill-buffer)
+    map))
+
+(define-minor-mode aven-description-edit-mode
+  "Minor mode for a buffer editing an Aven long-text field.
+Saving the buffer (`save-buffer', `C-x C-s', `C-c C-c') pushes its
+contents back via `aven text set', guarded by the SHA-256 read when
+the buffer was opened, so a concurrent edit is refused rather than
+silently overwritten."
+  :lighter " Aven-Edit"
+  (if aven-description-edit-mode
+      (progn
+        (add-hook 'after-save-hook #'aven-description--after-save nil t)
+        (add-hook 'kill-buffer-hook #'aven-description--cleanup nil t))
+    (remove-hook 'after-save-hook #'aven-description--after-save t)
+    (remove-hook 'kill-buffer-hook #'aven-description--cleanup t)))
+
+(defun aven/edit-description (&optional ref)
+  "Open a buffer to edit REF's description, saved back via `aven text set'."
+  (interactive)
+  (let* ((ref (or ref (aven--read-ref "Edit description of: ")))
+         (file (make-temp-file (format "aven-%s-description-" ref) nil ".md"))
+         (result (with-temp-buffer
+                   (let ((exit-code (call-process aven--executable nil t nil
+                                                   "text" "get" ref "description"
+                                                   "--output" file)))
+                     (cons exit-code (buffer-string))))))
+    (unless (zerop (car result))
+      (delete-file file)
+      (user-error "aven: %s" (string-trim (cdr result))))
+    (let ((hash (aven--parse-sha256 (cdr result))))
+      (find-file file)
+      (cond ((fboundp 'gfm-mode) (gfm-mode))
+            ((fboundp 'markdown-mode) (markdown-mode)))
+      (setq-local aven-description--ref ref
+                  aven-description--field "description"
+                  aven-description--sha256 hash)
+      (aven-description-edit-mode 1)
+      (message "aven: editing description of %s (save to sync, C-c C-k to discard)" ref))))
+
 (defun aven/note ()
   "Append a note to a task."
   (interactive)
@@ -206,9 +288,10 @@
     ("w" "Show"    aven/show)
     ("c" "Context" aven/context)]
    ["Task"
-    ("a" "Add"  aven/add)
-    ("e" "Edit" aven/edit)
-    ("n" "Note" aven/note)]
+    ("a" "Add"         aven/add)
+    ("e" "Edit"        aven/edit)
+    ("d" "Description" aven/edit-description)
+    ("n" "Note"        aven/note)]
    ["Workspace"
     ("g" "Sync"   aven/sync)
     ("y" "Doctor" aven/doctor)]])
