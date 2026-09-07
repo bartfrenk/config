@@ -1,15 +1,21 @@
 (require 'transient)
+(require 'magit-section)
 
 (defvar aven--executable "aven")
+
+(defvar aven-status-buffer-name "*aven-status*")
 
 (defconst aven--ref-pattern "[A-Z][A-Z0-9]*-[A-Z0-9]+"
   "Pattern matching a task ref such as APP-7KQ9, without anchors.")
 
 (defun aven--ref-at-point ()
   "Task ref at point, or nil."
-  (let ((sym (thing-at-point 'symbol t)))
-    (when (and sym (string-match-p (concat "\\`" aven--ref-pattern "\\'") sym))
-      sym)))
+  (or (when-let* ((section (and (fboundp 'magit-current-section) (magit-current-section)))
+                   (_ (eq (oref section type) 'aven-task)))
+        (oref section value))
+      (let ((sym (thing-at-point 'symbol t)))
+        (when (and sym (string-match-p (concat "\\`" aven--ref-pattern "\\'") sym))
+          sym))))
 
 (defun aven--ref-on-line ()
   "Task ref at the start of the current line, as printed by `list'/`search'."
@@ -63,6 +69,8 @@
                          (string-join (mapcar #'shell-quote-argument args) " ")))
         (apply #'call-process aven--executable nil t nil args)
         (goto-char (point-min))))
+    (when (get-buffer aven-status-buffer-name)
+      (aven-status-refresh))
     (display-buffer buf)))
 
 (defun aven--run (&rest args)
@@ -296,9 +304,118 @@ silently overwritten."
     ("g" "Sync"   aven/sync)
     ("y" "Doctor" aven/doctor)]])
 
+;;; Status buffer
+
+(defun aven--list-json (&rest args)
+  "Run `aven list' with ARGS and return the parsed tasks."
+  (with-temp-buffer
+    (let ((exit-code (apply #'call-process aven--executable nil t nil
+                             "list" (append args (list "--json")))))
+      (if (zerop exit-code)
+          (let ((json-array-type 'list)
+                (json-object-type 'plist)
+                (json-key-type 'keyword))
+            (json-read-from-string (buffer-string)))
+        (error "aven: %s" (string-trim (buffer-string)))))))
+
+(defun aven--task-priority-face (priority)
+  (pcase priority
+    ("urgent" 'error)
+    ("high"   'warning)
+    ("low"    'shadow)
+    ("none"   'shadow)
+    (_        nil)))
+
+(defun aven--insert-task-line (task)
+  "Insert one line for TASK, a plist as returned by `aven--list-json'."
+  (let ((ref      (plist-get task :ref))
+        (title    (plist-get task :title))
+        (priority (plist-get task :priority))
+        (labels   (plist-get task :labels))
+        (due      (plist-get task :due_on)))
+    (magit-insert-section (aven-task ref)
+      (insert (propertize ref 'face 'font-lock-constant-face) " ")
+      (unless (equal priority "none")
+        (insert (propertize priority 'face (aven--task-priority-face priority)) " "))
+      (insert title)
+      (when labels
+        (insert (propertize (format " (%s)" (string-join labels ",")) 'face 'shadow)))
+      (unless (string-empty-p due)
+        (insert (propertize (format " due %s" due) 'face 'warning)))
+      (insert "\n"))))
+
+(defun aven--insert-task-section (heading seen &rest list-args)
+  "Insert a section titled HEADING listing tasks matched by LIST-ARGS.
+Tasks whose ref is already in the SEEN hash table are skipped, so a
+task already shown in an earlier, higher-priority section is not
+repeated; refs of tasks that are inserted are added to it."
+  (let ((tasks (seq-remove
+                (lambda (task)
+                  (let ((ref (plist-get task :ref)))
+                    (prog1 (gethash ref seen)
+                      (puthash ref t seen))))
+                (apply #'aven--list-json list-args))))
+    (when tasks
+      (magit-insert-section (aven-tasks heading)
+        (magit-insert-heading (format "%s (%d)" heading (length tasks)))
+        (mapc #'aven--insert-task-line tasks)
+        (insert "\n")))))
+
+(define-derived-mode aven-status-mode magit-section-mode "Aven-Status"
+  "Major mode for the Aven status buffer.")
+
+(evil-set-initial-state 'aven-status-mode 'motion)
+
+(defun aven-status-visit-task-or-toggle ()
+  "Show the task at point in a dedicated buffer, or toggle the section."
+  (interactive)
+  (let ((section (magit-current-section)))
+    (if (and section (eq (oref section type) 'aven-task))
+        (aven--show-ref (oref section value))
+      (when section (magit-section-toggle section)))))
+
+(defun aven-status-refresh ()
+  "Rebuild the Aven status buffer."
+  (interactive)
+  (let ((buf (get-buffer-create aven-status-buffer-name))
+        (seen (make-hash-table :test 'equal)))
+    (with-current-buffer buf
+      (unless (derived-mode-p 'aven-status-mode)
+        (aven-status-mode))
+      (let ((inhibit-read-only t))
+        (erase-buffer)
+        (magit-insert-section (aven-status)
+          (aven--insert-task-section "Active"   seen "--status=active")
+          (aven--insert-task-section "Overdue"  seen "--overdue")
+          (aven--insert-task-section "Blocked"  seen "--blocked")
+          (aven--insert-task-section "Ready"    seen "--ready")
+          (aven--insert-task-section "Upcoming" seen "--upcoming"))
+        (when (eq (point-min) (point-max))
+          (insert (propertize "No tasks.\n" 'face 'shadow))))
+      (goto-char (point-min)))
+    buf))
+
+(defun aven/status ()
+  "Open the Aven status buffer, the entry point for the Aven interface."
+  (interactive)
+  (switch-to-buffer (aven-status-refresh)))
+
+(evil-define-key 'motion aven-status-mode-map
+  (kbd "RET") #'aven-status-visit-task-or-toggle
+  "g" #'aven-status-refresh
+  "l" #'aven/list
+  "s" #'aven/search
+  "w" #'aven/show
+  "c" #'aven/context
+  "a" #'aven/add
+  "e" #'aven/edit
+  "d" #'aven/edit-description
+  "n" #'aven/note
+  "?" #'aven/dispatch)
+
 (defun aven--register ()
   (map! :leader
         :desc "Aven"
-        "n g t" #'aven/dispatch))
+        "n g t" #'aven/status))
 
 (aven--register)
