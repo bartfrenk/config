@@ -1,7 +1,5 @@
 (require 'json)
 
-(defvar gtd-aven--executable "aven")
-
 (defun gtd-aven--entry-body ()
   "Body text of the entry at point: planning line, property drawer,
 and logbook excluded; child subtrees excluded."
@@ -32,7 +30,7 @@ CLI call fails, the entry is left in place for a retry."
            (exit-code (with-temp-buffer
                         (insert body)
                         (call-process-region (point-min) (point-max)
-                                              gtd-aven--executable nil t nil
+                                              aven--executable nil t nil
                                               "add" title
                                               "--project" project
                                               "--description-stdin"))))
@@ -47,7 +45,7 @@ CLI call fails, the entry is left in place for a retry."
 (defun gtd-aven--project-keys ()
   "Keys of all current Aven projects, as a list of strings."
   (with-temp-buffer
-    (unless (zerop (call-process gtd-aven--executable nil t nil
+    (unless (zerop (call-process aven--executable nil t nil
                                   "project" "list" "--json"))
       (error "aven: failed to list projects: %s" (buffer-string)))
     (let ((json-array-type 'list)
@@ -79,6 +77,9 @@ are untouched. Headings with no matching project are reported, not removed."
 
 (defun gtd-aven--register ()
   (add-to-list 'org-refile-targets `(,(gtd--path ".aven.org") :level . 1) t)
-  (add-hook 'org-after-refile-insert-hook #'gtd-aven--push-refiled-entry))
+  (add-hook 'org-after-refile-insert-hook #'gtd-aven--push-refiled-entry)
+  (map! :leader
+        :desc "Refresh aven file"
+        "n g f" #'gtd-aven/generate-file))
 
 (gtd-aven--register)
