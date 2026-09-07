@@ -364,18 +364,69 @@ this controls the columns shown between them."
                                           tasks))))
           aven-status-fields))
 
-(defun aven--insert-task-line (task ref-width widths)
-  "Insert one table row for TASK.
+(defun aven--task-row-text (task ref-width widths)
+  "Text of TASK's table row: ref, the configured fields, then title.
 REF-WIDTH and WIDTHS (an alist as returned by `aven--column-widths')
 align the ref and field columns consistently across all sections."
-  (let ((ref (plist-get task :ref)))
-    (magit-insert-section (aven-task ref)
-      (insert (propertize (string-pad ref ref-width) 'face 'font-lock-constant-face))
-      (dolist (field aven-status-fields)
-        (let ((value (aven--field-value task field)))
-          (insert "  " (propertize (string-pad (or value "") (alist-get field widths))
-                                    'face (aven--field-face field value)))))
-      (insert "  " (plist-get task :title) "\n"))))
+  (concat
+   (propertize (string-pad (plist-get task :ref) ref-width) 'face 'font-lock-constant-face)
+   (mapconcat (lambda (field)
+                (let ((value (aven--field-value task field)))
+                  (concat "  " (propertize (string-pad (or value "") (alist-get field widths))
+                                            'face (aven--field-face field value)))))
+              aven-status-fields "")
+   "  " (plist-get task :title)))
+
+(defun aven--task-properties (task)
+  "Alist of label/value pairs describing TASK's fields, for its drawer."
+  (let ((priority  (plist-get task :priority))
+        (labels    (plist-get task :labels))
+        (due       (plist-get task :due_on))
+        (available (plist-get task :available_at))
+        (blocked   (plist-get task :blocked_by))
+        (blocks    (plist-get task :blocks)))
+    (delq nil
+          (list (cons "status" (plist-get task :status))
+                (unless (equal priority "none") (cons "priority" priority))
+                (cons "project" (plist-get task :project))
+                (when labels (cons "labels" (string-join labels ",")))
+                (unless (string-empty-p due) (cons "due" due))
+                (unless (string-empty-p available) (cons "available" available))
+                (when (and blocked (> blocked 0)) (cons "blocked by" (number-to-string blocked)))
+                (when (and blocks (> blocks 0)) (cons "blocks" (number-to-string blocks)))
+                (when (eq (plist-get task :is_epic) t) (cons "epic" "yes"))
+                (when (eq (plist-get task :has_conflict) t) (cons "conflict" "yes"))
+                (cons "id" (plist-get task :id))))))
+
+(defun aven--task-description (ref)
+  "Raw description text of REF, or the empty string on failure."
+  (with-temp-buffer
+    (if (zerop (call-process aven--executable nil t nil
+                              "text" "get" ref "description" "--raw"))
+        (string-trim (buffer-string))
+      "")))
+
+(defun aven--insert-task-drawer (task)
+  "Insert TASK's fields as properties, then its description, as the
+body of its (folded) section."
+  (insert "\n")
+  (dolist (prop (aven--task-properties task))
+    (insert "    " (propertize (format "%s:" (car prop)) 'face 'font-lock-comment-face)
+            " " (cdr prop) "\n"))
+  (insert "\n")
+  (let ((description (aven--task-description (plist-get task :ref))))
+    (if (string-empty-p description)
+        (insert "    " (propertize "No description." 'face 'shadow) "\n")
+      (dolist (line (split-string description "\n"))
+        (insert "    " line "\n"))))
+  (insert "\n"))
+
+(defun aven--insert-task-line (task ref-width widths)
+  "Insert TASK as a folded section: the heading is its table row,
+the body is its properties drawer and description."
+  (magit-insert-section (aven-task (plist-get task :ref) t)
+    (magit-insert-heading (aven--task-row-text task ref-width widths))
+    (aven--insert-task-drawer task)))
 
 (defun aven--insert-task-section (heading hide tasks ref-width widths)
   "Insert a section titled HEADING listing TASKS as a table.
@@ -422,7 +473,9 @@ align columns consistently across all sections in the buffer."
           (dolist (group groups)
             (aven--insert-task-section (car group) nil (cdr group) ref-width widths)))
         (when (eq (point-min) (point-max))
-          (insert (propertize "No tasks.\n" 'face 'shadow))))
+          (insert (propertize "No tasks.\n" 'face 'shadow)))
+        (let ((magit-section-cache-visibility nil))
+          (magit-section-show magit-root-section)))
       (goto-char (point-min)))
     buf))
 
