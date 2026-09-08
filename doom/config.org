@@ -258,6 +258,16 @@ line.
       "s" #'agent-shell)
 #+end_src
 
+** Aven
+#+begin_src emacs-lisp :tangle yes
+(use-package! aven
+  :demand t
+  :config
+  (map! :leader
+        :desc "Aven"
+        "n g t" #'aven/status))
+#+end_src
+
 * Languages
 ** Chordpro
 #+begin_src emacs-lisp :tangle yes
