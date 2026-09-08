@@ -315,21 +315,42 @@
           (setq aven-description--sha256
                 (or (aven--parse-sha256 (cdr result)) aven-description--sha256))
           (message "aven: saved %s for %s" field ref))
-      (set-buffer-modified-p t)
       (message "aven: %s" (string-trim (cdr result))))))
+
+(defun aven-description--close ()
+  "Kill this buffer immediately and bring the Aven status buffer into view."
+  (set-buffer-modified-p nil)
+  (kill-buffer)
+  (switch-to-buffer (aven-status-refresh)))
+
+(defun aven-description-finish ()
+  "Push this buffer to Aven and close it, like `C-c C-c' in the magit
+commit message buffer."
+  (interactive)
+  (when (buffer-modified-p)
+    (save-buffer))
+  (aven-description--close))
+
+(defun aven-description-cancel ()
+  "Discard this buffer's changes and close it, like `C-c C-k' in the
+magit commit message buffer."
+  (interactive)
+  (aven-description--close))
 
 (defvar aven-description-edit-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-c C-c") #'save-buffer)
-    (define-key map (kbd "C-c C-k") #'kill-buffer)
+    (define-key map (kbd "C-c C-c") #'aven-description-finish)
+    (define-key map (kbd "C-c C-k") #'aven-description-cancel)
     map))
 
 (define-minor-mode aven-description-edit-mode
-  "Minor mode for a buffer editing an Aven long-text field.
-Saving the buffer (`save-buffer', `C-x C-s', `C-c C-c') pushes its
-contents back via `aven text set', guarded by the SHA-256 read when
-the buffer was opened, so a concurrent edit is refused rather than
-silently overwritten."
+  "Minor mode for a buffer editing an Aven long-text field, styled
+after the magit commit message buffer. `C-c C-c'
+(`aven-description-finish') pushes the buffer via `aven text set',
+guarded by the SHA-256 read when the buffer was opened, and closes
+the buffer immediately. `C-c C-k' (`aven-description-cancel')
+discards any unsaved changes and closes the buffer immediately.
+Either way, the Aven status buffer is left in view."
   :lighter " Aven-Edit"
   (if aven-description-edit-mode
       (progn
@@ -359,7 +380,7 @@ silently overwritten."
                   aven-description--field "description"
                   aven-description--sha256 hash)
       (aven-description-edit-mode 1)
-      (message "aven: editing description of %s (save to sync, C-c C-k to discard)" ref))))
+      (message "aven: editing description of %s (C-c C-c to push, C-c C-k to discard)" ref))))
 
 (defun aven/note ()
   "Append a note to a task."
