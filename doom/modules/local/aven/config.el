@@ -13,6 +13,7 @@
   (or (when-let* ((section (and (fboundp 'magit-current-section) (magit-current-section)))
                    (_ (eq (oref section type) 'aven-task)))
         (oref section value))
+      (and (boundp 'aven-task--ref) aven-task--ref)
       (let ((sym (thing-at-point 'symbol t)))
         (when (and sym (string-match-p (concat "\\`" aven--ref-pattern "\\'") sym))
           sym))))
@@ -29,6 +30,96 @@
   (let ((default (aven--ref-at-point)))
     (read-string (if default (format "%s(%s) " prompt default) prompt)
                  nil nil default)))
+
+;;; Task data
+
+(defun aven--task-json (ref)
+  "Full JSON detail for REF, as a plist."
+  (with-temp-buffer
+    (let ((exit-code (call-process aven--executable nil t nil "show" ref "--json")))
+      (if (zerop exit-code)
+          (let ((json-array-type 'list)
+                (json-object-type 'plist)
+                (json-key-type 'keyword))
+            (json-read-from-string (buffer-string)))
+        (error "aven: %s" (string-trim (buffer-string)))))))
+
+(defun aven--task-properties (task)
+  "Alist of label/value pairs describing all of TASK's fields."
+  (let ((priority  (plist-get task :priority))
+        (labels    (plist-get task :labels))
+        (due       (plist-get task :due_on))
+        (available (plist-get task :available_at))
+        (blocked   (plist-get task :blocked_by))
+        (blocks    (plist-get task :blocks)))
+    (delq nil
+          (list (cons "ref" (plist-get task :ref))
+                (cons "status" (plist-get task :status))
+                (unless (equal priority "none") (cons "priority" priority))
+                (cons "project" (plist-get task :project))
+                (when labels (cons "labels" (string-join labels ",")))
+                (unless (string-empty-p due) (cons "due" due))
+                (unless (string-empty-p available) (cons "available" available))
+                (when (and blocked (> blocked 0)) (cons "blocked by" (number-to-string blocked)))
+                (when (and blocks (> blocks 0)) (cons "blocks" (number-to-string blocks)))
+                (when (eq (plist-get task :is_epic) t) (cons "epic" "yes"))
+                (when (eq (plist-get task :has_conflict) t) (cons "conflict" "yes"))
+                (cons "created" (plist-get task :created_at))
+                (cons "updated" (plist-get task :updated_at))
+                (cons "id" (plist-get task :id))))))
+
+(defun aven--task-description (ref)
+  "Raw description text of REF, or the empty string on failure."
+  (with-temp-buffer
+    (if (zerop (call-process aven--executable nil t nil
+                              "text" "get" ref "description" "--raw"))
+        (string-trim (buffer-string))
+      "")))
+
+;;; Task buffer
+
+(defvar-local aven-task--ref nil
+  "Ref of the task this buffer displays.")
+
+(define-derived-mode aven-task-mode special-mode "Aven-Task"
+  "Major mode for a buffer showing one Aven task's properties and description.")
+
+(evil-set-initial-state 'aven-task-mode 'motion)
+
+(defun aven-task-refresh ()
+  "Rebuild this Aven task buffer from the current state of its task."
+  (interactive)
+  (let* ((ref aven-task--ref)
+         (task (aven--task-json ref))
+         (description (aven--task-description ref)))
+    (let ((inhibit-read-only t))
+      (erase-buffer)
+      (insert (propertize (plist-get task :title) 'face 'bold) "\n\n")
+      (dolist (prop (aven--task-properties task))
+        (insert (propertize (format "%s:" (car prop)) 'face 'font-lock-comment-face)
+                " " (cdr prop) "\n"))
+      (insert "\n")
+      (if (string-empty-p description)
+          (insert (propertize "No description." 'face 'shadow) "\n")
+        (insert description "\n")))
+    (goto-char (point-min))))
+
+(defun aven--show-ref (ref)
+  "Show REF in a dedicated Aven task buffer."
+  (let ((buf (get-buffer-create (format "*aven: %s*" ref))))
+    (with-current-buffer buf
+      (unless (derived-mode-p 'aven-task-mode)
+        (aven-task-mode)
+        (setq-local aven-task--ref ref))
+      (aven-task-refresh))
+    (display-buffer buf)))
+
+(evil-define-key 'motion aven-task-mode-map
+  "g" #'aven-task-refresh
+  "e" #'aven/edit
+  "d" #'aven/edit-description
+  "n" #'aven/note
+  "?" #'aven/dispatch)
 
 (defvar aven-output-font-lock-keywords
   `(("^\\$ aven .*$" . font-lock-comment-face)
@@ -71,15 +162,15 @@
         (goto-char (point-min))))
     (when (get-buffer aven-status-buffer-name)
       (aven-status-refresh))
+    (dolist (task-buf (buffer-list))
+      (with-current-buffer task-buf
+        (when (derived-mode-p 'aven-task-mode)
+          (aven-task-refresh))))
     (display-buffer buf)))
 
 (defun aven--run (&rest args)
   "Run aven with ARGS and display the output in `*aven*'."
   (aven--call "*aven*" args))
-
-(defun aven--show-ref (ref)
-  "Show REF's full detail in a buffer dedicated to that task."
-  (aven--call (format "*aven: %s*" ref) (list "show" ref "--full")))
 
 (defun aven-output-visit-task ()
   "Show the task on the current line in a dedicated buffer."
@@ -376,35 +467,6 @@ align the ref and field columns consistently across all sections."
                                             'face (aven--field-face field value)))))
               aven-status-fields "")
    "  " (plist-get task :title)))
-
-(defun aven--task-properties (task)
-  "Alist of label/value pairs describing TASK's fields, for its drawer."
-  (let ((priority  (plist-get task :priority))
-        (labels    (plist-get task :labels))
-        (due       (plist-get task :due_on))
-        (available (plist-get task :available_at))
-        (blocked   (plist-get task :blocked_by))
-        (blocks    (plist-get task :blocks)))
-    (delq nil
-          (list (cons "status" (plist-get task :status))
-                (unless (equal priority "none") (cons "priority" priority))
-                (cons "project" (plist-get task :project))
-                (when labels (cons "labels" (string-join labels ",")))
-                (unless (string-empty-p due) (cons "due" due))
-                (unless (string-empty-p available) (cons "available" available))
-                (when (and blocked (> blocked 0)) (cons "blocked by" (number-to-string blocked)))
-                (when (and blocks (> blocks 0)) (cons "blocks" (number-to-string blocks)))
-                (when (eq (plist-get task :is_epic) t) (cons "epic" "yes"))
-                (when (eq (plist-get task :has_conflict) t) (cons "conflict" "yes"))
-                (cons "id" (plist-get task :id))))))
-
-(defun aven--task-description (ref)
-  "Raw description text of REF, or the empty string on failure."
-  (with-temp-buffer
-    (if (zerop (call-process aven--executable nil t nil
-                              "text" "get" ref "description" "--raw"))
-        (string-trim (buffer-string))
-      "")))
 
 (defun aven--insert-task-drawer (task)
   "Insert TASK's fields as properties, then its description, as the
