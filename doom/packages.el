@@ -79,12 +79,12 @@
            :files ("*.el")))
 (package! gptel-magit)
 
-;; Local package, developed out-of-tree at ~/code/project/aven-emacs.
+;; Local package, developed out-of-tree at ~/code/projects/aven-emacs.
 ;; straight.el's `:local-repo' is a name under its own repos/ dir, not
 ;; an arbitrary path, so that directory name is expected to be a
-;; symlink to ~/code/project/aven-emacs:
-;;   ln -s ~/code/project/aven-emacs ~/.config/emacs/.local/straight/repos/aven-emacs
+;; symlink to ~/code/projects/aven-emacs:
+;;   ln -s ~/code/projects/aven-emacs ~/.config/emacs/.local/straight/repos/aven-emacs
 ;; `:type nil' tells straight not to manage it as a git remote (it's
-;; edited and versioned directly in ~/code/project/aven-emacs).
+;; edited and versioned directly in ~/code/projects/aven-emacs).
 (package! aven
   :recipe (:type nil :local-repo "aven-emacs" :files ("*.el")))
