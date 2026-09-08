@@ -72,9 +72,9 @@
 from the current buffer, along with their subtrees."
   (interactive)
   (let ((markers (org-map-entries
-                   (lambda () (point-marker))
-                   "TODO=\"DONE\"|TODO=\"CANCELLED\""
-                   'file)))
+                  (lambda () (point-marker))
+                  "TODO=\"DONE\"|TODO=\"CANCELLED\""
+                  'file)))
     (dolist (marker (reverse markers))
       (org-with-point-at marker
         (delete-region (point) (org-end-of-subtree t t))))
@@ -171,5 +171,3 @@ from the current buffer, along with their subtrees."
   (gtd--register-files)
   (gtd--set-agenda-format)
   (gtd--set-keybindings))
-
-(gtd/init)
