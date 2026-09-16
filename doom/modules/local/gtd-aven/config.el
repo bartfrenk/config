@@ -75,8 +75,15 @@ are untouched. Headings with no matching project are reported, not removed."
       (save-buffer))
     (message "aven: .aven.org synced with %d project(s)" (length keys))))
 
+(defun gtd-aven--add-refile-target ()
+  "Add .aven.org to `org-refile-targets'.
+Run as :after advice on `gtd--register-files' so the entry survives
+that function's unconditional `setq', regardless of whether this
+module or the base gtd module finishes loading first."
+  (add-to-list 'org-refile-targets `(,(gtd--path ".aven.org") :level . 1) t))
+
 (defun gtd-aven--register ()
-  (add-to-list 'org-refile-targets `(,(gtd--path ".aven.org") :level . 1) t)
+  (advice-add 'gtd--register-files :after #'gtd-aven--add-refile-target)
   (add-hook 'org-after-refile-insert-hook #'gtd-aven--push-refiled-entry)
   (map! :leader
         :desc "Refresh aven file"
