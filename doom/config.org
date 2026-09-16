@@ -170,22 +170,46 @@ line.
 : (Worktrees . my/magit-worktree)
 
 #+begin_src emacs-lisp :tangle yes
+(defun my/git-worktree-list (dir)
+  "Return the worktree paths of the git repo containing DIR.
+Return nil when DIR is not inside a git repo (or git is unavailable)."
+  (let ((default-directory dir))
+    (when (executable-find "git")
+      (ignore-errors
+        (delq nil
+              (mapcar
+               (lambda (line)
+                 (when (string-prefix-p "worktree " line)
+                   (substring line (length "worktree "))))
+               (process-lines "git" "worktree" "list" "--porcelain")))))))
+
+(defvar my/projectile-resolve-worktree-p t
+  "When non-nil, switching projectile project asks which git worktree to
+open if the target repository has more than one. Let-bound to nil by
+`my/projectile-switch-git-worktree', which already asks explicitly.")
+
+(defun my/projectile-resolve-worktree (project-to-switch)
+  "Resolve PROJECT-TO-SWITCH to one of its git worktrees.
+Prompt when the project's repository has more than one worktree;
+return PROJECT-TO-SWITCH unchanged otherwise."
+  (let ((worktrees (and my/projectile-resolve-worktree-p
+                        (my/git-worktree-list project-to-switch))))
+    (if (> (length worktrees) 1)
+        (completing-read "Worktree: " worktrees nil t)
+      project-to-switch)))
+
+(advice-add 'projectile-switch-project-by-name :filter-args
+            (lambda (args)
+              (cons (my/projectile-resolve-worktree (car args)) (cdr args))))
+
 (defun my/projectile-switch-git-worktree ()
-  "Switch Projectile to a Git worktree of the current repository."
+  "Switch Projectile directly to a Git worktree of the current repository."
   (interactive)
   (let* ((default-directory (projectile-project-root))
-         (worktrees
-          (process-lines
-           "git" "worktree" "list" "--porcelain"))
-         (dirs
-          (delq nil
-                (mapcar
-                 (lambda (line)
-                   (when (string-prefix-p "worktree " line)
-                     (substring line (length "worktree "))))
-                 worktrees)))
-         (choice (completing-read "Worktree: " dirs nil t)))
-    (projectile-switch-project-by-name choice)))
+         (worktrees (my/git-worktree-list default-directory))
+         (choice (completing-read "Worktree: " worktrees nil t)))
+    (let ((my/projectile-resolve-worktree-p nil))
+      (projectile-switch-project-by-name choice))))
 
 (map! :leader
       :desc "Worktrees"
