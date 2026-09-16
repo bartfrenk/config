@@ -93,7 +93,8 @@ from the current buffer, along with their subtrees."
 (defun gtd--register-files ()
   (setq org-refile-targets
         `((,(gtd--path "projects.org") :maxlevel . 3)
-          (,(gtd--path "actions.org")  :level . 0))
+          (,(gtd--path "actions.org")  :level . 0)
+          (,(gtd--path "someday.org")  :level . 0))
         org-refile-use-outline-path 'file
         org-outline-path-complete-in-steps nil
         org-refile-allow-creating-parent-nodes 'confirm
