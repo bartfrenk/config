@@ -295,8 +295,12 @@ line.
 #+begin_src emacs-lisp :tangle yes
 (after! org
   (setq gtd/dir "~/documents/org/gtd")
-  (gtd/init "~/documents/org/gtd"))
+  (gtd/init "~/documents/org/gtd")
+  (add-to-list 'org-refile-targets '("~/documents/songs/medicine-songs.org" :level . 0) t))
 #+end_src
+
+#+RESULTS:
+: ((~/documents/org/gtd/projects.org :maxlevel . 3) (~/documents/org/gtd/actions.org :level . 0) (~/documents/org/gtd/someday.org :level . 0) (~/documents/org/gtd/.aven.org :level . 1) (~/documents/songs/medicine-songs.org :level . 1))
 
 ** Python
 #+begin_src emacs-lisp :tangle yes
