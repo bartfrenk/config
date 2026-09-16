@@ -1,0 +1,19 @@
+inbox:
+  - destination: true
+    config:
+      kind: org
+      path: "~/documents/org/gtd/inbox.org"
+  - destination: false
+    config:
+      kind: tasks
+      title: Inbox
+      client_secret: !keyring gtd/google-client-secret
+      client_id: !keyring gtd/google-client-id
+      refresh_token: !keyring gtd/google-refresh-token
+  - destination: false
+    config:
+      kind: spotify
+      playlist_id: "4bFiyVW2XORyV5w9hPE6bm"
+      client_secret: !keyring gtd/spotify-client-secret
+      client_id: !keyring gtd/spotify-client-id
+      refresh_token: !keyring gtd/spotify-refresh-token

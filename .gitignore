@@ -12,3 +12,5 @@ doom/config.el
 !direnv/**/*
 !workmux
 !workmux/**/*
+!gtd
+!gtd/**/*
