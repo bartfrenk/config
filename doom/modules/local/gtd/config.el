@@ -29,6 +29,10 @@
   (interactive)
   (find-file (gtd--path "actions.org")))
 
+(defun gtd/resources ()
+  (interactive)
+  (find-file (gtd--path "resources.org")))
+
 (defun gtd/font-lock-refresh ()
   (interactive)
   (progn
@@ -94,7 +98,8 @@ from the current buffer, along with their subtrees."
   (setq org-refile-targets
         `((,(gtd--path "projects.org") :maxlevel . 3)
           (,(gtd--path "actions.org")  :level . 0)
-          (,(gtd--path "someday.org")  :level . 0))
+          (,(gtd--path "someday.org")  :level . 0)
+          (,(gtd--path "resources.org")  :level . 1))
         org-refile-use-outline-path 'file
         org-outline-path-complete-in-steps nil
         org-refile-allow-creating-parent-nodes 'confirm
@@ -163,7 +168,12 @@ from the current buffer, along with their subtrees."
         "n g p" #'gtd/projects)
   (map! :leader
         :desc "Open actions"
-        "n g a" #'gtd/actions))
+        "n g a" #'gtd/actions)
+  (map! :leader
+        :desc "Open actions"
+        "n g r" #'gtd/resources))
+
+(gtd--set-keybindings)
 
 (defun gtd/init (&optional dir)
   (if dir (setq gtd/dir dir))
