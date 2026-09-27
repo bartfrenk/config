@@ -198,6 +198,7 @@
        journal
        gtd
        gtd-aven
+       tangle
 
        :config
        literate
