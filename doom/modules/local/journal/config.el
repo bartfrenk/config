@@ -18,15 +18,32 @@
            (string= (car tpl) key))
          org-capture-templates)))
 
+(defun journal/location-template ()
+  "Capture template whose title defaults to the org heading at point."
+  ;; Org calls this before recording :original-buffer, while the buffer
+  ;; capture was invoked from is still current.
+  (let* ((heading (when (derived-mode-p 'org-mode)
+                    (ignore-errors
+                      (substring-no-properties (org-get-heading t t t t)))))
+         (title (read-string (format-prompt "Title" heading) nil nil heading)))
+    (concat "* " title "\nDate: %U\nLocation: %a\n\n%?")))
+
 (defun journal/add-capture-templates ()
   (add-to-list 'org-capture-templates
                `("j" "Journal entry" entry
                  (file journal/file)
-                 "* %^{Title}\nDate: %U\n\n%?")))
+                 "* %^{Title}\nDate: %U\n\n%?"))
+  (add-to-list 'org-capture-templates
+               `("J" "Journal entry with location" entry
+                 (file journal/file)
+                 (function journal/location-template))
+               t))
 
 (defun journal/init (&optional dir)
-  (setq journal/dir dir)
+  (when dir
+    (setq journal/dir dir))
   (journal/prune-capture-templates "j")
+  (journal/prune-capture-templates "J")
   (journal/add-capture-templates))
 
 (journal/init)
