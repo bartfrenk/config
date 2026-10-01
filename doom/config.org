@@ -151,6 +151,9 @@ line.
 
 (after! git-commit
   (setq git-commit-summary-max-length 80))
+
+(after! magit
+  (setq magit-diff-fontify-hunk t))
 #+end_src
 
 #+begin_src emacs-lisp :tangle yes
