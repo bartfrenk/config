@@ -51,7 +51,12 @@
      ("WAITING"   . (:inherit warning :weight bold :underline t))
      ("ACTIVE"    . (:inherit warning :weight bold :underline t))
      ("DONE"      . (:inherit shadow :weight bold :underline t))
-     ("CANCELLED" . (:inherit shadow :weight bold :underline t)))))
+     ("CANCELLED" . (:inherit shadow :weight bold :underline t))
+     ("GET"       . (:inherit success :weight bold :underline t))
+     ("TRIAGE"    . (:inherit success :weight bold :underline t))
+     ("READ"      . (:inherit success :weight bold :underline t))
+     ("SUMMARIZE" . (:inherit success :weight bold :underline t))
+     ("READING"   . (:inherit warning :weight bold :underline t)))))
 
 (defun gtd--remove-capture-templates (key)
   (setq org-capture-templates
