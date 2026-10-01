@@ -12,6 +12,18 @@ and logbook excluded; child subtrees excluded."
                          subtree-end)))
       (string-trim (org-remove-indentation (buffer-substring-no-properties (point) body-end))))))
 
+(defun gtd-aven--split-created (body)
+  "Split a leading inactive timestamp, as written by the inbox capture
+template, off BODY. Return (CREATED . REST), where CREATED is an ISO
+8601 string, or nil when BODY has no leading timestamp."
+  (if (string-match (concat "\\`" org-ts-regexp-inactive "[ \t]*\\(?:\n\\|\\'\\)") body)
+      (let ((ts (match-string 1 body))
+            (rest (string-trim (substring body (match-end 0)))))
+        (cons (format-time-string (if (string-match-p "[0-9]:[0-9]" ts) "%FT%T%:z" "%F")
+                                  (org-time-string-to-time ts))
+              rest))
+    (cons nil body)))
+
 (defun gtd-aven--project-name ()
   "Top-level ancestor heading of the entry at point, i.e. its Aven project."
   (or (car (org-get-outline-path))
@@ -26,14 +38,17 @@ CLI call fails, the entry is left in place for a retry."
     (org-back-to-heading t)
     (let* ((title (org-get-heading t t t t))
            (project (gtd-aven--project-name))
-           (body (gtd-aven--entry-body))
+           (created+body (gtd-aven--split-created (gtd-aven--entry-body)))
+           (created (car created+body))
            (exit-code (with-temp-buffer
-                        (insert body)
-                        (call-process-region (point-min) (point-max)
-                                              aven--executable nil t nil
-                                              "add" title
-                                              "--project" project
-                                              "--description-stdin"))))
+                        (insert (cdr created+body))
+                        (apply #'call-process-region (point-min) (point-max)
+                               aven--executable nil t nil
+                               "add" title
+                               "--project" project
+                               "--description-stdin"
+                               (when created
+                                 (list "--metadata" (concat "created=" created)))))))
       (if (zerop exit-code)
           (progn
             (org-back-to-heading t)
