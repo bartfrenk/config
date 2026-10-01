@@ -241,7 +241,11 @@ return PROJECT-TO-SWITCH unchanged otherwise."
 (use-package! agent-shell
   :defer t
   :custom
-  (agent-shell-header-style 'text))
+  (agent-shell-header-style 'text)
+  :bind
+  (:map agent-shell-mode-map
+   ("RET" . newline)
+   ("<C-return>" . agent-shell-submit)))
 #+end_src
 
 #+RESULTS:
