@@ -208,8 +208,6 @@ from the current buffer, along with their subtrees."
         :desc "Open actions"
         "n g r" #'gtd/resources))
 
-(gtd--set-keybindings)
-
 (defun gtd/init (&optional dir)
   (if dir (setq gtd/dir dir))
   (gtd--set-capture-templates)
