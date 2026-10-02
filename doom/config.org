@@ -145,9 +145,34 @@ line.
 : fill-whole-buffer
 
 ** Git
+magit's "c g" (generate commit) uses gptel-magit, which defaults to a
+conventional-commits prompt that allows types (e.g. build, ci, perf) and a
+freeform body that the global commit-msg hook
+(=~/.config/git/hooks/commit-msg=) rejects. Build the prompt from
+=~/.claude/skills/commit/FORMAT.md= instead — the same file the Claude Code
+=commit= skill reads for its message shape — so the two never drift apart.
+
 #+begin_src emacs-lisp :tangle yes
+(defun my/gptel-magit-commit-prompt ()
+  "Build the gptel-magit commit prompt from the shared commit format spec.
+Reads ~/.claude/skills/commit/FORMAT.md, the same file the Claude Code
+`commit' skill uses, so magit's \"c g\" and Claude's /commit produce the
+same commit message shape."
+  (let ((format-spec
+         (with-temp-buffer
+           (insert-file-contents
+            (expand-file-name "~/.claude/skills/commit/FORMAT.md"))
+           (string-trim (buffer-string)))))
+    (concat
+     "You are an expert at writing Git commits. Your job is to write a short clear commit message that summarizes the changes.\n\n"
+     "Only return the commit message in your response. Do not include any additional meta-commentary about the task. Do not include the raw diff output in the commit message.\n\n"
+     "Follow this format exactly:\n\n"
+     format-spec)))
+
 (use-package! gptel-magit
-  :hook (magit-mode . gptel-magit-install))
+  :hook (magit-mode . gptel-magit-install)
+  :config
+  (setq gptel-magit-commit-prompt (my/gptel-magit-commit-prompt)))
 
 (after! git-commit
   (setq git-commit-summary-max-length 80))
