@@ -18,6 +18,18 @@ for a response.
 (global-unset-key (kbd "C-x s"))
 #+end_src
 
+A buffer from =compile= with COMINT shares =comint-mode-map= with every comint
+buffer, so =local-set-key= there leaks into all of them. =doom/reload= does this
+with =q= when it finishes, which made =q= quit agent-shell, =shell= and REPL
+buffers, even in insert state. Giving each such buffer its own keymap keeps the
+binding local.
+
+#+begin_src emacs-lisp :tangle yes
+(add-hook 'compilation-shell-minor-mode-hook
+          (defun my/compilation-private-keymap-h ()
+            (use-local-map (make-composed-keymap nil (current-local-map)))))
+#+end_src
+
 ** Appearance
 #+begin_src emacs-lisp :tangle yes
 (setq doom-theme 'doom-vibrant)
