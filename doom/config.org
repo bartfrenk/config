@@ -148,38 +148,31 @@ line.
 magit's "c g" (generate commit) uses gptel-magit, which defaults to a
 conventional-commits prompt that allows types (e.g. build, ci, perf) and a
 freeform body that the global commit-msg hook
-(=~/.config/git/hooks/commit-msg=) rejects. Override the prompt so it matches
-the format enforced by that hook and by the Claude Code =commit= skill
-(=~/.claude/skills/commit/SKILL.md=): only feat/fix/docs/style/refactor/
-test/chore types, a capitalized description, and a bullet-point body.
+(=~/.config/git/hooks/commit-msg=) rejects. Build the prompt from
+=~/.claude/skills/commit/FORMAT.md= instead — the same file the Claude Code
+=commit= skill reads for its message shape — so the two never drift apart.
 
 #+begin_src emacs-lisp :tangle yes
-(defconst my/gptel-magit-commit-prompt
-  "You are an expert at writing Git commits. Your job is to write a short clear commit message that summarizes the changes.
-
-The commit message should be structured as follows:
-
-    <type>(<scope>): <Description>
-
-    [optional body]
-
-- Commits MUST be prefixed with a type, which consists of one of the following words: feat, fix, docs, style, refactor, test, chore
-- The type feat MUST be used when a commit adds a new feature
-- The type fix MUST be used when a commit represents a bug fix
-- An optional scope MAY be provided after a type. A scope is a phrase describing a section of the codebase enclosed in parentheses, e.g., fix(parser):
-- A description MUST immediately follow the type/scope prefix. The description MUST start with a capital letter, e.g., fix(parser): Array parsing issue when multiple spaces were contained in string.
-- Do not end the subject line with any punctuation
-- Use the imperative mood in the subject line
-- An optional body MAY follow the subject line after one blank line. The body MUST consist of bullet points. Omit it entirely if not useful.
-- Do not include a Co-Authored-By trailer or any other co-author information"
-  "Commit message prompt for gptel-magit, aligned with the Claude Code
-`commit' skill (~/.claude/skills/commit/SKILL.md) so that magit's \"c g\" and
-Claude's /commit produce the same commit message shape.")
+(defun my/gptel-magit-commit-prompt ()
+  "Build the gptel-magit commit prompt from the shared commit format spec.
+Reads ~/.claude/skills/commit/FORMAT.md, the same file the Claude Code
+`commit' skill uses, so magit's \"c g\" and Claude's /commit produce the
+same commit message shape."
+  (let ((format-spec
+         (with-temp-buffer
+           (insert-file-contents
+            (expand-file-name "~/.claude/skills/commit/FORMAT.md"))
+           (string-trim (buffer-string)))))
+    (concat
+     "You are an expert at writing Git commits. Your job is to write a short clear commit message that summarizes the changes.\n\n"
+     "Only return the commit message in your response. Do not include any additional meta-commentary about the task. Do not include the raw diff output in the commit message.\n\n"
+     "Follow this format exactly:\n\n"
+     format-spec)))
 
 (use-package! gptel-magit
   :hook (magit-mode . gptel-magit-install)
   :config
-  (setq gptel-magit-commit-prompt my/gptel-magit-commit-prompt))
+  (setq gptel-magit-commit-prompt (my/gptel-magit-commit-prompt)))
 
 (after! git-commit
   (setq git-commit-summary-max-length 80))
