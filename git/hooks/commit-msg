@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# Global commit-msg hook enforcing the conventions of the Claude Code commit skill
+# (~/.claude/skills/commit/SKILL.md).
+set -euo pipefail
+
+msg_file="$1"
+
+# Merge, revert, fixup and squash commits keep git's generated subjects
+subject=$(grep -v '^#' "$msg_file" | sed '/^[[:space:]]*$/d' | head -n1 || true)
+if [[ "$subject" =~ ^(Merge|Revert|fixup!|squash!|amend!)\  ]]; then
+  skip_format=1
+fi
+
+fail() { echo "commit-msg: $*" >&2; exit 1; }
+
+if [[ -z "${skip_format:-}" ]]; then
+  grep -qE '^(feat|fix|docs|style|refactor|test|chore)(\([a-z0-9._/-]+\))?!?: [A-Z]' <<<"$subject" \
+    || fail "subject must match '<type>(<scope>): <Description>' (types: feat fix docs style refactor test chore; description capitalized)"
+fi
+
+grep -qi '^Co-Authored-By:' "$msg_file" && fail "co-author trailers are not allowed"
+
+# CLAUDE.md and .claude/ files must be committed separately from other changes
+files=$(git diff --cached --name-only)
+if [[ -n "$files" ]]; then
+  claude=$(grep -cE '(^|/)(CLAUDE\.md|\.claude/)' <<<"$files" || true)
+  total=$(grep -c . <<<"$files")
+  if (( claude > 0 && claude < total )); then
+    fail "CLAUDE.md / .claude files must be committed separately from other changes"
+  fi
+fi
+
+# Chain to the repository's own commit-msg hook, if any
+local_hook="$(git rev-parse --git-common-dir)/hooks/commit-msg"
+[[ -x "$local_hook" ]] && exec "$local_hook" "$@"
+exit 0

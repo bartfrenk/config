@@ -15,3 +15,6 @@ doom/config.el
 !gtd
 !gtd/**/*
 gtd/tokens
+!git
+!git/hooks
+!git/hooks/**/*

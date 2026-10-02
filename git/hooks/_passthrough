@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# core.hooksPath disables repo-local hooks; forward to them so tools like
+# pre-commit or husky keep working.
+local_hook="$(git rev-parse --git-common-dir)/hooks/$(basename "$0")"
+[[ -x "$local_hook" ]] && exec "$local_hook" "$@"
+exit 0
