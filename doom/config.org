@@ -242,10 +242,15 @@ return PROJECT-TO-SWITCH unchanged otherwise."
   :defer t
   :custom
   (agent-shell-header-style 'text)
-  :bind
-  (:map agent-shell-mode-map
-   ("RET" . newline)
-   ("<C-return>" . agent-shell-submit)))
+  :config
+  ;; `evil-collection-comint' binds RET to submit in normal state and
+  ;; newline in insert state via its own evil-state keymaps, which take
+  ;; precedence over plain `:bind' entries on `agent-shell-mode-map'.
+  ;; Overriding here via `evil-collection-define-key' is the only way to
+  ;; actually win against that precedence.
+  (evil-collection-define-key '(normal insert) 'agent-shell-mode-map
+    (kbd "RET") #'newline
+    (kbd "<C-return>") #'agent-shell-submit))
 #+end_src
 
 #+RESULTS:
