@@ -76,6 +76,23 @@
 (defun gtd--refile-target-no-todo-p ()
   (not (org-get-todo-state)))
 
+(defun gtd--tickler-file-p (file)
+  (and file (file-equal-p file (gtd--path "tickler.org"))))
+
+(defun gtd--reject-undated-tickler-refile ()
+  "Abort a refile into tickler.org unless the entry has a SCHEDULED date.
+
+Runs in the destination buffer after the entry has been copied in but
+before `org-refile' deletes the original, so deleting the copy here and
+signaling aborts the whole refile as a no-op (plus the error message)."
+  (when (gtd--tickler-file-p (buffer-file-name))
+    (unless (org-entry-get nil "SCHEDULED")
+      (let ((beg (point)) (end (org-end-of-subtree t t)))
+        (delete-region beg end)
+        (user-error "Refusing to refile into tickler.org without a SCHEDULED date")))))
+
+(add-hook 'org-after-refile-insert-hook #'gtd--reject-undated-tickler-refile)
+
 (defun gtd/prune-completed ()
   "Remove all completed headlines (TODO state DONE or CANCELLED)
 from the current buffer, along with their subtrees."
@@ -104,7 +121,8 @@ from the current buffer, along with their subtrees."
         `((,(gtd--path "projects.org") :maxlevel . 3)
           (,(gtd--path "actions.org")  :level . 0)
           (,(gtd--path "someday.org")  :level . 0)
-          (,(gtd--path "resources.org")  :level . 1))
+          (,(gtd--path "resources.org")  :level . 1)
+          (,(gtd--path "tickler.org")  :level . 0))
         org-refile-use-outline-path 'file
         org-outline-path-complete-in-steps nil
         org-refile-allow-creating-parent-nodes 'confirm
