@@ -8,10 +8,22 @@
 (defun gtd--path (file)
   (concat gtd/dir "/" file))
 
+(defun gtd--gtd-buffer-p (&optional buffer)
+  (let ((file (buffer-file-name buffer)))
+    (and file (file-in-directory-p file gtd/dir))))
+
 (defun gtd/sync ()
-  "Run `gtd sync' to synchronize local GTD files."
+  "Run `gtd sync' to synchronize local GTD files.
+
+`gtd sync' reads and rewrites the files on disk, so save any modified GTD
+buffers first and revert them afterwards to pick up its changes."
   (interactive)
+  (save-some-buffers t #'gtd--gtd-buffer-p)
   (let ((exit-code (call-process (expand-file-name gtd--gtd-executable) nil nil nil "sync")))
+    (dolist (buffer (buffer-list))
+      (when (gtd--gtd-buffer-p buffer)
+        (with-current-buffer buffer
+          (revert-buffer t t t))))
     (if (zerop exit-code)
         (message "gtd: synced")
       (message "gtd: sync failed (exit %s)" exit-code))))
