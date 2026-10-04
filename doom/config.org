@@ -367,9 +367,27 @@ return PROJECT-TO-SWITCH unchanged otherwise."
 
 #+begin_src emacs-lisp :tangle yes
 (after! org
-  (setq gtd/dir "~/documents/org/gtd")
-  (gtd/init "~/documents/org/gtd")
-  (add-to-list 'org-refile-targets '("~/documents/songs/medicine-songs.org" :level . 0) t))
+  (use-package! gtd
+    :demand t
+    :config
+    (setq org-modern-todo nil)
+    (gtd/init "~/documents/org/gtd")
+    (add-to-list 'org-refile-targets '("~/documents/songs/medicine-songs.org" :level . 0) t)
+    (map! :leader
+          :desc "Open inbox"
+          "o i" #'gtd/inbox)
+    (map! :leader
+          :desc "Open inbox"
+          "n g i" #'gtd/inbox)
+    (map! :leader
+          :desc "Open projects"
+          "n g p" #'gtd/projects)
+    (map! :leader
+          :desc "Open actions"
+          "n g a" #'gtd/actions)
+    (map! :leader
+          :desc "Open actions"
+          "n g r" #'gtd/resources)))
 #+end_src
 
 #+RESULTS:

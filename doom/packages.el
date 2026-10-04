@@ -88,3 +88,13 @@
 ;; edited and versioned directly in ~/code/projects/emacs-aven).
 (package! aven
   :recipe (:type nil :local-repo "emacs-aven" :files ("*.el")))
+
+;; Local package, developed out-of-tree at ~/code/projects/emacs-gtd.
+;; straight.el's `:local-repo' is a name under its own repos/ dir, not
+;; an arbitrary path, so that directory name is expected to be a
+;; symlink to ~/code/projects/emacs-gtd:
+;;   ln -s ~/code/projects/emacs-gtd ~/.config/emacs/.local/straight/repos/emacs-gtd
+;; `:type nil' tells straight not to manage it as a git remote (it's
+;; edited and versioned directly in ~/code/projects/emacs-gtd).
+(package! gtd
+  :recipe (:type nil :local-repo "emacs-gtd" :files ("*.el")))
