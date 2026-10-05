@@ -32,7 +32,7 @@ binding local.
 
 ** Appearance
 #+begin_src emacs-lisp :tangle yes
-(setq doom-theme 'doom-vibrant)
+(setq doom-theme 'doom-opera)
 (setq doom-modeline-height 25)
 #+end_src
 
