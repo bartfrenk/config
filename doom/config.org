@@ -341,6 +341,29 @@ return PROJECT-TO-SWITCH unchanged otherwise."
         "n g t" #'aven/status))
 #+end_src
 
+** RSS
+Vitalik Buterin's feed still links to the defunct =vitalik.ca= domain; the same
+paths are served from =vitalik.eth.limo=.
+#+begin_src emacs-lisp :tangle yes
+(defun my/elfeed-fix-vitalik-link (entry)
+  "Point ENTRY at vitalik.eth.limo when it links to the dead vitalik.ca."
+  (when-let* ((link (elfeed-entry-link entry))
+              ((string-prefix-p "https://vitalik.ca/" link)))
+    (setf (elfeed-entry-link entry)
+          (replace-regexp-in-string
+           "\\`https://vitalik\\.ca/" "https://vitalik.eth.limo/" link))))
+
+(after! elfeed
+  (add-hook 'elfeed-new-entry-hook #'my/elfeed-fix-vitalik-link))
+#+end_src
+
+The arXiv feeds are high-volume, so they are hidden by default. Use =+arxiv= in
+the search filter to see them.
+#+begin_src emacs-lisp :tangle yes
+(after! elfeed
+  (setq-default elfeed-search-filter "@2-week-ago -arxiv "))
+#+end_src
+
 * Languages
 ** Chordpro
 #+begin_src emacs-lisp :tangle yes
