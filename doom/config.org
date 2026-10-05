@@ -179,7 +179,8 @@ same commit message shape."
      "You are an expert at writing Git commits. Your job is to write a short clear commit message that summarizes the changes.\n\n"
      "Only return the commit message in your response. Do not include any additional meta-commentary about the task. Do not include the raw diff output in the commit message.\n\n"
      "Follow this format exactly:\n\n"
-     format-spec)))
+     format-spec
+     "\n\nReturn the raw commit message as plain text. Do not wrap it in a code block or backticks; the fences in the format above only delimit the examples.")))
 
 (use-package! gptel-magit
   :hook (magit-mode . gptel-magit-install)
