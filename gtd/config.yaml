@@ -21,3 +21,9 @@ inbox:
       client_secret: !keyring gtd/spotify-client-secret
       client_id: !keyring gtd/spotify-client-id
       refresh_token: !keyring gtd/spotify-refresh-token
+  - destination: false
+    config:
+      kind: remarkable
+      path: "/Inbox"
+      hash_cache_path: "~/.config/gtd/remarkable-hash"
+      anthropic_api_key: !keyring gtd/anthropic-api-key
