@@ -196,7 +196,6 @@
 
        :local
        journal
-       gtd
        gtd-aven
        tangle
 
