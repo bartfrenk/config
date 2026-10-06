@@ -1,5 +1,5 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
-#+STARTUP: content indent
+#+STARTUP: content
 
 * Generic
 ** Personal Info
@@ -363,6 +363,20 @@ the search filter to see them.
 (after! elfeed
   (setq-default elfeed-search-filter "@2-week-ago -arxiv "))
 #+end_src
+
+#+begin_src emacs-lisp :tangle yes
+(map! :leader
+      :desc "Open RSS feed reader"
+      "o f" #'=rss)
+
+(map! :map elfeed-search-mode-map
+      :n "q" #'quit-window
+      :map elfeed-show-mode-map
+      :n "q" #'quit-window)
+#+end_src
+
+#+RESULTS:
+: (Open RSS feed reader . =rss)
 
 * Languages
 ** Chordpro
