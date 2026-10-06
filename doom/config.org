@@ -379,37 +379,30 @@ the search filter to see them.
 #+RESULTS:
 : (Open RSS feed reader . =rss)
 
-=W= on an entry summarizes its own link (not elfeed's internal id) into the
-org-roam wiki, via the =roam-content-summarizer= Claude Code subagent defined in
-the org repo. Runs headlessly in the background; check =*elfeed-summarize*= for
-progress or errors.
+=W= on an entry opens an agent-shell session in the org repo with a prompt to
+summarize the entry's own link (not elfeed's internal id) via the
+=roam-content-summarizer= Claude Code subagent. The prompt is inserted but not
+submitted, so it can be reviewed first; submit with =agent-shell-submit=
+(=C-return=).
 #+begin_src emacs-lisp :tangle yes
 (defvar my/elfeed-wiki-repo (expand-file-name "~/documents/org/")
   "Org repo holding the roam wiki and the `roam-content-summarizer' agent.")
 
 (defun my/elfeed-summarize-entry-to-wiki ()
-  "Summarize the current elfeed entry's link into the org-roam wiki.
-Runs the `roam-content-summarizer' Claude Code subagent headlessly, from
-`my/elfeed-wiki-repo', against the entry's own link."
+  "Open an agent-shell session to summarize the current entry into the wiki.
+Starts a new agent-shell rooted at `my/elfeed-wiki-repo' with a prompt asking
+the `roam-content-summarizer' subagent to summarize the entry's own link."
   (interactive)
-  (let* ((link (elfeed-entry-link elfeed-show-entry))
-         (default-directory my/elfeed-wiki-repo))
+  (require 'agent-shell)
+  (let ((link (elfeed-entry-link elfeed-show-entry)))
     (unless link
       (user-error "No link on this entry"))
-    (message "my/elfeed-summarize-entry-to-wiki: summarizing %s…" link)
-    (process-send-eof
-     (make-process
-      :name "elfeed-summarize-to-wiki"
-      :buffer (get-buffer-create "*elfeed-summarize*")
-      :command (list "claude" "-p"
-                      (format "Use the roam-content-summarizer subagent to summarize %s and add it to the wiki."
-                              link))
-      :connection-type 'pipe
-      :sentinel
-      (lambda (_proc event)
-        (if (string-prefix-p "finished" event)
-            (message "my/elfeed-summarize-entry-to-wiki: added %s to the wiki" link)
-          (message "my/elfeed-summarize-entry-to-wiki: failed on %s (see *elfeed-summarize*)" link)))))))
+    (let* ((default-directory my/elfeed-wiki-repo)
+           (shell-buffer (agent-shell--new-shell :location my/elfeed-wiki-repo)))
+      (agent-shell--display-and-insert-context
+       shell-buffer
+       (format "Use the roam-content-summarizer subagent to summarize %s and add it to the wiki."
+               link)))))
 
 (after! elfeed
   (map! :map elfeed-show-mode-map
