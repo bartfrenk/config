@@ -382,8 +382,10 @@ the search filter to see them.
 =W= on an entry starts an agent-shell session in the org repo with a prompt to
 summarize the entry's own link (not elfeed's internal id) via the
 =roam-content-summarizer= Claude Code subagent, without stealing focus. The
-prompt is inserted but not submitted, so it can be reviewed first; submit with
-=agent-shell-submit= (=C-return=) once you switch to it.
+shell is renamed to the entry's title so it stands out among other sessions in
+=agent-shell-hq-toggle= and =agent-shell-hq-peek=. The prompt is inserted but
+not submitted, so it can be reviewed first; submit with =agent-shell-submit=
+(=C-return=) once you switch to it.
 #+begin_src emacs-lisp :tangle yes
 (defvar my/elfeed-wiki-repo (expand-file-name "~/documents/org/")
   "Org repo holding the roam wiki and the `roam-content-summarizer' agent.")
@@ -392,16 +394,22 @@ prompt is inserted but not submitted, so it can be reviewed first; submit with
   "Start an agent-shell session to summarize the current entry into the wiki.
 Starts a new agent-shell rooted at `my/elfeed-wiki-repo' with a prompt asking
 the `roam-content-summarizer' subagent to summarize the entry's own link, in
-the background without displaying or focusing the shell. Review the prompt
-and submit with `agent-shell-submit' (C-return) once you switch to it."
+the background without displaying or focusing the shell. Renames the shell
+to the entry's title so it's identifiable among other sessions. Review the
+prompt and submit with `agent-shell-submit' (C-return) once you switch to it."
   (interactive)
   (require 'agent-shell)
-  (let ((link (elfeed-entry-link elfeed-show-entry)))
+  (let* ((entry elfeed-show-entry)
+         (link (elfeed-entry-link entry))
+         (title (elfeed-entry-title entry)))
     (unless link
       (user-error "No link on this entry"))
     (let* ((default-directory my/elfeed-wiki-repo)
            (shell-buffer (agent-shell--new-shell :location my/elfeed-wiki-repo
                                                  :no-display t)))
+      (shell-maker-set-buffer-name
+       shell-buffer
+       (format "Wiki: %s" (truncate-string-to-width title 60 nil nil "…")))
       (agent-shell-insert
        :shell-buffer shell-buffer
        :no-focus t
