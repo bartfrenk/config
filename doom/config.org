@@ -379,6 +379,43 @@ the search filter to see them.
 #+RESULTS:
 : (Open RSS feed reader . =rss)
 
+=W= on an entry summarizes its own link (not elfeed's internal id) into the
+org-roam wiki, via the =roam-content-summarizer= Claude Code subagent defined in
+the org repo. Runs headlessly in the background; check =*elfeed-summarize*= for
+progress or errors.
+#+begin_src emacs-lisp :tangle yes
+(defvar my/elfeed-wiki-repo (expand-file-name "~/documents/org/")
+  "Org repo holding the roam wiki and the `roam-content-summarizer' agent.")
+
+(defun my/elfeed-summarize-entry-to-wiki ()
+  "Summarize the current elfeed entry's link into the org-roam wiki.
+Runs the `roam-content-summarizer' Claude Code subagent headlessly, from
+`my/elfeed-wiki-repo', against the entry's own link."
+  (interactive)
+  (let* ((link (elfeed-entry-link elfeed-show-entry))
+         (default-directory my/elfeed-wiki-repo))
+    (unless link
+      (user-error "No link on this entry"))
+    (message "my/elfeed-summarize-entry-to-wiki: summarizing %s…" link)
+    (process-send-eof
+     (make-process
+      :name "elfeed-summarize-to-wiki"
+      :buffer (get-buffer-create "*elfeed-summarize*")
+      :command (list "claude" "-p"
+                      (format "Use the roam-content-summarizer subagent to summarize %s and add it to the wiki."
+                              link))
+      :connection-type 'pipe
+      :sentinel
+      (lambda (_proc event)
+        (if (string-prefix-p "finished" event)
+            (message "my/elfeed-summarize-entry-to-wiki: added %s to the wiki" link)
+          (message "my/elfeed-summarize-entry-to-wiki: failed on %s (see *elfeed-summarize*)" link)))))))
+
+(after! elfeed
+  (map! :map elfeed-show-mode-map
+        :n "W" #'my/elfeed-summarize-entry-to-wiki))
+#+end_src
+
 * Languages
 ** Chordpro
 #+begin_src emacs-lisp :tangle yes
