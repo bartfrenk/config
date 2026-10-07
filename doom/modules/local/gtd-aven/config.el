@@ -68,6 +68,39 @@ CLI call fails, the entry is left in place for a retry."
       (mapcar (lambda (project) (alist-get 'key project))
               (json-read-from-string (buffer-string))))))
 
+(defun gtd-aven--tasks ()
+  "All available, nondeleted Aven tasks across every project, as a list
+of alists."
+  (with-temp-buffer
+    (unless (zerop (call-process aven--executable nil t nil
+                                  "list" "--json"))
+      (error "aven: failed to list tasks: %s" (buffer-string)))
+    (let ((json-array-type 'list)
+          (json-object-type 'alist))
+      (json-read-from-string (buffer-string)))))
+
+(defun gtd-aven--task-candidate (task)
+  "One completing-read candidate line for TASK, an alist from
+`gtd-aven--tasks'. Ref, project, and status are all part of the
+candidate so they can be searched on, not just the title."
+  (format "%-10s %-14s %-8s %s"
+          (alist-get 'ref task)
+          (alist-get 'project task)
+          (alist-get 'status task)
+          (alist-get 'title task)))
+
+(defun gtd-aven/insert-task-ref ()
+  "Search Aven tasks by ref, project, status, or title, and insert the
+selected task's ref at point, the way `org-roam-node-insert' inserts a
+roam link."
+  (interactive)
+  (let* ((candidates (mapcar (lambda (task)
+                                (cons (gtd-aven--task-candidate task)
+                                      (alist-get 'ref task)))
+                              (gtd-aven--tasks)))
+         (choice (completing-read "Aven task: " candidates nil t)))
+    (insert (cdr (assoc choice candidates)))))
+
 (defun gtd-aven/generate-file ()
   "Ensure .aven.org has a top-level heading for every current Aven project.
 Existing headings, and any entries left under them from a failed push,
@@ -102,6 +135,8 @@ module or the base gtd module finishes loading first."
   (add-hook 'org-after-refile-insert-hook #'gtd-aven--push-refiled-entry)
   (map! :leader
         :desc "Refresh aven file"
-        "n g f" #'gtd-aven/generate-file))
+        "n g f" #'gtd-aven/generate-file
+        :desc "Insert aven task ref"
+        "n g s" #'gtd-aven/insert-task-ref))
 
 (gtd-aven--register)
