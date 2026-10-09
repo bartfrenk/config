@@ -459,6 +459,7 @@ prompt and submit with `agent-shell-submit' (C-return) once you switch to it."
     :config
     (setq org-modern-todo nil)
     (gtd/init "~/documents/org/gtd")
+    (require 'gtd-aven)
     (add-to-list 'org-refile-targets '("~/documents/songs/medicine-songs.org" :level . 0) t)
     (map! :leader
           :desc "Open inbox"
@@ -474,7 +475,13 @@ prompt and submit with `agent-shell-submit' (C-return) once you switch to it."
           "n g a" #'gtd/actions)
     (map! :leader
           :desc "Open actions"
-          "n g r" #'gtd/resources)))
+          "n g r" #'gtd/resources)
+    (map! :leader
+          :desc "Refresh aven file"
+          "n g f" #'gtd-aven/generate-file)
+    (map! :leader
+          :desc "Insert aven task ref"
+          "n g s" #'gtd-aven/insert-task-ref)))
 #+end_src
 
 #+RESULTS:
