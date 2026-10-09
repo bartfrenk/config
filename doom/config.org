@@ -339,8 +339,11 @@ return PROJECT-TO-SWITCH unchanged otherwise."
   :config
   (map! :leader
         :desc "Aven"
-        "n g t" #'aven/status))
+        "o t" #'aven/status))
 #+end_src
+
+#+RESULTS:
+: t
 
 ** RSS
 Vitalik Buterin's feed still links to the defunct =vitalik.ca= domain; the same
@@ -359,10 +362,12 @@ paths are served from =vitalik.eth.limo=.
 #+end_src
 
 The arXiv feeds are high-volume, so they are hidden by default. Use =+arxiv= in
-the search filter to see them.
+the search filter to see them. Wired is no longer fetched (=:ignore:= in
+=elfeed.org=); its remaining entries are hidden by default too. Use =\=wired.com=
+in the search filter to see them.
 #+begin_src emacs-lisp :tangle yes
 (after! elfeed
-  (setq-default elfeed-search-filter "@2-week-ago -arxiv "))
+  (setq-default elfeed-search-filter "@2-week-ago -arxiv ~wired.com "))
 #+end_src
 
 #+begin_src emacs-lisp :tangle yes
@@ -420,6 +425,8 @@ prompt and submit with `agent-shell-submit' (C-return) once you switch to it."
   (map! :map elfeed-show-mode-map
         :n "W" #'my/elfeed-summarize-entry-to-wiki))
 #+end_src
+
+#+RESULTS:
 
 * Languages
 ** Chordpro
