@@ -5,15 +5,17 @@ set -euo pipefail
 
 msg_file="$1"
 
-# Merge, revert, fixup and squash commits keep git's generated subjects
+# Merge, revert, fixup, squash and amend commits aggregate or replay other
+# commits' changes rather than representing a fresh, intentional pairing of
+# changes, so they're exempt from checks that assume the latter.
 subject=$(grep -v '^#' "$msg_file" | sed '/^[[:space:]]*$/d' | head -n1 || true)
 if [[ "$subject" =~ ^(Merge|Revert|fixup!|squash!|amend!)\  ]]; then
-  skip_format=1
+  skip_checks=1
 fi
 
 fail() { echo "commit-msg: $*" >&2; exit 1; }
 
-if [[ -z "${skip_format:-}" ]]; then
+if [[ -z "${skip_checks:-}" ]]; then
   grep -qE '^(feat|fix|docs|style|refactor|test|chore)(\([a-z0-9._/-]+\))?!?: [A-Z]' <<<"$subject" \
     || fail "subject must match '<type>(<scope>): <Description>' (types: feat fix docs style refactor test chore; description capitalized)"
 fi
@@ -21,12 +23,14 @@ fi
 grep -qi '^Co-Authored-By:' "$msg_file" && fail "co-author trailers are not allowed"
 
 # CLAUDE.md and .claude/ files must be committed separately from other changes
-files=$(git diff --cached --name-only)
-if [[ -n "$files" ]]; then
-  claude=$(grep -cE '(^|/)(CLAUDE\.md|\.claude/)' <<<"$files" || true)
-  total=$(grep -c . <<<"$files")
-  if (( claude > 0 && claude < total )); then
-    fail "CLAUDE.md / .claude files must be committed separately from other changes"
+if [[ -z "${skip_checks:-}" ]]; then
+  files=$(git diff --cached --name-only)
+  if [[ -n "$files" ]]; then
+    claude=$(grep -cE '(^|/)(CLAUDE\.md|\.claude/)' <<<"$files" || true)
+    total=$(grep -c . <<<"$files")
+    if (( claude > 0 && claude < total )); then
+      fail "CLAUDE.md / .claude files must be committed separately from other changes"
+    fi
   fi
 fi
 
