@@ -1,0 +1,4 @@
+.envrc
+**/.claude/settings.local.json
+.workmux
+.agent-shell

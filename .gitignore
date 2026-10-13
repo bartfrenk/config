@@ -17,5 +17,6 @@ doom/config.el
 gtd/remarkable-hash
 gtd/tokens
 !git
+!git/**/*
 !git/hooks
 !git/hooks/**/*
