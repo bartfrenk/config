@@ -14,8 +14,8 @@
   sh = !git ship
 
 [core]
-  excludesfile = /home/bart/.gitignore_global
-	hooksPath = /home/bart/.config/git/hooks
+  excludesfile = /home/bart/.config/git/ignore
+  hooksPath = /home/bart/.config/git/hooks
 
 [credential]
   helper = store
