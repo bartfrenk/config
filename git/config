@@ -10,16 +10,7 @@
   pl = pull
   df = diff
   ls = log --oneline -n 20 --graph
-  ship = "!f() { \
-	  before=$(git rev-parse HEAD) && \
-	  claude -p \"/commit\" && \
-	  after=$(git rev-parse HEAD) && \
-	  if [ \"$before\" != \"$after\" ]; then \
-		  git push; \
-	  else \
-		  echo \"No new commit created; skipping push.\"; \
-	  fi; \
-  }; f"
+  ship = "!~/.local/bin/git-ship"
   sh = !git ship
 
 [core]
