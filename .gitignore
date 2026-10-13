@@ -18,5 +18,6 @@ gtd/remarkable-hash
 gtd/tokens
 !git
 !git/**/*
+git/credentials
 !git/hooks
 !git/hooks/**/*
